@@ -194,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>2.3</b> The data to visualise</a></li>
 <li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>2.4</b> Code style</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#include-the-package-name-every-time.-why"><i class="fa fa-check"></i><b>2.4.1</b> Include the package name every time. Why?</a></li>
-<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing-hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>2.4.2</b> One line does one thing (Hit the return key a lot!)</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>2.4.2</b> One line does one thing - Hit the return key a lot</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory Data Analysis</a><ul>
@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>A quick way to move around an R Markdown document in RStudio is through the document outline. You can see the outline by holding down Ctrl+Shift+O, clicking the top right icon in the code pane, or left clicking on the bottom bar of the R markdown file. The gif below shows you how it works.</li>
 </ul>
-<p><img src="outline.gif" width="80%" />
+<p><img src="outline.gif" width="100%" />
 </br>
 * Recorded with ScreenToGif: <a href="https://www.screentogif.com/" class="uri">https://www.screentogif.com/</a></p>
 </div>
@@ -326,12 +326,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     filter</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># wrangling / munging / manipulating</span></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="kw">library</span>(tidyverse) <span class="co"># loads of useful packages in one </span></a></code></pre></div>
-<pre><code>## -- Attaching packages ----------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ------ tidyverse 1.2.1 --</code></pre>
 <pre><code>## v tibble  2.1.3     v purrr   0.3.2
 ## v tidyr   1.0.0     v dplyr   0.8.3
 ## v readr   1.3.1     v stringr 1.4.0
 ## v tibble  2.1.3     v forcats 0.4.0</code></pre>
-<pre><code>## -- Conflicts -------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts --------- tidyverse_conflicts() --
 ## x dplyr::add_count()     masks tidylog::add_count()
 ## x dplyr::add_tally()     masks tidylog::add_tally()
 ## x dplyr::anti_join()     masks tidylog::anti_join()
@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>A lot of data visilisation is showing how values change over time. Therefore, rather than the ususal iris or mtcars, this guide uses a built-in data set within ggplot of housing sales in American cities over several years.</p></li>
 <li><p>The only manipulation we will do is to create a real date using the excellet R lubrdate package. We also reduce the number of American cities so our first charts aren’t too crowded.</p></li>
 <li><p>In this simple data preperation or wrangling I’ll use tidylog with dplyr. It’s a simple way to do fast basic Quality Asssurance as you code.</p></li>
-<li><p>Simple replace dplyr verbs with the same verb in tidylog. This will tell you key info about what is being done to your data by each dplyr verb. For example, how many rows are dropped or added byfilters or joins, and what percentage of values changed after a mutate.</p></li>
+<li><p>Simple replace dplyr verbs with the same verb in tidylog. This will tell you key info about what is being done to your data by each dplyr verb. For example, how many rows are dropped or added by filters or joins, and what percentage of values changed after a mutate.</p></li>
 </ul>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># create a data frame with a real date for plotting</span></a>
 <a class="sourceLine" id="cb34-2" title="2">df &lt;-<span class="st"> </span>ggplot2<span class="op">::</span>txhousing <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -435,6 +435,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb34-4" title="4">                                              <span class="dt">month =</span> month, </a>
 <a class="sourceLine" id="cb34-5" title="5">                                              <span class="dt">day =</span><span class="dv">1</span>)) </a></code></pre></div>
 <pre><code>## mutate: changed 8,602 values (100%) of &#39;date&#39; (0 new NA)</code></pre>
+<ul>
+<li>Let’s also create a data frame with fewer cities. This will make plots less crowded later. Here we select only cities where the maximum number in any month is 800 or more.</li>
+</ul>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># reduce the number of cities for simpler plots</span></a>
 <a class="sourceLine" id="cb36-2" title="2">df_red &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb36-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(city) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -444,8 +447,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## mutate (grouped): new variable &#39;sales_max&#39; with 27 unique values and 43% NA</code></pre>
 <pre><code>## filter: removed 6,545 rows (76%), 2,057 rows remaining</code></pre>
 <ul>
-<li><p>Look at these useful messages above crated by tiylog. So it tells us what percentage of values are NA. And how many rows the filter has removed.</p></li>
-<li><p>Has this worked? No! The mutate has gone wrong as we would like 100% of rows to have the maximum sales value! Well spotted tidylog. We correct it below by removing the NAs from the maximum</p></li>
+<li>But look! Look at these useful messages above created by tiylog. It tells us what percentage of values are NA. And how many rows the filter has removed. But the mutate has gone wrong as it tells us there are 43% NA. Well spotted tidylog. We correct it below by removing the NAs from the maximum sales value.</li>
 </ul>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># reduce the number of cities for simpler plots</span></a>
 <a class="sourceLine" id="cb39-2" title="2">df_red &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -456,7 +458,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb39-7" title="7"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">filter</span>(sales_max <span class="op">&gt;=</span><span class="st"> </span><span class="dv">800</span>)</a></code></pre></div>
 <pre><code>## mutate (grouped): new variable &#39;sales_max&#39; with 45 unique values and 0% NA</code></pre>
 <pre><code>## filter: removed 6,545 rows (76%), 2,057 rows remaining</code></pre>
-<p>Let’s take a quick look at the top few rows of the data using kableExtra table.</p>
+<ul>
+<li><p>This has worked with 0% NA.</p></li>
+<li><p>Let’s take a quick look at the top few rows of the data using kableExtra table. A later chapter explores tables.</p></li>
+</ul>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">kableExtra<span class="op">::</span><span class="kw">kable</span>(utils<span class="op">::</span><span class="kw">head</span>(df))</a></code></pre></div>
 <table>
 <thead>
@@ -683,12 +688,12 @@ Abilene
 <a class="sourceLine" id="cb43-3" title="3">ggrepel<span class="op">::</span><span class="kw">geom_text_repel</span>()</a></code></pre></div>
 <p><img src="package_name.gif" width="1100%" /></p>
 </div>
-<div id="one-line-does-one-thing-hit-the-return-key-a-lot" class="section level3">
-<h3><span class="header-section-number">2.4.2</span> One line does one thing (Hit the return key a lot!)</h3>
+<div id="one-line-does-one-thing---hit-the-return-key-a-lot" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> One line does one thing - Hit the return key a lot</h3>
 <ul>
-<li><p>Try and get each line to do one thing by hitting the return key after every pipe, comma or plus symbol in ggplot.</p></li>
-<li><p>Also, provide values for your paramenters in the order the function expects them so you don’t have to name them. I think it’s better to name each one so your code is easier to read.</p></li>
-<li><p>Here is code that works but doesn’t follow any of those rules. The code is cramped and slow to understand, edit or re-use.</p></li>
+<li><p>Ideally one line does one thing. Hit the return key after every pipe, comma or plus symbol in ggplot and RStudio tabs your code in the right way.</p></li>
+<li><p>Also, name the parameters in each function instead of relying on theorder the function expects them. Your code is then easier to read by others and you later.</p></li>
+<li><p>For example, below this works but doesn’t follow any of those rules. The code is cramped and slow to understand, edit or re-use.</p></li>
 </ul>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">ggplot</span>(df) <span class="op">+</span></a>
 <a class="sourceLine" id="cb44-2" title="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(date, sales, <span class="dt">colour =</span> city)) <span class="op">+</span></a>
@@ -700,22 +705,22 @@ Abilene
 <a class="sourceLine" id="cb44-8" title="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> years, <span class="dt">linetype =</span> <span class="dv">4</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb44-9" title="9"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(), <span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>), <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">60</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">9</span>), <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>), <span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>, <span class="dt">legend.direction =</span> <span class="st">&quot;vertical&quot;</span>, <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">22</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>), <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">size =</span> <span class="dv">18</span>), <span class="dt">plot.caption =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">&quot;darkgrey&quot;</span>), <span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
 <ul>
-<li>The code below is the same code as above but it follows all these rules:</li>
+<li>In oontrast, the code below is the same code as above but it follows these 5 rules:</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li>Use package names</li>
-<li>Each line does one thing or is one paramater settging in a function</li>
-<li>Tabbed consistently by hitting the return key after each pipe, comma or plus</li>
-<li>Put spaces around equals</li>
-<li>Name every parameter you put in a function</li>
+<li>Use package names.</li>
+<li>Each line does one thing (e.g. a function or a parameter setting in a function).</li>
+<li>Name every parameter you put in a function.</li>
+<li>Tabbed consistently by hitting the return key after each pipe ( %&gt;% ), comma or plus symbol (+).</li>
+<li>Put spaces around equals.</li>
 </ol>
-<p>By following these rules it means:</p>
+<p>The benefits of following these rules are that you can:</p>
 <ol style="list-style-type: decimal">
-<li>The code is easier to run top downwards adding one chunk at a time (like the popular ggplot flipbooks I describe at bullet 11 here: <a href="https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r" class="uri">https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r</a>)</li>
-<li>Easily comment whole lines or parameters to undersatnd what they add.</li>
-<li>More easily find and edit parameaters (e.g. a font size)</li>
-<li>Helps others QA or re-use your code more quickly.</li>
-<li>Helps others new to R understand what you are doing.</li>
+<li>Run your code top downwards in chunks adding more lines each time (like the popular ggplot flipbooks I describe at bullet 11 here: <a href="https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r" class="uri">https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r</a>)</li>
+<li>Comment out whole lines of code or parameters in a function to undersatnd what they are doing.</li>
+<li>Easily find and edit parameaters in a function (e.g. a font size)</li>
+<li>Help others QA or re-use your code more quickly.</li>
+<li>Help others new to R understand what you are doing and learn R faster.</li>
 </ol>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
