@@ -4,7 +4,7 @@
 
 * A quick way to move around an R Markdown document in RStudio is through the document outline. You can see the outline by holding down Ctrl+Shift+O, clicking the top right icon in the code pane, or left clicking on the bottom bar of the R markdown file. The gif below shows you how it works.
 
-```{r, echo=FALSE, out.width = "80%"}
+```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("outline.gif") 
 ```
 </br>
@@ -14,7 +14,7 @@ knitr::include_graphics("outline.gif")
 
 Here are all the R packages that are used in this guide. 
 
-```{r libraries, warning=FALSE}
+```{r libraries, warning=FALSE, messages = FALSE}
 # data vis https://www.htmlwidgets.org/index.html
 library(ggplot2) # static charts - amazing variety
 library(plotly) # interactive charts
@@ -68,7 +68,7 @@ library(xfun)
 
 * In this simple data preperation or wrangling I'll use tidylog with dplyr. It's a simple way to do fast basic Quality Asssurance as you code. 
 
-* Simple replace dplyr verbs with the same verb in tidylog. This will tell you key info about what is being done to your data by each dplyr verb. For example, how many rows are dropped or added byfilters or joins, and what percentage of values changed after a mutate.
+* Simple replace dplyr verbs with the same verb in tidylog. This will tell you key info about what is being done to your data by each dplyr verb. For example, how many rows are dropped or added by filters or joins, and what percentage of values changed after a mutate.
 
 ```{r create_df, message=TRUE}
 # create a data frame with a real date for plotting
@@ -76,7 +76,11 @@ df <- ggplot2::txhousing %>%
   tidylog::mutate(date = lubridate::make_date(year = year,
                                               month = month, 
                                               day =1)) 
+```
 
+* Let's also create a data frame with fewer cities. This will make plots less crowded later. Here we select only cities where the maximum number in any month is 800 or more.
+
+```{r}
 # reduce the number of cities for simpler plots
 df_red <- df %>% 
   dplyr::group_by(city) %>% 
@@ -85,9 +89,7 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 800)
 ```
 
-* Look at these useful messages above crated by tiylog. So it tells us what percentage of values are NA. And how many rows the filter has removed.
-
-* Has this worked? No! The mutate has gone wrong as we would like 100% of rows to have the maximum sales value! Well spotted tidylog. We correct it below by removing the NAs from the maximum
+* But look! Look at these useful messages above created by tiylog. It tells us what percentage of values are NA. And how many rows the filter has removed. But the mutate has gone wrong as it tells us there are 43% NA. Well spotted tidylog. We correct it below by removing the NAs from the maximum sales value.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -99,7 +101,10 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 800)
 ```
 
-Let's take a quick look at the top few rows of the data using kableExtra table.
+
+* This has worked with 0% NA.
+
+* Let's take a quick look at the top few rows of the data using kableExtra table. A later chapter explores tables.
 
 ```{r}
 kableExtra::kable(utils::head(df))
@@ -127,13 +132,13 @@ ggrepel::geom_text_repel()
 knitr::include_graphics("package_name.gif") 
 ```
 
-### One line does one thing (Hit the return key a lot!)
+### One line does one thing - Hit the return key a lot
 
-* Try and get each line to do one thing by hitting the return key after every pipe, comma or plus symbol in ggplot. 
+* Ideally one line does one thing. Hit the return key after every pipe, comma or plus symbol in ggplot and RStudio tabs your code in the right way. 
 
-* Also, provide values for your paramenters in the order the function expects them so you don't have to name them. I think it's better to name each one so your code is easier to read.
+* Also, name the parameters in each function instead of relying on theorder the function expects them. Your code is then easier to read by others and you later.
 
-* Here is code that works but doesn't follow any of those rules. The code is cramped and slow to understand, edit or re-use.
+* For example, below this works but doesn't follow any of those rules. The code is cramped and slow to understand, edit or re-use.
 
 ```{r cramped_code, eval=FALSE}
 ggplot(df) +
@@ -147,21 +152,21 @@ ggplot(df) +
   theme(panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), strip.text.x = element_text(size = 10), axis.text.x = element_text(angle = 60, hjust = 1, size = 9), legend.text = element_text(size = 12), legend.position = "right", legend.direction = "vertical", plot.title = element_text(size = 22, face = "bold"), plot.subtitle = element_text(color = "grey", size = 18), plot.caption = element_text(hjust = 0, size = 12, color = "darkgrey"), legend.title = element_blank())
 ```
 
-* The code below is the same code as above but it follows all these rules:
+* In oontrast, the code below is the same code as above but it follows these 5 rules:
 
-1. Use package names
-2. Each line does one thing or is one paramater settging in a function
-3. Tabbed consistently by hitting the return key after each pipe, comma or plus
-3. Put spaces around equals 
-4. Name every parameter you put in a function
+1. Use package names.
+2. Each line does one thing (e.g. a function or a parameter setting in a function).
+3. Name every parameter you put in a function.
+4. Tabbed consistently by hitting the return key after each pipe ( %>% ), comma or plus symbol (+).
+5. Put spaces around equals.
 
-By following these rules it means:
+The benefits of following these rules are that you can:
 
-1. The code is easier to run top downwards adding one chunk at a time (like the popular ggplot flipbooks I describe at bullet 11 here: https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r)
-2. Easily comment whole lines or parameters to undersatnd what they add.
-3. More easily find and edit parameaters (e.g. a font size)
-4. Helps others QA or re-use your code more quickly.
-5. Helps others new to R understand what you are doing.
+1. Run your code top downwards in chunks adding more lines each time (like the popular ggplot flipbooks I describe at bullet 11 here: https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r)
+2. Comment out whole lines of code or parameters in a function to undersatnd what they are doing.
+3. Easily find and edit parameaters in a function (e.g. a font size)
+4. Help others QA or re-use your code more quickly.
+5. Help others new to R understand what you are doing and learn R faster.
 
 ```{r clean_code, eval=FALSE}
 df %>%
