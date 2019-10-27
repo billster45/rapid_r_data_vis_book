@@ -1,0 +1,19 @@
+# Final document
+
+## crosstalk
+
+```{r crosstalk}
+TX <- crosstalk::SharedData$new(df, ~year)
+```
+
+## flexdashboard
+
+Put a link here
+
+# Which viz and other resources
+https://medium.com/multiple-views-visualization-research-explained/multiple-views-on-how-to-choose-a-visualization-b3ffc99fcddc
+https://www.kdnuggets.com/2019/06/how-choose-visualization.html
+http://experception.net/Franconeri_ExperCeptionDotNet_DataVisQuickRef.pdf
+https://www.data-to-viz.com
+https://github.com/billster45/r-guides-and-galleries#learn-to-visualise-data-with-r
+
