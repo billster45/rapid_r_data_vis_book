@@ -4,24 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Minimal Book Example</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>Rapid R Data Viz Book</title>
+  <meta name="description" content="Description" />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Minimal Book Example" />
+  <meta property="og:title" content="Rapid R Data Viz Book" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta property="og:description" content="Description" />
+  
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Minimal Book Example" />
+  <meta name="twitter:title" content="Rapid R Data Viz Book" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="Description" />
   
 
-<meta name="author" content="Yihui Xie" />
+<meta name="author" content="Bill Cockerill" />
 
 
 <meta name="date" content="2019-10-27" />
@@ -50,6 +50,57 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/trelliscopejs_widget-0.3.0/trelliscope.min.js"></script>
+<script src="libs/trelliscopejs_widget-binding-0.2.1/trelliscopejs_widget.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<script src="libs/apexcharts-3.8.4/apexcharts.min.js"></script>
+<script src="libs/apexcharter-binding-0.1.2/apexcharter.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.8/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/jquery-ui-1.11.4/jquery.ui.touch-punch.min.js"></script>
+<link href="libs/c3-0.4.11/c3.min.css" rel="stylesheet" />
+<script src="libs/c3-0.4.11/c3.min.js"></script>
+<script src="libs/d3-3.5.5/d3.v3.min.js"></script>
+<link href="libs/pivottable-2.19.0/pivot.min.css" rel="stylesheet" />
+<script src="libs/pivottable-2.19.0/pivot.min.js"></script>
+<script src="libs/pivottable-2.19.0/d3_renderers.min.js"></script>
+<script src="libs/pivottable-2.19.0/c3_renderers.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.cs.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.da.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.de.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.es.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.fr.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.it.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.nl.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.pl.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.pt.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.ru.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.sq.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.tr.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.zh.min.js"></script>
+<link href="libs/subtotal-1.10.0/subtotal.min.css" rel="stylesheet" />
+<script src="libs/subtotal-1.10.0/subtotal.min.js"></script>
+<script src="libs/polyfill-0.1/polyfill.min.js"></script>
+<link href="libs/rpivotTable_style-0.1/rpivotTable.css" rel="stylesheet" />
+<script src="libs/rpivotTable-binding-0.3.0/rpivotTable.js"></script>
 
 
 <style type="text/css">
@@ -131,16 +182,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Why read this?</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#a-rapid-approach-to-data-viz"><i class="fa fa-check"></i><b>1.1</b> A rapid approach to data viz</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#what-about-python"><i class="fa fa-check"></i><b>1.2</b> What about Python?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-about-other-tools"><i class="fa fa-check"></i><b>1.3</b> What about other tools?</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-an-r-master-to-inspire-you"><i class="fa fa-check"></i><b>1.4</b> Find an R master to inspire you…</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Setup</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#navigating-an-r-markdown"><i class="fa fa-check"></i><b>2.1</b> Navigating an R markdown</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#libraries"><i class="fa fa-check"></i><b>2.2</b> Libraries</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>2.3</b> The data to visualise</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>2.4</b> Code style</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#include-the-package-name-every-time.-why"><i class="fa fa-check"></i><b>2.4.1</b> Include the package name every time. Why?</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing-hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>2.4.2</b> One line does one thing (Hit the return key a lot!)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#start-with-dplyr-counts-and-summaries-in-console"><i class="fa fa-check"></i><b>3.1</b> Start with dplyr counts and summaries in console</a></li>
+<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#next-plot-data-points"><i class="fa fa-check"></i><b>3.2</b> Next plot data points</a></li>
+<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#why-start-with-geom_point"><i class="fa fa-check"></i><b>3.3</b> Why start with geom_point()?</a></li>
+<li class="chapter" data-level="3.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#now-facet-by-categories"><i class="fa fa-check"></i><b>3.4</b> Now facet by categories</a></li>
+<li class="chapter" data-level="3.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-with-trelliscopejs"><i class="fa fa-check"></i><b>3.5</b> Facet with trelliscopejs</a></li>
+<li class="chapter" data-level="3.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#or-loop-and-plot-every-value"><i class="fa fa-check"></i><b>3.6</b> Or loop and plot every value</a></li>
+<li class="chapter" data-level="3.7" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>3.7</b> Polish your final plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interactive-plots.html"><a href="interactive-plots.html"><i class="fa fa-check"></i><b>4</b> Interactive plots</a><ul>
+<li class="chapter" data-level="4.1" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly"><i class="fa fa-check"></i><b>4.1</b> Plotly</a></li>
+<li class="chapter" data-level="4.2" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-build-to-edit"><i class="fa fa-check"></i><b>4.2</b> Plotly Build to edit</a></li>
+<li class="chapter" data-level="4.3" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-most-basic"><i class="fa fa-check"></i><b>4.3</b> Plotly (most basic)</a></li>
+<li class="chapter" data-level="4.4" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-a-few-more-settings"><i class="fa fa-check"></i><b>4.4</b> plotly (a few more settings)</a></li>
+<li class="chapter" data-level="4.5" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-bells-whistles"><i class="fa fa-check"></i><b>4.5</b> plotly (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="4.6" data-path="interactive-plots.html"><a href="interactive-plots.html#apexchater-simple"><i class="fa fa-check"></i><b>4.6</b> apexchater simple</a></li>
+<li class="chapter" data-level="4.7" data-path="interactive-plots.html"><a href="interactive-plots.html#apexchater-with-bells-whistles"><i class="fa fa-check"></i><b>4.7</b> apexchater with bells &amp; whistles</a></li>
+<li class="chapter" data-level="4.8" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-for-time-series-data"><i class="fa fa-check"></i><b>4.8</b> dygraphs for time series data</a></li>
+<li class="chapter" data-level="4.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>4.9</b> dygraphs bells &amp; whistles</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>5</b> Animation</a></li>
+<li class="chapter" data-level="6" data-path="svg-polish.html"><a href="svg-polish.html"><i class="fa fa-check"></i><b>6</b> SVG Polish</a></li>
+<li class="chapter" data-level="7" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>7</b> Tables</a><ul>
+<li class="chapter" data-level="7.1" data-path="tables.html"><a href="tables.html#dt"><i class="fa fa-check"></i><b>7.1</b> DT</a></li>
+<li class="chapter" data-level="7.2" data-path="tables.html"><a href="tables.html#rpivottable-simple"><i class="fa fa-check"></i><b>7.2</b> rpivottable simple</a></li>
+<li class="chapter" data-level="7.3" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>7.3</b> rpivottable (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="7.4" data-path="tables.html"><a href="tables.html#formattable"><i class="fa fa-check"></i><b>7.4</b> formattable</a></li>
+<li class="chapter" data-level="7.5" data-path="tables.html"><a href="tables.html#kable"><i class="fa fa-check"></i><b>7.5</b> kable</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>8</b> Colours</a></li>
+<li class="chapter" data-level="9" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>9</b> Final document</a><ul>
+<li class="chapter" data-level="9.1" data-path="final-document.html"><a href="final-document.html#crosstalk"><i class="fa fa-check"></i><b>9.1</b> crosstalk</a></li>
+<li class="chapter" data-level="9.2" data-path="final-document.html"><a href="final-document.html#flexdashboard"><i class="fa fa-check"></i><b>9.2</b> flexdashboard</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="which-viz-and-other-resources.html"><a href="which-viz-and-other-resources.html"><i class="fa fa-check"></i><b>10</b> Which viz and other resources</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -153,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rapid R Data Viz Book</a>
           </h1>
         </div>
 
@@ -162,20 +253,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">A Minimal Book Example</h1>
-<p class="author"><em>Yihui Xie</em></p>
+<h1 class="title">Rapid R Data Viz Book</h1>
+<p class="author"><em>Bill Cockerill</em></p>
 <p class="date"><em>2019-10-27</em></p>
 </div>
-<div id="prerequisites" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>This is a <em>sample</em> book written in <strong>Markdown</strong>. You can use anything that Pandoc’s Markdown supports, e.g., a math equation <span class="math inline">\(a^2 + b^2 = c^2\)</span>.</p>
-<p>The <strong>bookdown</strong> package can be installed from CRAN or Github:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co"># or the development version</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></a></code></pre></div>
-<p>Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading <code>#</code>.</p>
-<p>To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.name/tinytex/" class="uri">https://yihui.name/tinytex/</a>.</p>
+<div id="why-read-this" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Why read this?</h1>
+<div id="a-rapid-approach-to-data-viz" class="section level2">
+<h2><span class="header-section-number">1.1</span> A rapid approach to data viz</h2>
+<ul>
+<li><p>This is my <em>current</em> approach to data visualiation in R. My apporach keeps chaning. I’m amazed how often you can discover new methods and packages just in the excellent <a href="https://www.r-bloggers.com/">R-Bloggers</a> website or <a href="https://twitter.com/search?q=%23rstats&amp;src=typd&amp;lang=en">#rstats</a> on Twitter.</p></li>
+<li><p>No matter how expert you are using R I hope you learn about at least one new trick from this short guide. I always have in mind helping people just starting in R. Particularly anyone struggling to learn as I did. I love how the R community create many guides that de-mystify and democratise data analysis in R. With the same aim, all the code examples here are super simple and re-usable. As well as providing more complex examples set out clearly so they are easier to understand and re-use.</p></li>
+<li><p>Another reason forsuper simple examples is they can become fast Exploratory Data Exploration (EDA) methods too. The best data work starts with good EDA. That includes high quality data engineering or Kaggle Data Science competition winners.</p></li>
+</ul>
+</div>
+<div id="what-about-python" class="section level2">
+<h2><span class="header-section-number">1.2</span> What about Python?</h2>
+<ul>
+<li>Python is great for data visualisation too such as Pands, Seaborn, Matplotlib, and Bokeh. But my day to day work is in R only so that’s where I’ve built most data vis skills so far. A good place to find similar examples with real data are Python Notebooks on the Kaggle Data Science website <a href="https://www.kaggle.com/kernels" class="uri">https://www.kaggle.com/kernels</a> Use the filters at the top to select popular data visulisation notebooks in Python.</li>
+</ul>
+</div>
+<div id="what-about-other-tools" class="section level2">
+<h2><span class="header-section-number">1.3</span> What about other tools?</h2>
+<ul>
+<li>Graphical User Interface (GUI) or Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place as long as we don’t end up doing our data engineering with them. As Hadley wickham says… And even PowerPoint can be used to create publication quality charts.</li>
+</ul>
+</div>
+<div id="find-an-r-master-to-inspire-you" class="section level2">
+<h2><span class="header-section-number">1.4</span> Find an R master to inspire you…</h2>
+<ul>
+<li><p>I hope you will find this material inspires you to try some new techniques that make your work faster and more interesting. How David Robinson explores, cleans then analystes data in R is inspiring. Lots of tricks I use here I saw him do on his Tidy Tuesday YouTube videos. I describe these at bullet 18 in my this collection of good R guides: <a href="https://github.com/billster45/r-guides-and-galleries#putting-it-all-together" class="uri">https://github.com/billster45/r-guides-and-galleries#putting-it-all-together</a></p></li>
+<li><p>Another R master, Claus Wilke has created a new guide similar to this in that it starts with simple examples that become more complex . In his practical guide see how he starts with the bare minimum code you need to create the plot then gradually builds it up into a publication quality plot: <a href="https://github.com/wilkelab/practicalgg" class="uri">https://github.com/wilkelab/practicalgg</a> He wrote this so that help make the charts he creates in Fundamentals of Data Visualization easier to copy: <a href="https://serialmentor.com/dataviz/" class="uri">https://serialmentor.com/dataviz/</a></p></li>
+<li><p>This guide is similar to Wilke’s but with a greater focus on EDA. I also offer a wider set of tools for EDA, particulary R packages that make your plot interactive. As well as describing my personal preference for writing R code in a very clean and structured style.</p></li>
+</ul>
 
+</div>
 </div>
             </section>
 
@@ -230,20 +342,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

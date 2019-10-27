@@ -1,0 +1,58 @@
+# Tables
+
+```{r}
+```
+
+## DT
+
+* Usually "tidy" data is long https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
+
+* but tables need it wide so let's reshape with the new tidyr::pivot_wider, then put into an interactive table
+
+```{r}
+# first reshape with new tidyr
+df_wide <- 
+  df %>% 
+  dplyr::arrange(city,desc(date)) %>% 
+  dplyr::mutate(date1 = base::format(date, "%d %b %y")) %>%
+  tidyr::pivot_wider(id_cols = city, 
+              names_from = date1,
+              values_from = median)
+
+df_wide %>% 
+  DT::datatable(df_wide)
+```
+
+## rpivottable simple
+
+* Have found rpivotables aren't great for the end customer but are a good EDA tool instead of exporting to Excel and using their excellent pivot tables.
+
+```{r}
+rpivotTable::rpivotTable(data = df_red)
+```
+
+## rpivottable (bells & whistles)
+
+* Once we've played around with it manually we might hard code our favourite settings for our document.
+
+```{r}
+rpivotTable::rpivotTable(data = df_red,
+                         rows = c("year","city"),
+                         cols = "date",
+                         inclusions = list(year = list("2014")),
+                         aggregatorName = "Sum",
+                         vals = "sales",
+                         rendererName = "Line Chart")
+```
+
+## formattable
+
+```{r}
+formattable::format_table(head(df))
+```
+
+## kable
+
+```{r}
+kableExtra::kable(head(df))
+```

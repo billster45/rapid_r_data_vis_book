@@ -1,0 +1,43 @@
+# Colours
+
+For data viz I'm actually going to start with colours so we can use them later.
+
+RColorBrewer is a good package or pre-prepared palettes you can use quickly.
+
+```{r RColourBrewer}
+# easy colours
+RColorBrewer::display.brewer.all()
+
+# create a palette for plotting
+# 
+mypalette <- RColorBrewer::brewer.pal(9,"Set3") 
+barplot(1:9,col = mypalette)
+
+#https://github.com/EmilHvitfeldt/prismatic
+library(prismatic)
+
+terrain <- prismatic::colour(terrain.colors(10))
+plot(terrain)
+
+terrain_gray <- prismatic::clr_grayscale(terrain)
+plot(terrain_gray)
+
+terrain_darken <- prismatic::clr_darken(terrain)
+plot(terrain_darken)
+
+terrain_negate <- prismatic::clr_negate(terrain)
+plot(terrain_negate)
+
+#devtools::install_github("nschiett/fishualize", force = TRUE)
+#https://github.com/nschiett/fishualize/blob/master/README.md
+library(fishualize)
+```
+
+* you can also hand pick your own colours from this website http://tristen.ca/hcl-picker/ that I found on the Excellent blog on colours by Michael Toth: https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html
+
+So lets get some colours we like and put them in a list to use
+
+```{r colour_picker}
+newpalette <- c("#804759","#713E4E","#633543","#562D39","#48252F","#3B1D25")
+barplot(1:6,col = newpalette)
+```

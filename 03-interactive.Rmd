@@ -1,0 +1,213 @@
+# Interactive plots
+
+## Plotly
+
+* Interactive plots can help you and your audience explore and understand stories in the data faster and more enjoyably. Carson Sievert who maintains the Plotly R package demonstrates here how if interactive plots are built quickly (as is possible with Plotly) they can augment your data exploration: https://talks.cpsievert.me/20180202/#1 He does some nice things with the same US housing data.
+
+* A quick way to use it is use ggplot first then put that through a plotly function called plotly::ggplotly() like this...
+
+```{r ggplotly, warning=FALSE,message=FALSE}
+p <- df_red %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = date,
+               y = sales,
+               colour = city) +
+  ggplot2::geom_line() 
+
+plotly::ggplotly(p)
+```
+
+## Plotly Build to edit
+
+* Often, even with changing the ggplot, the ggplotly function doesn't quite do what you wnat. Use plotly build instaed to create a plot you can edit all aspects of by navifatint hte list
+
+```{r plotly_build, warning=FALSE,message=FALSE}
+p <- df_red %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = date,
+               y = sales,
+               colour = city) +
+  ggplot2::geom_line() 
+
+p_build <- plotly::plotly_build(p)
+
+# add in aplotly build
+```
+
+## Plotly (most basic)
+
+* Plotly is very forgiving. Here we don't tell it what kind of plot we want (such as points or lines) but it still creates somethign. And thanfully it's our friend the points..
+
+```{r plotly_basic, warning=FALSE,message=FALSE}
+df_red %>% 
+  plotly::plot_ly(x = ~date,
+                  y = ~sales,
+                  color = ~city)
+```
+
+## plotly (a few more settings)
+
+* with a few more settings we can make it a line plot
+
+```{r plotly_further, warning=FALSE,message=FALSE}
+df_red %>% 
+  plotly::plot_ly(x = ~date,
+                  y = ~sales,
+                  color = ~city,
+                  type = "scatter",
+                  linetype = "markers")
+```
+
+## plotly (bells & whistles)
+
+* And as before add some bells and whistles to get close to our final plot.
+
+
+
+
+```{r plotly_bells_whistles, warning=FALSE,message=FALSE}
+ax <- list(
+  title = "",
+  zeroline = FALSE,
+  showline = FALSE,
+  showticklabels = FALSE,
+  showgrid = FALSE
+)
+
+df_red %>% 
+  plotly::plot_ly(x = ~date, 
+                  y = ~sales, 
+                  text = rownames(df_red)) %>%
+  add_lines(linetype = ~city, 
+            colorscale = "set3") %>%
+  rangeslider() %>%
+  plotly::layout(xaxis = ax, yaxis = ax)
+```
+
+* Here are some good further plotly resources
+https://plotly-r.com/index.html
+https://plotly-r.com/scatter-traces.html#lines
+https://moderndata.plot.ly/tufte-style-visualizations-in-r-using-plotly/
+
+## apexchater simple
+
+* The highcharter js package is great but not free: https://github.com/jbkunst/highcharter
+
+* ApexCharter is almost as good, inspried by highcharter and is free to use...
+
+* Look how easily we can create a chart with it..
+
+```{r apex_simple}
+df_red %>% 
+  apexcharter::apex(type = "line",
+                  mapping = aes(x = date,
+                                y = sales,
+                                group = city
+                                ))
+```
+
+## apexchater with bells & whistles
+
+* Addding the bells and whistles can certainly be a bit fiddlier than with ggplot and plotly, but here is a lot you could use.
+
+* the best place for advice is the referene...https://dreamrs.github.io/apexcharter/reference/index.html
+
+```{r apex_bells_whistles}
+df_red %>% 
+  apexcharter::apex(aes(x = date, 
+                        y = sales, 
+                        group = city), 
+           type = "line") %>% 
+  apexcharter::ax_legend(position = "right") %>% 
+  apexcharter::ax_stroke(width = 2) %>% 
+  #apexcharter::ax_colors(mypalette) %>%
+  apexcharter::ax_yaxis(
+    title = list(text = "Sales")
+  ) %>% 
+  apexcharter::ax_xaxis(labels = list(format = "yyyy")) %>% 
+  apexcharter::ax_labs(
+    title = "apexcharter chart for sales by City",
+    subtitle = "this is a subtitle"
+  ) %>% 
+  apexcharter::ax_title(
+    style = list(fontSize = "22px")
+  ) %>% 
+  apexcharter::ax_subtitle(
+    style = list(fontSize = "16px", color = "#BDBDBD")
+  ) %>% 
+  apexcharter::ax_chart(zoom = list(
+    enabled = TRUE, type = "xy"
+  )) 
+```
+
+## dygraphs for time series data
+
+* Similar in style to apexchater is the excellent dygraphs for when your data is a time series...
+
+* One hurdle is your data frame needs to be a time series. A really easy way to convert is the tsbox pacakge
+http://rstudio.github.io/dygraphs/
+https://www.tsbox.help/articles/tsbox.html
+
+```{r dygraphss}
+df_red_ts <- df_red %>% 
+  dplyr::select(date,city,sales) %>% 
+  tsbox::ts_xts()
+
+df_red_ts %>% 
+  dygraphs::dygraph()
+```
+
+## dygraphs bells & whistles
+
+* Again, here is a bells & whilstles version you can play around with to get it how you like.
+
+* The help pages for dygraphs are very well laid out. Pretty much you only need this one guide to find out how to change all the settings possible: https://rstudio.github.io/dygraphs/
+
+
+```{r dygraphs_bells}
+dateWindow <- c("2014-01-01", "2015-07-01")
+
+presAnnotation <- function(dygraph, x, text) {
+  dygraph %>%
+    dyAnnotation(x, text, width = 60)
+}
+
+presBankHolidays <- function(dygraph) {
+  dygraph %>%
+    dyEvent("2014-07-03", "Independence Day", labelLoc = "bottom") %>%
+    dyEvent("2014-11-26", "Thanksgiving", labelLoc = "bottom")
+}
+
+
+df_red_ts %>%
+  dygraphs::dygraph(main = "Housing Sales USA") %>%
+  # https://github.com/rstudio/dygraphs/issues/80
+  dyAxis(
+    "y",
+    label = "Sales",
+    # http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    valueFormatter = 'function(d){return d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",");}',
+    axisLabelFormatter = 'function(d){return d.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",");}',
+    axisLabelFontSize = 10,
+    axisLabelWidth = 70
+  ) %>%
+  dyRangeSelector(
+    height = 60,
+    dateWindow = dateWindow
+  ) %>%
+  dyShading(
+    from = "2014-1-1",
+    to = "2014-12-31"
+  ) %>%
+  presBankHolidays() %>%
+  dyLegend(width = 600) %>%
+  presAnnotation("2014-07-01", text = "2014") %>%
+  presAnnotation("2015-06-01", text = "2015") %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(8, "Set2")) %>%
+  dyOptions(drawPoints = TRUE, pointSize = 2) %>%
+  dyLegend(
+    show = "always",
+    hideOnMouseOut = FALSE
+  )
+```
+
