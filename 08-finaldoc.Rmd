@@ -1,0 +1,50 @@
+# Final document
+
+## Picking a final output doc
+
+* After all our hard work it can have excellent impact if use a well structured and easy to navigate html document.
+
+* I have found using cross talk in an R Markdown with a table of contens and tabbed pages, or with flexdashboard are two great options. And writing this book has made be realise how simple bookdown is to use. The different methods are demonstrated below.
+
+## crosstalk
+
+https://github.com/ropensci/plotly/blob/master/demo/crosstalk-highlight-epl.R
+
+```{r crosstalk}
+df_crosstalk <- crosstalk::SharedData$new(df, ~year)
+
+crosstalk::filter_select(
+  id = "year",
+  label = "Select a year",
+  allLevels = TRUE,
+  multiple = FALSE,
+  sharedData = df_crosstalk,
+  group = ~ factor(year)
+)
+
+
+df_crosstalk %>% 
+  plotly::plot_ly(x = ~date,
+                  y = ~sales,
+                  color = ~city,
+                  type = 'scatter', 
+                  mode = 'lines')
+
+
+```
+
+## flexdashboard
+
+* [Flexdashboard example by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) covers all the bases.
+
+https://arm.rbind.io/slides/flexdashboard.html#1
+
+```{r}
+
+```
+
+## R markdown with floating contents and tabbed pates
+
+```{r}
+
+```

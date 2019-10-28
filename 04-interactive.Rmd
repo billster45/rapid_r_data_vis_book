@@ -103,6 +103,7 @@ df_red %>%
 * Here are some good further plotly resources
 https://plotly-r.com/index.html
 https://moderndata.plot.ly/tufte-style-visualizations-in-r-using-plotly/
+https://plotly-r.com/
 
 ## apexchater simple
 
@@ -123,7 +124,7 @@ df_red %>%
 
 * To add the bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is very well laid out with good examples. Here I've put in some useful ones in a clear code format. 
 
-```{r apex_bells_whistles, fig.height=10}
+```{r apex_bells_whistles, out.width = "1100%"}
 df_red %>% 
   apexcharter::apex(aes(x = date, 
                         y = sales, 

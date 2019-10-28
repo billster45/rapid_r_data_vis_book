@@ -33,6 +33,7 @@ library(ggrepel) # move labels so they don't overlap
 
 # colours
 library(RColorBrewer) # ready to use colour pallets
+library(prismatic) # palettes and ways to tweak an entier pallete
 
 # tables
 library(kableExtra) # attractive static tables

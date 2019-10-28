@@ -1,0 +1,120 @@
+# Tables
+
+```{r}
+```
+
+## DataTables (DT) basic
+
+* For plotting we usually have [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) where the data frame is "long" and each row represents one observation. 
+
+* Howver, for easy to read tables we usually need to make our long tidy data wide so that there are many observations in each row. Below we use tidyr::pivot_wider(), then put that wide data frame into an interactive table using DT
+
+```{r}
+# first reshape with new tidyr
+df_wide <- 
+  df %>% 
+  dplyr::filter(year == 2014) %>% 
+  dplyr::arrange(city,date) %>% 
+  dplyr::mutate(date1 = base::format(date, "%b %y")) %>%
+  tidyr::pivot_wider(id_cols = city, 
+              names_from = date1,
+              values_from = sales)
+
+df_wide %>% 
+  DT::datatable(df_wide)
+```
+
+## DataTables bells & whisltes
+
+* The [DataTables reference](https://rstudio.github.io/DT/) is excellent for showing all the elements you can change with clear examples. 
+
+* Often you have decided on lots of differet [options][https://rstudio.github.io/DT/options.html] then want apply that to many later DataTables in your work. A way to save a lot of code is to set your main options globally like this...
+
+```{r}
+options(DT.options = list(
+  pageLength = 10,
+  lengthMenu = c(5, 10, 20, 50, 100, 200, 500),
+  dom = "Blfrtip",
+  buttons = list(list(extend = "csv", filename = "download")),
+  keys = TRUE,
+  autoWidth = TRUE
+))
+```
+
+* Then the settings above will be applied to every call
+
+```{r}
+df_wide %>% 
+  DT::datatable(
+    caption = "Housing sales",
+    filter = "top",
+    extensions = c("FixedColumns", "Buttons"),
+    options = list(columnDefs = list(list(width = "150px", 
+                                          targets = c(1))))
+  )
+```
+
+## Colour DataTable with formattable
+
+Colouring DataTables based on the value is a common client request. Here is how to colour 
+
+```{r}
+# find 8 cut points going from the smallest to the largest value of sales in 2014 
+cuts <- base::seq(from = min(df$sales[df$year==2014], 
+                             na.rm = TRUE),
+                  to = max(df$sales[df$year==2014], 
+                           na.rm=TRUE),
+                  length.out = 8)
+
+# define 9 colours for those cut points (1 more than the cut points needed)
+colours <- RColorBrewer::brewer.pal(n = 9,name = "Blues")
+
+# columns to format
+cols <- base::seq(from = 2,
+                  to = ncol(df_wide),
+                  by = 1)
+
+df_wide %>% 
+  dplyr::mutate_if(.predicate = base::is.character, 
+                   .funs = base::as.factor) %>% # converts an character columns to a factor so that the drop down menu works in the DataTable
+  DT::datatable(
+    caption = "Housing sales",
+    filter = "top",
+    extensions = c("FixedColumns", "Buttons"),
+    options = list(columnDefs = list(list(width = "150px", 
+                                          targets = c(1))))
+  ) %>% 
+  DT::formatStyle(columns = cols,
+              background = DT::styleInterval(cuts = cuts,
+                                             values = colours)) %>% 
+  DT::formatCurrency(columns = cols, 
+                     currency = "",
+                     digits = 0,
+                     interval = 3, 
+                     mark = ',') 
+```
+
+## rpivottable simple
+
+* I love Excel pivot tables and charts for exploring data. 
+
+* rpivotables can be a good exploratory tool too. We can simply put the data frame into the function. Then play around with the html output below as you would an Excel pivot table to explore the data.
+
+```{r}
+rpivotTable::rpivotTable(data = df_red)
+```
+
+## rpivottable (bells & whistles)
+
+* Once we've played around with it manually we can specify the most useful lay out that tells our story. The html table below can still be manipulated as we wish.
+
+```{r}
+rpivotTable::rpivotTable(data = df_red,
+                         rows = c("year","city"),
+                         cols = "date",
+                         inclusions = list(year = list("2014")),
+                         aggregatorName = "Sum",
+                         vals = "sales",
+                         rendererName = "Line Chart")
+```
+
