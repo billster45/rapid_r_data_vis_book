@@ -1,10 +1,14 @@
 # Interactive plots
 
-## Plotly
+## Plotly cheat: convert ggplot with plotly::ggplotly()
 
-* Interactive plots can help you and your audience explore and understand stories in the data faster and more enjoyably. Carson Sievert who maintains the Plotly R package demonstrates here how if interactive plots are built quickly (as is possible with Plotly) they can augment your data exploration: https://talks.cpsievert.me/20180202/#1 He does some nice things with the same US housing data.
+* Interactive plots help you and your audience find stories in data faster and more enjoyably. Carson Sievert (who maintains the Plotly R package) showed in a [talk](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we an "iterate quickly". And this is possible with how easy and tolerant plotly is to use.
 
-* A quick way to use it is use ggplot first then put that through a plotly function called plotly::ggplotly() like this...
+* However, while plotly is fast to explore, adding the final polish can be harder than ggplot.
+
+* Sievert also uses the same 
+
+* A quick way to use Plotly that builds on your ggplot skills is to put it through a plotly function called plotly::ggplotly() like this...
 
 ```{r ggplotly, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -17,9 +21,11 @@ p <- df_red %>%
 plotly::ggplotly(p)
 ```
 
-## Plotly Build to edit
+## Edit ggplot conversion with plotly::plotly_build()
 
-* Often, even with changing the ggplot, the ggplotly function doesn't quite do what you wnat. Use plotly build instaed to create a plot you can edit all aspects of by navifatint hte list
+* Often, even with editing how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to what you wnat. If this happens use plotly::plotly_build() instead to build a plotly plot where you can edit all the settings.
+
+* plotly::plotly_build() creates a nested list of all the settings you can explore in RStudio using the viewer. Here is how we create a plotly_build().
 
 ```{r plotly_build, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -30,13 +36,25 @@ p <- df_red %>%
   ggplot2::geom_line() 
 
 p_build <- plotly::plotly_build(p)
-
-# add in aplotly build
 ```
 
-## Plotly (most basic)
+* And now we later any of the setgins in p_build like this. Here we have edited the font size on the x axis to be a very small size 8.
 
-* Plotly is very forgiving. Here we don't tell it what kind of plot we want (such as points or lines) but it still creates somethign. And thanfully it's our friend the points..
+```{r}
+p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]] = 8
+
+p_build
+```
+
+* But of course that code above is very fiddly to work out. The gif below shows you how to browse the nested structure with the viewer and then automatically geneate the code you need to edit each value.
+
+```{r, echo=FALSE, out.width = "1100%"}
+knitr::include_graphics(path = "plotly_build.gif") 
+```
+
+## Plotly most basic
+
+* Plotly is very forgiving. Here we don't tell it what kind of plot we want (such as points or lines) but it still creates a plot. And thanfully it's our friend data points..
 
 ```{r plotly_basic, warning=FALSE,message=FALSE}
 df_red %>% 
@@ -48,22 +66,20 @@ df_red %>%
 ## plotly (a few more settings)
 
 * with a few more settings we can make it a line plot
+https://plot.ly/r/line-and-scatter/
 
 ```{r plotly_further, warning=FALSE,message=FALSE}
 df_red %>% 
   plotly::plot_ly(x = ~date,
                   y = ~sales,
                   color = ~city,
-                  type = "scatter",
-                  linetype = "markers")
+                  type = 'scatter', 
+                  mode = 'lines')
 ```
 
 ## plotly (bells & whistles)
 
 * And as before add some bells and whistles to get close to our final plot.
-
-
-
 
 ```{r plotly_bells_whistles, warning=FALSE,message=FALSE}
 ax <- list(
@@ -78,7 +94,7 @@ df_red %>%
   plotly::plot_ly(x = ~date, 
                   y = ~sales, 
                   text = rownames(df_red)) %>%
-  add_lines(linetype = ~city, 
+  add_lines(color = ~city, 
             colorscale = "set3") %>%
   rangeslider() %>%
   plotly::layout(xaxis = ax, yaxis = ax)
@@ -86,18 +102,15 @@ df_red %>%
 
 * Here are some good further plotly resources
 https://plotly-r.com/index.html
-https://plotly-r.com/scatter-traces.html#lines
 https://moderndata.plot.ly/tufte-style-visualizations-in-r-using-plotly/
 
 ## apexchater simple
 
-* The highcharter js package is great but not free: https://github.com/jbkunst/highcharter
+* The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisaiotns like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, it's not free to use.
 
-* ApexCharter is almost as good, inspried by highcharter and is free to use...
+* ApexCharter is almost as good, is inspried by highcharter, and is free to use. Look how easily we can create a chart with it just using this code.
 
-* Look how easily we can create a chart with it..
-
-```{r apex_simple}
+```{r apex_simple, out.width = "1100%"}
 df_red %>% 
   apexcharter::apex(type = "line",
                   mapping = aes(x = date,
@@ -108,11 +121,9 @@ df_red %>%
 
 ## apexchater with bells & whistles
 
-* Addding the bells and whistles can certainly be a bit fiddlier than with ggplot and plotly, but here is a lot you could use.
+* To add the bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is very well laid out with good examples. Here I've put in some useful ones in a clear code format. 
 
-* the best place for advice is the referene...https://dreamrs.github.io/apexcharter/reference/index.html
-
-```{r apex_bells_whistles}
+```{r apex_bells_whistles, fig.height=10}
 df_red %>% 
   apexcharter::apex(aes(x = date, 
                         y = sales, 
@@ -133,7 +144,8 @@ df_red %>%
     style = list(fontSize = "22px")
   ) %>% 
   apexcharter::ax_subtitle(
-    style = list(fontSize = "16px", color = "#BDBDBD")
+    style = list(fontSize = "16px", 
+                 color = "#BDBDBD")
   ) %>% 
   apexcharter::ax_chart(zoom = list(
     enabled = TRUE, type = "xy"

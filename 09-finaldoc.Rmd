@@ -8,6 +8,8 @@ TX <- crosstalk::SharedData$new(df, ~year)
 
 ## flexdashboard
 
+https://arm.rbind.io/slides/flexdashboard.html#1
+
 Put a link here
 
 # Which viz and other resources

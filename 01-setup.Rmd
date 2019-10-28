@@ -10,11 +10,11 @@ knitr::include_graphics("outline.gif")
 </br>
 * Recorded with ScreenToGif: https://www.screentogif.com/
 
-## Libraries
+## Load R packages to your library
 
 Here are all the R packages that are used in this guide. 
 
-```{r libraries, warning=FALSE, messages = FALSE}
+```{r libraries, echo=TRUE,message=FALSE,warning=FALSE,results='hide'}
 # data vis https://www.htmlwidgets.org/index.html
 library(ggplot2) # static charts - amazing variety
 library(plotly) # interactive charts
@@ -62,13 +62,13 @@ library(xfun)
 
 ## The data to visualise
 
-* A lot of data visilisation is showing how values change over time. Therefore, rather than the ususal iris or mtcars, this guide uses a built-in data set within ggplot of housing sales in American cities over several years.
+* A lot of data visilisation shows values changing over time. For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars this guide uses a built-in data set within ggplot. It is the [txhousing](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) data set built into ggplot. It provides house sales in American cities over several years. 
 
-* The only manipulation we will do is to create a real date using the excellet R lubrdate package. We also reduce the number of American cities so our first charts aren't too crowded.
+* If you're looking for a smalll well behaved data set to test your skills take a look at this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/).
 
-* In this simple data preperation or wrangling I'll use tidylog with dplyr. It's a simple way to do fast basic Quality Asssurance as you code. 
+* The only manipulation we will do on the txhousing data set is create a real date using [lubrdate](https://lubridate.tidyverse.org/). We also create a smaller data frame with a smaller number of American cities so some of the plots aren't too crowded.
 
-* Simple replace dplyr verbs with the same verb in tidylog. This will tell you key info about what is being done to your data by each dplyr verb. For example, how many rows are dropped or added by filters or joins, and what percentage of values changed after a mutate.
+* We'll alo use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. It's a simple way to do fast basic Quality Asssurance as you code. Simply replace dplyr verbs with the same verb in tidylog. This will tell you what each dplyr verb has done to your data. For example, how many rows are dropped or added by filters or joins, or what percentage of values changed after a mutate.
 
 ```{r create_df, message=TRUE}
 # create a data frame with a real date for plotting
@@ -86,10 +86,10 @@ df_red <- df %>%
   dplyr::group_by(city) %>% 
   tidylog::mutate(sales_max = base::max(sales)) %>% 
   dplyr::ungroup() %>% 
-  tidylog::filter(sales_max >= 800)
+  tidylog::filter(sales_max >= 500)
 ```
 
-* But look! Look at these useful messages above created by tiylog. It tells us what percentage of values are NA. And how many rows the filter has removed. But the mutate has gone wrong as it tells us there are 43% NA. Well spotted tidylog. We correct it below by removing the NAs from the maximum sales value.
+* But look! Read the messages above created by tiylog. It tells us what percentage of values are NA. The mutate must have gone wrong as it tells us there are 43% NA. Well spotted tidylog. We correct it below by removing NAs from the maximum sales value.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -98,13 +98,12 @@ df_red <- df %>%
   tidylog::mutate(sales_max = base::max(sales, 
                                         na.rm = TRUE)) %>% 
   dplyr::ungroup() %>% 
-  tidylog::filter(sales_max >= 800)
+  tidylog::filter(sales_max >= 500)
 ```
 
+* This has worked with 0% NA in the tidlog message above.
 
-* This has worked with 0% NA.
-
-* Let's take a quick look at the top few rows of the data using kableExtra table. A later chapter explores tables.
+* Let's now look at the top few rows of the data frame using kableExtra table. A later chapter explores tables.
 
 ```{r}
 kableExtra::kable(utils::head(df))
@@ -114,13 +113,13 @@ kableExtra::kable(utils::head(df))
 
 ### Include the package name every time. Why?
 
-* When I first started learning R I tried to teach myself with other people's code. I got confused where functions came from, particularly when they used their own functions. It made their code appear harder, more complex and cleverer than it really was. 
+* When I first started learning R I tried to teach myself using other people's code. I got confused where functions came from, particularly when they mixed functions from many packages, base functions and their own functions. It made their code appear harder, more complex and cleverer than it really was.
 
-* Instead I use the package name before every function. Even base R functions. This can help people new to R who read your code. And it can help you when yourself when you come back to code you did ages ago and have forgotten what you were doing. 
+* Instead I use the package name before every function. Even base R functions. This can help people new to R who read your code. And you can help you future self when you come back to code you did ages ago and have forgotten what you were doing. 
 
-* Another good reason to use the package name is you can hit the tab key at the end of the double colon like this and see all the functions in that package.
+* Another good reason to use the package name is being able to hit the tab key at the end of the double colon like this and see all the functions in that package.
 
-* Also, try highlighting a function, including the package name and hit the F1 key. (You'll see David Robinson do this a lot even on his own packages.) Also try hitting the F2 key to quickly see all the possible parameters in a function and see what the defaults are that it will use if you don't set them to a new value. 
+* Also, try highlighting a function and its package name and hit the F1 key. (You'll see David Robinson do this a lot even on his own packages.) Also try hitting the F2 key to quickly see all the possible parameters in a function and see what the defaults are that it will use if you don't set them to a new value. 
 
 ```{r package_name, eval=FALSE}
 ggplot2::
@@ -132,7 +131,7 @@ ggrepel::geom_text_repel()
 knitr::include_graphics("package_name.gif") 
 ```
 
-### One line does one thing - Hit the return key a lot
+### One line does one thing - hit the return key a lot
 
 * Ideally one line does one thing. Hit the return key after every pipe, comma or plus symbol in ggplot and RStudio tabs your code in the right way. 
 
@@ -154,19 +153,21 @@ ggplot(df) +
 
 * In oontrast, the code below is the same code as above but it follows these 5 rules:
 
-1. Use package names.
-2. Each line does one thing (e.g. a function or a parameter setting in a function).
-3. Name every parameter you put in a function.
+1. Include package names before each function. Even for [base functions](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html).
+2. Each line does one thing (e.g. a function or the value of one argument in a function).
+3. Name every argument you set the value of in a function.
 4. Tabbed consistently by hitting the return key after each pipe ( %>% ), comma or plus symbol (+).
 5. Put spaces around equals.
+6. Use [styler](https://styler.r-lib.org/) to automatically apply some of these rules. 
 
 The benefits of following these rules are that you can:
 
-1. Run your code top downwards in chunks adding more lines each time (like the popular ggplot flipbooks I describe at bullet 11 here: https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r)
+1. Run your code top downwards in chunks adding more lines each time (like the popular ggplot flipbooks I describe at bullet 11 in my collection of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r)
 2. Comment out whole lines of code or parameters in a function to undersatnd what they are doing.
 3. Easily find and edit parameaters in a function (e.g. a font size)
 4. Help others QA or re-use your code more quickly.
 5. Help others new to R understand what you are doing and learn R faster.
+6. You are not being a "gatekeeper" of your growing R knowledge and skills. Share, explain and democratise what you know. You can then move on to more complex analysis in R with an even higher value (as proposed by Richard Susskind in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)).
 
 ```{r clean_code, eval=FALSE}
 df %>%
@@ -227,3 +228,33 @@ df %>%
     legend.title = element_blank()
   )
 ```
+
+* Note this layout differs from the [layered gramar of graphics](https://r4ds.had.co.nz/data-visualisation.html#the-layered-grammar-of-graphics) code template below...
+
+```{r, eval = FALSE}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(
+     mapping = aes(<MAPPINGS>),
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION>
+```
+
+* My preference is to mentally view this as data being poured into ggplot through the pipe, then we tell it which columns to map, then the geom, followed by the same co-ordinate and facet function as Wickham reccomends. 
+
+* This is inspired by the code lay out of the many flipbook guides I describe at bullet 11 [here](https://github.com/billster45/r-guides-and-galleries#learn-to-visualise-data-with-r).
+
+```{r, eval=FALSE}
+<DATA> %>% 
+  ggplot2::ggplot() + 
+  ggplot2::aes(<MAPPINGS>) +
+  ggplot2::<GEOM_FUNCTION>(
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION>
+```
+

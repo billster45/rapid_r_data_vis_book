@@ -1,11 +1,14 @@
 # Animation
 
-* Animation is easy to add. I've had a play here inspired by a good Tweet of examples you could follow:
-https://github.com/billster45/gganimate-experiments/blob/master/README.md
+* Animation is easy to add. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples you can easily adapt.
 
-* I've found animation is most effective when you see changes over time. Here is the annual pattern of sales changing each year.
+* However, I've found animation is most effective when you see changes over time. Here is the annual pattern of house sales changing each year.
 
 * Getting the labels to display at the end of each line as it animates is fiddly.
+
+```{r, echo=FALSE, out.width = "80%"}
+knitr::include_graphics("housing.gif") 
+```
 
 ```{r animate_housing,eval= FALSE}
 # Method from: https://github.com/thomasp85/gganimate/wiki/Temperature-time-series
@@ -81,7 +84,4 @@ gganimate::animate(p, width = 900,
 gganimate::anim_save(filename = "housing.gif")
 ```
 
-```{r, echo=FALSE, out.width = "80%"}
-knitr::include_graphics("housing.gif") 
-```
 

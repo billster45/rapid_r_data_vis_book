@@ -12,26 +12,44 @@ description: "Description"
 
 # Why read this?
 
-## A rapid approach to data viz
+## The best data analysis is fast and intuitive
 
-* This is my *current* approach to data visualiation in R. My apporach keeps chaning. I'm amazed how often you can discover new methods and packages just in the excellent [R-Bloggers](https://www.r-bloggers.com/) website or [#rstats](https://twitter.com/search?q=%23rstats&src=typd&lang=en) on Twitter.
+* The best data analysis starts with **fast** and intuitive Exploratory Data Analysis (EDA). You are in a [flow state absored](https://en.wikipedia.org/wiki/Flow_(psychology)) by the patterns and stories your data reveals. This includes any kind of data work from data engineering to [Kaggle Data Science competition winners](http://blog.kaggle.com/category/winners-interviews/).
 
-* No matter how expert you are using R I hope you learn about at least one new trick from this short guide. I always have in mind helping people just starting in R. Particularly anyone struggling to learn as I did. I love how the R community create many guides that de-mystify and democratise data analysis in R. With the same aim, all the code examples here are super simple and re-usable. As well as providing more complex examples set out clearly so they are easier to understand and re-use.
+* This book shows you as series of linked methods to use in a logical order to to explore and visualise data quickly before create quality final plots with clean and easily editable code. It is intended to be accessible by beginners in R to those with an intermediate level of skill. Even experienced R users could pick up a new trick or two by scanning this material quickly.
 
-* Another reason forsuper simple examples is they can become fast Exploratory Data Exploration (EDA) methods too. The best data work starts with good EDA. That includes high quality data engineering or Kaggle Data Science competition winners.
+* Each method starts with simple code so it you can use it as part of a fast Exploratory Data Analysis (EDA) toolkit. Then a more complex version is provided you can adapt to turn it into publicatoin quality plots.
 
-## What about Python?
+* This is my *current* approach to data visualiation in R. But my methods keep changing from reading [R-Bloggers](https://www.r-bloggers.com/) and [#rstats](https://twitter.com/search?q=%23rstats&src=typd&lang=en) daily. 
 
-* Python is great for data visualisation too such as Pands, Seaborn, Matplotlib, and Bokeh. But my day to day work is in R only so that's where I've built most data vis skills so far. A good place to find similar examples with real data are Python Notebooks on the Kaggle Data Science website https://www.kaggle.com/kernels Use the filters at the top to select popular data visulisation notebooks in Python. 
+* This diagram is from [R for Data Science](https://r4ds.had.co.nz/introduction.html#what-you-will-learn) that summarises the overall Data Science workflow. We're just going to look at the Visualise and Communicate parts underlined. And to emphasise the importance of clear well laid out code as also part of an internal communicationn to yourself and analysis colleagues.
 
-## What about other tools? 
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics(path = "data-science-explore_edit.png") 
+```
 
-* Graphical User Interface (GUI) or Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place as long as we don't end up doing our data engineering with them. As Hadley wickham says... And even PowerPoint can be used to create publication quality charts.
+## What about Python for data viz?
 
-## Find an R master to inspire you...
+* Python is great for data visualisation too through Pandas, Seaborn, Matplotlib, and Bokeh. My day to day work only allows R so this is where I've built most data vis skills so far. A good place to find similar examples with real data are Python Notebooks on [Kaggle](https://www.kaggle.com/kernels). Use the filters at the top to select popular data visulisation notebooks in Python. 
 
-* I hope you will find this material inspires you to try some new techniques that make your work faster and more interesting. How David Robinson explores, cleans then analystes data in R is inspiring. Lots of tricks I use here I saw him do on his Tidy Tuesday YouTube videos. I describe these at bullet 18 in my this collection of good R guides: https://github.com/billster45/r-guides-and-galleries#putting-it-all-together
+## What about Point and Click tools? 
 
-* Another R master, Claus Wilke has created a new guide similar to this in that it starts with simple examples that become more complex . In his practical guide see how he starts with the bare minimum code you need to create the plot then gradually builds it up into a publication quality plot: https://github.com/wilkelab/practicalgg He wrote this so that help make the charts he creates in Fundamentals of Data Visualization easier to copy: https://serialmentor.com/dataviz/
+* Graphical User Interface (GUI) or Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place as long as we recognise their weaknesses. Hadley Wickham contrasts PaC tools vs code tools well in this [interview](http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/).
 
-* This guide is similar to Wilke's but with a greater focus on EDA. I also offer a wider set of tools for EDA, particulary R packages that make your plot interactive. As well as describing my personal preference for writing R code in a very clean and structured style.
+---
+
+>*Point-and-click interfaces are great, because they lay out all of your options in front of you, and you don’t have to remember anything. You can navigate through the set of pre-supplied options. And that’s also it’s greatest weakness, because first of all, you are constrained into what the developer thought you should be able to do.* And secondly, because your primary interaction is with a mouse, it’s very *difficult to record what you did. And I think that’s a problem for science, because ideally you want to say how you actually got these results. And then simply do that reliably and have other people critique you on that.* But it’s also really hard when you are learning, because when you have a problem, how do you communicate that problem to someone else? You basically have to say, “I clicked here, then I clicked here, then I clicked here, and I did this.” Or you make a screen cast, and it’s just clunky. 
+
+>So, the advantages of programming languages like *R or Python, is that the primary mechanism for communicating with the computer is text. And that is scary because there’s nothing like this blinking cursory in front of you; it doesn’t tell you what to do next. But it means you are unconstrained, because you can do anything you can imagine.* And you have all these advantages of text, where if you have a problem with your code, you can copy and paste it into an email, you can Google it, you can check it and put it on GitHub, or you can share it by Twitter. *There’s just so many advantages to the fact that the primary way you relate with a programming language is through code, which is just text. And so, as long as you are doing data analysis fairly regularly, I think all the advantages outweigh a point and click interface* like Stata.
+
+---
+
+## Find an R master to inspire you
+
+### David Robinson
+
+* How David Robinson explores, cleans then analystes data in R inspires me. Several methods I use here I saw Robinson use on his Tidy Tuesday live coding YouTube videos. I'd strongly reccomend watching any of his live coding videos [here](https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday). This book is a narrow section of Data Science of visualise and communicate, but you will see Robinson tackle the whole data sciecne path from import to communicate shown in the diagram above.
+
+### Claus Wilke
+
+* Another R master, Claus Wilke has created a new guide similar to this book. It starts with simple examples that become more complex. In his [Practical ggplot2](https://github.com/wilkelab/practicalgg) guide see how he starts with the bare minimum code you need to create the plot then gradually builds it up into something that is publication quality. He wrote it to help you more easily make charts like those in the [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/). This book is similar to Wilke's but with a greater focus on exploratory data analysis. I also offer a wider set of tools beyond ggplot (particulary for interactive plots, as well as a clean code style.

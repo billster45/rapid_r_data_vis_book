@@ -84,97 +84,6 @@ df_red %>%
   ggplot2::geom_line()
 ```
 
-## Why start with geom_point()?
-
-* We start with ggplot2::geom_point() because it works for for both raw and summrarised data straight away. 
-
-* For example, here is raw granular data where each row describes a person getting married. 
-
-```{r prep_case_data}
-marriage <-
-  mosaicData::Marriage %>%
-  tidylog::mutate(prev_marriage = as.character(prevconc)) %>%
-  tidylog::mutate(prev_marriage = case_when(
-    is.na(prev_marriage) ~ "First Time",
-    TRUE ~ prev_marriage
-  )) %>%
-  tidylog::mutate(ceremonydate1 = lubridate::parse_date_time(ceremonydate, "mdy"))
-
-kableExtra::kable(utils::head(marriage %>% 
-                                dplyr::select(ceremonydate1, person, prev_marriage, age, race, sign)))
-```
-
-* Before we had one value per city and date so geom_line worked fine as long as the date and the city were in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common). 
-
-* A common error with raw data I keep making is to try and put it into a bar or line chart straight away then get confused by the error or the chart.
-
-```{r plot_error, error = TRUE}
-marriage %>%
-  ggplot2::ggplot() +
-  ggplot2::aes(
-    x = prev_marriage,
-    y = age
-  ) +
-  ggplot2::geom_bar()
-```
-
-* ggplot2::geom_col() would be a better choice but we still have to think to much about what it's showing. Yes a bar plot might be the right choice for our final plot but it's sometimes troublesome when we want to explore quickly.
-
-```{r}
-marriage %>%
-  ggplot2::ggplot() +
-  ggplot2::aes(
-    x = prev_marriage,
-    y = age
-  ) +
-  ggplot2::geom_col()
-```
-
-* Here we use ggplot2::geom_point() and facet by person
-
-````{r}
-marriage %>%
-  ggplot2::ggplot() +
-  ggplot2::aes(
-    x = prev_marriage,
-    y = age
-  ) +
-  ggplot2::facet_wrap(~person) +
-  ggplot2::geom_point(alpha = 0.3)
-```
-
-* Immediately this is interesting as we see the ages of brides and grooms and what happened in their previous marriage! Death, Divorce or Unknown! 
-
-* Based on the distribution of those points that are so pleasingly intuitive we can go on to experiment with different classic ways to represent the distributions we see. So first histograms
-
-```{r plot_error_fix}
-marriage %>%
-  ggplot2::ggplot() +
-  ggplot2::aes(x = age) +
-  ggplot2::facet_wrap(~ person + prev_marriage) +
-  ggplot2::geom_histogram()
-```
-
-* Or the density distribution with ggplot2::geom_density()
-
-```{r plot_error_fix2}
-p <-
-  marriage %>%
-  ggplot2::ggplot() +
-  ggplot2::aes(
-    x = age,
-    fill = prev_marriage
-  ) +
-  ggplot2::geom_density(adjust = 1, alpha = 0.5, colour = NA) +
-  ggplot2::facet_wrap(vars(person), ncol = 1) +
-  ggplot2::theme_minimal()
-
-directlabels::direct.label(p, list("top.points", cex = .75, hjust = 0, vjust = -0.2))
-```
-
-* However, with so few data points I personally prefer the geom_point chart.
-
-
 ## Now facet by categories
 
 * Another logical step after showing categories by colour is to use "small multiples". This is a fancy way of saying draw a chart for each category and look at them all at once in a grid. An important setting here is to specify scales = "free" so they are their own scale and we can study what's going on in each city.
@@ -195,11 +104,9 @@ df_red %>%
   )
 ```
 
-## Facet with trelliscopejs
+## Facet interactively (trelliscopejs)
 
-* Another powerful way to facet or create small multiples for your data exploration is trelliscope. Here we look at al the US cities adding a facet by city. 
-
-* And it lets you play around with the data further. Have a go on this below and see what it does.
+* An interactive way to facet (or create small multiples) that allows interactive data exploration is trelliscopejs. Here we look at all the US cities facetted by city in a trelliscope web page. Have a play on this below and see what it does.
 
 ```{r trelliscopejs, message=FALSE, warning=FALSE}
 df %>%
@@ -230,11 +137,11 @@ df_red_nest <-
   tidyr::nest()
 ```
 
-```{r}
+```{r, eval=FALSE}
 df_red_nest %>% View()
 ```
 
-```{r}
+```{r, eval=FALSE}
 df_red_nest[[2]][[1]] %>% View()
 ```
 
@@ -257,7 +164,7 @@ df_red_nest_plot <-
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 df_red_nest_plot %>% View()
 ```
 

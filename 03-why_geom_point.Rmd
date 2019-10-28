@@ -1,0 +1,197 @@
+# Why start with geom_point() ?
+
+## The problem with bars and columns
+
+* We start with ggplot2::geom_point() because it works for for both raw and summrarised data straight away. And makes ggplot less intimidating when you start. It is famed for giving you errors see this tweet https://twitter.com/thomasp85/status/1170998101101953025?s=12
+
+* For example, here is raw granular data where each row describes a person getting married. 
+
+```{r prep_case_data}
+marriage <-
+  mosaicData::Marriage %>%
+  tidylog::mutate(prev_marriage = as.character(prevconc)) %>%
+  tidylog::mutate(prev_marriage = case_when(
+    is.na(prev_marriage) ~ "First Time",
+    TRUE ~ prev_marriage
+  )) %>%
+  tidylog::mutate(ceremonydate1 = lubridate::parse_date_time(ceremonydate, "mdy"))
+
+kableExtra::kable(utils::head(marriage %>% 
+                                dplyr::select(ceremonydate1, person, prev_marriage, age, race, sign)))
+```
+
+* Before we had one value per city and date so geom_line worked fine as long as the date and the city were in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common). 
+
+* A common error with raw data I keep making is to try and put it into a bar or line chart straight away then get confused by the error or the chart.
+
+```{r plot_error, error = TRUE}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age
+  ) +
+  ggplot2::geom_bar()
+```
+
+* ggplot2::geom_col() would be a better choice but we still have to think to much about what it's showing. Yes a bar plot might be the right choice for our final plot but it's sometimes troublesome when we want to explore quickly.
+
+```{r}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age
+  ) +
+  ggplot2::geom_col()
+```
+
+* One reason for this is with bars we can be starting a statistical transformation without realising it. This is well exlainned in the [Statistical Transformatoins](https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations) chapter of [R for Data Science](https://r4ds.had.co.nz/)
+
+## Go back to geom_point() 
+
+* Here we use ggplot2::geom_point() and facet by person
+
+```{r}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age
+  ) +
+  ggplot2::facet_wrap(~person) +
+  ggplot2::geom_point(alpha = 0.3)
+```
+
+* Immediately this is interesting as we see the ages of brides and grooms and what happened in their previous marriage! Death, Divorce or Unknown! 
+
+* Based on the distribution of those points that are so pleasingly intuitive we can go on to experiment with different classic ways to represent the distributions we see. So first histograms
+
+```{r plot_error_fix}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = age) +
+  ggplot2::facet_wrap(~ person + 
+                        prev_marriage) +
+  ggplot2::geom_histogram()
+```
+
+* Or the density distribution with ggplot2::geom_density()
+
+```{r plot_error_fix2}
+p <-
+  marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = age,
+    fill = prev_marriage
+  ) +
+  ggplot2::geom_density(adjust = 1, 
+                        alpha = 0.5, 
+                        colour = NA) +
+  ggplot2::facet_wrap(vars(person), 
+                      ncol = 1) +
+  ggplot2::theme_minimal()
+
+directlabels::direct.label(p, list("top.points", cex = .75, hjust = 0, vjust = -0.2))
+```
+
+## The final choice - geom_point() and stat_summary()
+
+* However, with so few data points I personally prefer the geom_point chart.
+
+```{r}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age
+  ) +
+  ggplot2::facet_wrap(~person) +
+  ggplot2::geom_boxplot(alpha = 0.8) +
+  ggplot2::geom_point(alpha = 0.3) +
+  ggplot2::theme_light()
+```
+
+* And this [evolution of a ggplot](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) also starts with a boxplot but ends up with geom_point() and stat_summary() shown below is fantastic with full code in a gradualy story like this book.
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
+```
+
+* Inspired by that plot if we steal some of the methods..
+
+```{r, echo=FALSE, fig.height=10}
+knitr::include_graphics(path = "marriage.svg") 
+```
+
+```{r}
+p <- marriage %>% 
+  dplyr::group_by(person,prev_marriage) %>% 
+  dplyr::mutate(pers_prev_avg = median(age)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::group_by(person) %>% 
+  dplyr::mutate(pers_avg = median(age)) %>% 
+  dplyr::ungroup() %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age,
+    colour = prev_marriage
+  ) +
+  ggplot2::facet_wrap(~person, ncol = 1) +
+  ggplot2::stat_summary(fun.y = median, 
+                        geom = "point", 
+                        size = 5) +
+  ggplot2::stat_summary(aes(label= paste( round(..y..,1), 
+                                          " years")),
+                        fun.y=median, 
+                        colour = "black",
+                        geom="text", 
+                        size=3,
+                        vjust = -1.5) +
+  ggplot2::geom_hline(aes(yintercept = pers_avg), 
+                     color = "gray70", 
+                     size = 0.6) +
+  ggplot2::geom_text(aes(x = 0.7,
+                         y = pers_avg,
+                         label = paste(person," averge age", round(pers_avg,0)), 
+                         #colour = "white",
+                         hjust = 1.05),
+                     colour = "black",
+                     size = 3) +
+  ggplot2::geom_segment(aes(x = prev_marriage, 
+                   xend = prev_marriage,
+                   y = pers_avg, 
+                   yend = pers_prev_avg),
+               size = 0.8) +
+  ggplot2::geom_jitter(size = 2, 
+                       alpha = 0.4, 
+                       width = 0.2) +
+  ggplot2::scale_color_brewer(type = "qual",
+                              palette = "Dark2") +
+  ggplot2::theme_minimal()+
+  ggplot2::theme(
+                 plot.title = element_text(size = 14, 
+                                           hjust = 0),
+                 legend.position = "none",
+                 axis.title.x = element_blank(),
+                 axis.title.y = element_blank(),
+                 panel.grid = element_blank(),
+                 strip.text.x = element_text(size = 12,
+                                             hjust = 0.1),
+                 panel.border = element_rect(colour = "black", 
+                                             fill=NA,
+                                             size = 0.1)
+                 ) +
+  ggplot2::scale_y_continuous(breaks=base::seq(0,100,10)) +
+  ggplot2::coord_flip() +
+    ggplot2::labs(
+    title = "Average median* age by previous marriage status",
+    caption = "*The median is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it"
+  ) 
+
+ggplot2::ggsave(file="marriage.svg", 
+                device = "svg",
+                plot=p)
+```
