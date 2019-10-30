@@ -14,7 +14,12 @@ df %>% count(city, year, month) %>% View()#
 df %>% group_by(city) %>% summarise(vol_max = max(volume, na.rm = T)) %>% arrange(desc(vol_max)) %>% View()
 ```
 
-## Next plot data points
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics("console_coding.gif") 
+```
+
+
+## Plot data points with geom_point()
 
 * After using count(), group_by() and summarise() plot all data points with ggplot2::geom_point(). It almost NEVER fails to show you what's going on and is unlikely to return errors. 
 
@@ -84,7 +89,7 @@ df_red %>%
   ggplot2::geom_line()
 ```
 
-## Now facet by categories
+## Facet by categories
 
 * Another logical step after showing categories by colour is to use "small multiples". This is a fancy way of saying draw a chart for each category and look at them all at once in a grid. An important setting here is to specify scales = "free" so they are their own scale and we can study what's going on in each city.
 
@@ -126,7 +131,7 @@ df %>%
   )
 ```
 
-## Or loop and plot every value
+## Or loop to plot every category seperately
 
 * Or to really study each chart, nest the data into a data frame of dataframes for each city. Then loop through each one and creating a plot in the data frame we plot.
 

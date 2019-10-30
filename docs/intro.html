@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-10-28" />
+<meta name="date" content="2019-10-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,15 @@
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="libs/ionrangeslider-2.1.2/js/ion.rangeSlider.min.js"></script>
+<script src="libs/strftime-0.9.2/strftime-min.js"></script>
 <script src="libs/apexcharts-3.8.4/apexcharts.min.js"></script>
 <script src="libs/apexcharter-binding-0.1.2/apexcharter.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
@@ -83,8 +92,6 @@
 <script src="libs/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
-<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
 <script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="libs/jquery-ui-1.11.4/jquery.ui.touch-punch.min.js"></script>
@@ -113,9 +120,6 @@
 <script src="libs/polyfill-0.1/polyfill.min.js"></script>
 <link href="libs/rpivotTable_style-0.1/rpivotTable.css" rel="stylesheet" />
 <script src="libs/rpivotTable-binding-0.3.0/rpivotTable.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 
 
 <style type="text/css">
@@ -198,9 +202,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Why read this?</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#the-best-data-analysis-is-fast-and-intuitive"><i class="fa fa-check"></i><b>1.1</b> The best data analysis is fast and intuitive</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#the-best-data-analysis-starts-with-fast-intuitive-eda"><i class="fa fa-check"></i><b>1.1</b> The best data analysis starts with fast &amp; intuitive EDA</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#what-about-python-for-data-viz"><i class="fa fa-check"></i><b>1.2</b> What about Python for data viz?</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-about-point-and-click-tools"><i class="fa fa-check"></i><b>1.3</b> What about Point and Click tools?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-about-point-and-click-eda-tools"><i class="fa fa-check"></i><b>1.3</b> What about Point and Click EDA tools?</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-an-r-master-to-inspire-you"><i class="fa fa-check"></i><b>1.4</b> Find an R master to inspire you</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#david-robinson"><i class="fa fa-check"></i><b>1.4.1</b> David Robinson</a></li>
 <li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#claus-wilke"><i class="fa fa-check"></i><b>1.4.2</b> Claus Wilke</a></li>
@@ -217,16 +221,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#start-with-dplyr-counts-and-summaries-in-console"><i class="fa fa-check"></i><b>3.1</b> Start with dplyr counts and summaries in console</a></li>
-<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#next-plot-data-points"><i class="fa fa-check"></i><b>3.2</b> Next plot data points</a></li>
-<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#now-facet-by-categories"><i class="fa fa-check"></i><b>3.3</b> Now facet by categories</a></li>
+<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>3.2</b> Plot data points with geom_point()</a></li>
+<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>3.3</b> Facet by categories</a></li>
 <li class="chapter" data-level="3.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>3.4</b> Facet interactively (trelliscopejs)</a></li>
-<li class="chapter" data-level="3.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#or-loop-and-plot-every-value"><i class="fa fa-check"></i><b>3.5</b> Or loop and plot every value</a></li>
+<li class="chapter" data-level="3.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#or-loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>3.5</b> Or loop to plot every category seperately</a></li>
 <li class="chapter" data-level="3.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>3.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>4</b> Why start with geom_point() ?</a><ul>
 <li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-problem-with-bars-and-columns"><i class="fa fa-check"></i><b>4.1</b> The problem with bars and columns</a></li>
 <li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#go-back-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Go back to geom_point()</a></li>
-<li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-final-choice---geom_point-and-stat_summary"><i class="fa fa-check"></i><b>4.3</b> The final choice - geom_point() and stat_summary()</a></li>
+<li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#geom_point-and-geom_boxplot-is-better"><i class="fa fa-check"></i><b>4.3</b> geom_point() <strong>and</strong> geom_boxplot() is better</a></li>
+<li class="chapter" data-level="4.4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#final-choice-geom_jitter-and-stat_summary"><i class="fa fa-check"></i><b>4.4</b> Final choice: geom_jitter() <strong>and</strong> stat_summary()</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interactive-plots.html"><a href="interactive-plots.html"><i class="fa fa-check"></i><b>5</b> Interactive plots</a><ul>
 <li class="chapter" data-level="5.1" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-cheat-convert-ggplot-with-plotlyggplotly"><i class="fa fa-check"></i><b>5.1</b> Plotly cheat: convert ggplot with plotly::ggplotly()</a></li>
@@ -239,7 +244,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.8" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-for-time-series-data"><i class="fa fa-check"></i><b>5.8</b> dygraphs for time series data</a></li>
 <li class="chapter" data-level="5.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>5.9</b> dygraphs bells &amp; whistles</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>6</b> Animation</a></li>
+<li class="chapter" data-level="6" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>6</b> Animation</a><ul>
+<li class="chapter" data-level="6.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>6.1</b> ggplot animation</a></li>
+<li class="chapter" data-level="6.2" data-path="animation.html"><a href="animation.html#plotly-animation"><i class="fa fa-check"></i><b>6.2</b> plotly animation</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>7</b> Tables</a><ul>
 <li class="chapter" data-level="7.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>7.1</b> DataTables (DT) basic</a></li>
 <li class="chapter" data-level="7.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>7.2</b> DataTables bells &amp; whisltes</a></li>
@@ -248,8 +256,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>7.5</b> rpivottable (bells &amp; whistles)</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>8</b> Colours</a><ul>
-<li class="chapter" data-level="8.1" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>8.1</b> Prismatic</a></li>
-<li class="chapter" data-level="8.2" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>8.2</b> Hand picked colours</a></li>
+<li class="chapter" data-level="8.1" data-path="colours.html"><a href="colours.html#color-brewer"><i class="fa fa-check"></i><b>8.1</b> Color Brewer</a></li>
+<li class="chapter" data-level="8.2" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>8.2</b> Prismatic</a></li>
+<li class="chapter" data-level="8.3" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>8.3</b> Hand picked colours</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>9</b> Final document</a><ul>
 <li class="chapter" data-level="9.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>9.1</b> Picking a final output doc</a></li>

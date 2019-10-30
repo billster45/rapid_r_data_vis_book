@@ -96,9 +96,9 @@ p <-
 directlabels::direct.label(p, list("top.points", cex = .75, hjust = 0, vjust = -0.2))
 ```
 
-## The final choice - geom_point() and stat_summary()
+## geom_point() **and** geom_boxplot() is better
 
-* However, with so few data points I personally prefer the geom_point chart.
+* With so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well and would have been my final plot until I saw the fantastic plot in the next section.
 
 ```{r}
 marriage %>%
@@ -109,17 +109,26 @@ marriage %>%
   ) +
   ggplot2::facet_wrap(~person) +
   ggplot2::geom_boxplot(alpha = 0.8) +
-  ggplot2::geom_point(alpha = 0.3) +
+  ggplot2::geom_jitter(width = 0.1,
+                       alpha = 0.3) +
   ggplot2::theme_light()
 ```
 
-* And this [evolution of a ggplot](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) also starts with a boxplot but ends up with geom_point() and stat_summary() shown below is fantastic with full code in a gradualy story like this book.
+## Final choice: geom_jitter() **and** stat_summary()
+
+* In this ["evolution of a ggplot"](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) post it also starts with a boxplot but they finally choose ggplot2::geom_jitter() and ggpolt2::stat_summary(). The post gives the full code in a gradual story like the ggplot flipbooks styke. 
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif") 
+```
+
+* And their final plot is here.. 
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
 ```
 
-* Inspired by that plot if we steal some of the methods..
+* Inspired by that plot and stealing its methods this is plot is much more engaging and intersestinng than the boxplot in the section above.
 
 ```{r, echo=FALSE, fig.height=10}
 knitr::include_graphics(path = "marriage.svg") 
@@ -142,7 +151,8 @@ p <- marriage %>%
   ggplot2::facet_wrap(~person, ncol = 1) +
   ggplot2::stat_summary(fun.y = median, 
                         geom = "point", 
-                        size = 5) +
+                        size = 4,
+                        alpha = 0.8) +
   ggplot2::stat_summary(aes(label= paste( round(..y..,1), 
                                           " years")),
                         fun.y=median, 

@@ -25,7 +25,13 @@ plotly::ggplotly(p)
 
 * Often, even with editing how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to what you wnat. If this happens use plotly::plotly_build() instead to build a plotly plot where you can edit all the settings.
 
-* plotly::plotly_build() creates a nested list of all the settings you can explore in RStudio using the viewer. Here is how we create a plotly_build().
+* Plotly build is an R list which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) to create the web graphic. This diagram below from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Caron's book [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains it well.
+
+```{r, echo=FALSE, out.width = "100%"}
+knitr::include_graphics(path = "https://plotly-r.com/images/printing.svg") 
+```
+
+* plotly::plotly_build() is a nested list of all the settings you can explore in RStudio using the viewer. Here is how we create a plotly_build() object we can edit.
 
 ```{r plotly_build, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -36,17 +42,23 @@ p <- df_red %>%
   ggplot2::geom_line() 
 
 p_build <- plotly::plotly_build(p)
-```
-
-* And now we later any of the setgins in p_build like this. Here we have edited the font size on the x axis to be a very small size 8.
-
-```{r}
-p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]] = 8
 
 p_build
 ```
 
-* But of course that code above is very fiddly to work out. The gif below shows you how to browse the nested structure with the viewer and then automatically geneate the code you need to edit each value.
+* And now we later any of the setgins in p_build like this. Here we have edited the font size on the x axis to be a huge font size of 42. We found this setting by putting a dollar at the end of p_build and hitting the tab key to see the named elents of this list at different levels. This show us the top level of the list. We can then work our way down with dollars till we find the setting we want.
+
+```{r}
+p_build$x$layout$xaxis$tickfont$size = 42
+
+p_build
+```
+
+* However, this dollar and tab key method to search through the named elemnts of the plotly object is very fiddly and time consuming to find the value ou want to change. The gif below shows you an easier point and click way to do it. 
+
+* In the environment pane, click on the magnifying glass to the right of p_build. You can then expand the nested lists like a tree till you reach the value to change. To the right of the value you will find an icon to click that automatically generates the code below. It can be used in place of the dollar and tab code method above.
+
+> p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]]
 
 ```{r, echo=FALSE, out.width = "1100%"}
 knitr::include_graphics(path = "plotly_build.gif") 
@@ -82,22 +94,78 @@ df_red %>%
 * And as before add some bells and whistles to get close to our final plot.
 
 ```{r plotly_bells_whistles, warning=FALSE,message=FALSE}
-ax <- list(
-  title = "",
-  zeroline = FALSE,
-  showline = FALSE,
-  showticklabels = FALSE,
-  showgrid = FALSE
-)
-
 df_red %>% 
   plotly::plot_ly(x = ~date, 
                   y = ~sales, 
                   text = rownames(df_red)) %>%
   add_lines(color = ~city, 
             colorscale = "set3") %>%
-  rangeslider() %>%
-  plotly::layout(xaxis = ax, yaxis = ax)
+  rangeslider() 
+```
+
+* And carson actually goes to town on this exact data set https://plotly-r.com/the-data-plot-pipeline.html
+
+
+* And more here https://plotly-r.com/client-side-linking.html
+
+```{r}
+# load the `txhousing` dataset
+data(txhousing, package = "ggplot2")
+
+# declare `city` as the SQL 'query by' column
+tx <- highlight_key(txhousing, ~city)
+
+# initiate a plotly object
+base <- plot_ly(tx, color = I("black")) %>% 
+  group_by(city)
+
+# create a time series of median house price
+base %>%
+  group_by(city) %>%
+  add_lines(x = ~date, y = ~median)
+```
+
+
+
+
+```{r}
+library(crosstalk)
+
+# generally speaking, use a "unique" key for filter, 
+# especially when you have multiple filters!
+tx <- highlight_key(txhousing)
+gg <- ggplot(tx) + geom_line(aes(date, median, group = city))
+filter <- bscols(
+  filter_select("id", "Select a city", tx, ~city),
+  ggplotly(gg, dynamicTicks = TRUE),
+  widths = c(12, 12)
+)
+
+tx2 <- highlight_key(txhousing, ~city, "Select a city")
+gg <- ggplot(tx2) + geom_line(aes(date, median, group = city))
+select <- highlight(
+  ggplotly(gg, tooltip = "city"), 
+  selectize = TRUE, persistent = TRUE
+)
+
+bscols(filter, select)
+```
+
+
+```{r}
+library(crosstalk)
+tx <- highlight_key(txhousing)
+widgets <- bscols(
+  widths = c(12, 12, 12),
+  filter_select("city", "Cities", tx, ~city),
+  filter_slider("sales", "Sales", tx, ~sales),
+  filter_checkbox("year", "Years", tx, ~year, inline = TRUE)
+)
+bscols(
+  widths = c(4, 8), widgets, 
+  plot_ly(tx, x = ~date, y = ~median, showlegend = FALSE) %>% 
+    add_lines(color = ~city, colors = "black")
+)
 ```
 
 * Here are some good further plotly resources

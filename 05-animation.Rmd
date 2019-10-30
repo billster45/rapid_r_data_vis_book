@@ -1,5 +1,7 @@
 # Animation
 
+## ggplot animation
+
 * Animation is easy to add. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples you can easily adapt.
 
 * However, I've found animation is most effective when you see changes over time. Here is the annual pattern of house sales changing each year.
@@ -83,5 +85,43 @@ gganimate::animate(p, width = 900,
 
 gganimate::anim_save(filename = "housing.gif")
 ```
+
+## plotly animation
+
+https://plotly-r.com/animating-views.html
+
+```{r}
+df_red %>% 
+  plotly::plot_ly(alpha  = 1) %>%
+  plotly::add_lines(
+    x = ~month, 
+    y = ~sales,
+    frame = ~year, 
+    color = ~factor(city),
+    line = list(simplify = FALSE)
+  ) %>%
+  plotly::layout(yaxis = list(title = "Sales"))
+```
+
+
+```{r}
+df_red %>% 
+  plotly::plot_ly(alpha  = 1) %>%
+  plotly::add_lines(
+    x = ~month, 
+    y = ~sales,
+    frame = ~year, 
+    color = ~factor(city),
+    line = list(simplify = FALSE)
+  ) %>%
+  plotly::layout(yaxis = list(title = "Sales")) %>% 
+  plotly::animation_opts(frame = 1000, 
+                       #  easing = "elastic", 
+                         easing = "bounce", 
+                         redraw = FALSE) %>%
+  plotly::animation_slider(currentvalue = list(prefix = "YEAR ", 
+                                               font = list(color="blue")))
+```
+
 
 

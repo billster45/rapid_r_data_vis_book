@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-10-28" />
+<meta name="date" content="2019-10-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,15 @@
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="libs/ionrangeslider-2.1.2/js/ion.rangeSlider.min.js"></script>
+<script src="libs/strftime-0.9.2/strftime-min.js"></script>
 <script src="libs/apexcharts-3.8.4/apexcharts.min.js"></script>
 <script src="libs/apexcharter-binding-0.1.2/apexcharter.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
@@ -83,8 +92,6 @@
 <script src="libs/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
-<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
 <script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="libs/jquery-ui-1.11.4/jquery.ui.touch-punch.min.js"></script>
@@ -113,9 +120,6 @@
 <script src="libs/polyfill-0.1/polyfill.min.js"></script>
 <link href="libs/rpivotTable_style-0.1/rpivotTable.css" rel="stylesheet" />
 <script src="libs/rpivotTable-binding-0.3.0/rpivotTable.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 
 
 <style type="text/css">
@@ -198,9 +202,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Why read this?</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#the-best-data-analysis-is-fast-and-intuitive"><i class="fa fa-check"></i><b>1.1</b> The best data analysis is fast and intuitive</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#the-best-data-analysis-starts-with-fast-intuitive-eda"><i class="fa fa-check"></i><b>1.1</b> The best data analysis starts with fast &amp; intuitive EDA</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#what-about-python-for-data-viz"><i class="fa fa-check"></i><b>1.2</b> What about Python for data viz?</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-about-point-and-click-tools"><i class="fa fa-check"></i><b>1.3</b> What about Point and Click tools?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-about-point-and-click-eda-tools"><i class="fa fa-check"></i><b>1.3</b> What about Point and Click EDA tools?</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-an-r-master-to-inspire-you"><i class="fa fa-check"></i><b>1.4</b> Find an R master to inspire you</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#david-robinson"><i class="fa fa-check"></i><b>1.4.1</b> David Robinson</a></li>
 <li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#claus-wilke"><i class="fa fa-check"></i><b>1.4.2</b> Claus Wilke</a></li>
@@ -217,16 +221,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#start-with-dplyr-counts-and-summaries-in-console"><i class="fa fa-check"></i><b>3.1</b> Start with dplyr counts and summaries in console</a></li>
-<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#next-plot-data-points"><i class="fa fa-check"></i><b>3.2</b> Next plot data points</a></li>
-<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#now-facet-by-categories"><i class="fa fa-check"></i><b>3.3</b> Now facet by categories</a></li>
+<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>3.2</b> Plot data points with geom_point()</a></li>
+<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>3.3</b> Facet by categories</a></li>
 <li class="chapter" data-level="3.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>3.4</b> Facet interactively (trelliscopejs)</a></li>
-<li class="chapter" data-level="3.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#or-loop-and-plot-every-value"><i class="fa fa-check"></i><b>3.5</b> Or loop and plot every value</a></li>
+<li class="chapter" data-level="3.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#or-loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>3.5</b> Or loop to plot every category seperately</a></li>
 <li class="chapter" data-level="3.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>3.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>4</b> Why start with geom_point() ?</a><ul>
 <li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-problem-with-bars-and-columns"><i class="fa fa-check"></i><b>4.1</b> The problem with bars and columns</a></li>
 <li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#go-back-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Go back to geom_point()</a></li>
-<li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-final-choice---geom_point-and-stat_summary"><i class="fa fa-check"></i><b>4.3</b> The final choice - geom_point() and stat_summary()</a></li>
+<li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#geom_point-and-geom_boxplot-is-better"><i class="fa fa-check"></i><b>4.3</b> geom_point() <strong>and</strong> geom_boxplot() is better</a></li>
+<li class="chapter" data-level="4.4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#final-choice-geom_jitter-and-stat_summary"><i class="fa fa-check"></i><b>4.4</b> Final choice: geom_jitter() <strong>and</strong> stat_summary()</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interactive-plots.html"><a href="interactive-plots.html"><i class="fa fa-check"></i><b>5</b> Interactive plots</a><ul>
 <li class="chapter" data-level="5.1" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-cheat-convert-ggplot-with-plotlyggplotly"><i class="fa fa-check"></i><b>5.1</b> Plotly cheat: convert ggplot with plotly::ggplotly()</a></li>
@@ -239,7 +244,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.8" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-for-time-series-data"><i class="fa fa-check"></i><b>5.8</b> dygraphs for time series data</a></li>
 <li class="chapter" data-level="5.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>5.9</b> dygraphs bells &amp; whistles</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>6</b> Animation</a></li>
+<li class="chapter" data-level="6" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>6</b> Animation</a><ul>
+<li class="chapter" data-level="6.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>6.1</b> ggplot animation</a></li>
+<li class="chapter" data-level="6.2" data-path="animation.html"><a href="animation.html#plotly-animation"><i class="fa fa-check"></i><b>6.2</b> plotly animation</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>7</b> Tables</a><ul>
 <li class="chapter" data-level="7.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>7.1</b> DataTables (DT) basic</a></li>
 <li class="chapter" data-level="7.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>7.2</b> DataTables bells &amp; whisltes</a></li>
@@ -248,8 +256,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>7.5</b> rpivottable (bells &amp; whistles)</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>8</b> Colours</a><ul>
-<li class="chapter" data-level="8.1" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>8.1</b> Prismatic</a></li>
-<li class="chapter" data-level="8.2" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>8.2</b> Hand picked colours</a></li>
+<li class="chapter" data-level="8.1" data-path="colours.html"><a href="colours.html#color-brewer"><i class="fa fa-check"></i><b>8.1</b> Color Brewer</a></li>
+<li class="chapter" data-level="8.2" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>8.2</b> Prismatic</a></li>
+<li class="chapter" data-level="8.3" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>8.3</b> Hand picked colours</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>9</b> Final document</a><ul>
 <li class="chapter" data-level="9.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>9.1</b> Picking a final output doc</a></li>
@@ -279,62 +288,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="colours" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Colours</h1>
-<p>##Color Brewer</p>
+<div id="color-brewer" class="section level2">
+<h2><span class="header-section-number">8.1</span> Color Brewer</h2>
 <ul>
 <li><p>We’ve already used colours in some of the code. Particularly the pallettes in the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>.</p></li>
 <li><p>It has some ready made palletes that we can view like this.</p></li>
 </ul>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="co"># easy colours</span></a>
-<a class="sourceLine" id="cb89-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="co"># easy colours</span></a>
+<a class="sourceLine" id="cb103-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/RColourBrewer-1.png" width="672" /></p>
 <ul>
 <li>And the display can be limited to colour blind friendly palettes.</li>
 </ul>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <ul>
 <li>we can set up a pallete of colours like this and view them in a simple bar plot</li>
 </ul>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
 <pre><code>## Warning in RColorBrewer::brewer.pal(9, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
 ## Returning the palette you asked for with that many colors</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
 <div id="prismatic" class="section level2">
-<h2><span class="header-section-number">8.1</span> Prismatic</h2>
+<h2><span class="header-section-number">8.2</span> Prismatic</h2>
 <ul>
 <li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with palettes by shifting the entire set at once. For example, starting with terrain..</li>
 </ul>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb94-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb108-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <ul>
 <li>Turn the pallete grey</li>
 </ul>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
-<a class="sourceLine" id="cb95-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
+<a class="sourceLine" id="cb109-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <ul>
 <li>Darken the pallete</li>
 </ul>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
-<a class="sourceLine" id="cb96-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <ul>
 <li>Make the pallete negative</li>
 </ul>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
-<a class="sourceLine" id="cb97-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
+<a class="sourceLine" id="cb111-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
 <div id="hand-picked-colours" class="section level2">
-<h2><span class="header-section-number">8.2</span> Hand picked colours</h2>
+<h2><span class="header-section-number">8.3</span> Hand picked colours</h2>
 <ul>
 <li><p>You can also hand pick your own colours from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a> reccomedned on an <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">excellent blog post on using colours</a> in ggplot by by Michael Toth.</p></li>
 <li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create then copy and paste the colours below.</p></li>
 </ul>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
-<a class="sourceLine" id="cb98-2" title="2"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
+<a class="sourceLine" id="cb112-2" title="2"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/colour_picker-1.png" width="672" /></p>
 
 </div>
