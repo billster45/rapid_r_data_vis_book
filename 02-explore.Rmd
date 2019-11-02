@@ -2,9 +2,9 @@
 
 ## Start with dplyr counts and summaries in console
 
-* David Robinson first explores new data with simple counts in the console. 
+* David Robinson often starts explorig data with simple counts in the console. 
 
-* Here we don't use the package name (so breaking the rule I just told you) so we can quickly explore the data by typing dplyr verbs quickly
+* Here we don't use the package name (so breaking the rule I just told you) so we can quickly explore the data with dplyr verbs.
 
 ```{r explore_like_David_Robinson, eval = FALSE}
 df %>% count(city) %>% View()
@@ -18,12 +18,13 @@ df %>% group_by(city) %>% summarise(vol_max = max(volume, na.rm = T)) %>% arrang
 knitr::include_graphics("console_coding.gif") 
 ```
 
-
 ## Plot data points with geom_point()
 
-* After using count(), group_by() and summarise() plot all data points with ggplot2::geom_point(). It almost NEVER fails to show you what's going on and is unlikely to return errors. 
+* After using dplyr count(), group_by() and summarise(), try plotting all data points with ggplot2::geom_point(). It almost NEVER fails to show you what's going on quickly and is unlikely to return errors. 
 
-* This is the minimum and most reliable ggplot code to start with. Let's look at all the values of sales for each date.
+* ggplot2::geom_point() is the minimum and most reliable code to start with. 
+
+* Let's look at all the values of sales for each date.
 
 ```{r ggplot_geom_point}
 df %>%
@@ -35,7 +36,7 @@ df %>%
   ggplot2::geom_point()
 ```
 
-* Then look at sales over the values of any other dimensions. There is one other dimension city. 
+* Now let's look at the individual sales values over the values of other columns like city. 
 
 ```{r ggplot_geom_point1}
 df %>%
@@ -47,9 +48,9 @@ df %>%
   ggplot2::geom_point()
 ```
 
-* But those points look a bit crowded. Whenever the dots overlap replace geom_point() with geom_jitter(). 
+* These very dark lines where we can't see seperate data points is known as over plotting. We can solve this by replaceing geom_point() with geom_jitter() which randomly "jitters" the points a bit so we can see more of the individually.
 
-* And we make the dots lighter using a non-intuitive parameter called alpha.
+* Sometimes there are so many data points the jitter is not enough to reduce over plotting. We can also make the dots lighter using a a parameter called alpha. The lower the value the fainter the points.
 
 ```{r ggplot_geom_point2}
 df %>%
@@ -58,12 +59,14 @@ df %>%
     x = sales,
     y = city
   ) +
-  ggplot2::geom_jitter(alpha = 0.1)
+  ggplot2::geom_jitter(alpha = 0.01)
 ```
 
-* Of course we know sales of most things vary by season. Let's put date on the x axis, make city the colour, and because the data is over time we can join those dots using ggplot2::geom_line()
+Hadley Wickham has a few more tricks to solve over plotting in his ggplot2 book [overplotting chapter](https://ggplot2-book.org/statistical-summaries.html#overplotting).
 
-* We're also using the reduced data set so it's not too crowded for now.
+* We all know sales of most things vary by the time of the year. Let's now put date on the x axis, make city the colour, and because the data is over time we can join the data points using ggplot2::geom_line().
+
+* We're also using the reduced data set with fewer ciites so the plot is less crowded. As a rule of thumb, more than about 7 lines can be a confusing plot.
 
 ```{r ggplot_geom_line3}
 df_red %>%
@@ -76,7 +79,7 @@ df_red %>%
   ggplot2::geom_line()
 ```
 
-* Beautiful, while sales have very different volumes between cities we can see they tightly follow the same seasonal pattern. But the are on different scales so harder to compare the patterns. One option Wickham does is to log transform the sales value. 
+* Beautiful. While sales have very different volumes in different cities we can see they follow the same seasonal pattern. To bring the patterns of sales closer to each other and easier to compare we can transform the sales value by taking its log. 
 
 ```{r ggplot_geom_line4}
 df_red %>%
@@ -91,9 +94,7 @@ df_red %>%
 
 ## Facet by categories
 
-* Another logical step after showing categories by colour is to use "small multiples". This is a fancy way of saying draw a chart for each category and look at them all at once in a grid. An important setting here is to specify scales = "free" so they are their own scale and we can study what's going on in each city.
-
-* This lets us more easily spot interesting differences in the seasonal pattern between cities. 
+* Another logical step after showing categories by colour is to use "small multiples". This is a fancy way of saying draw a chart for each value of one ore more columns and look at them all at once. Usually in a grid. An important setting here is to specify scales = "free" so each small plot has its own scale. This lets us more easily spot interesting differences in the seasonal pattern between cities. 
 
 ```{r ggplot_facet}
 df_red %>%
@@ -111,7 +112,7 @@ df_red %>%
 
 ## Facet interactively (trelliscopejs)
 
-* An interactive way to facet (or create small multiples) that allows interactive data exploration is trelliscopejs. Here we look at all the US cities facetted by city in a trelliscope web page. Have a play on this below and see what it does.
+* An interactive way to facet (or create small multiples) and explore your data with a GUI in R is trelliscopejs. Here we look at all the US cities facetted by city in a trelliscope web page. Have a play with all the settings and see what it does.
 
 ```{r trelliscopejs, message=FALSE, warning=FALSE}
 df %>%
@@ -131,9 +132,13 @@ df %>%
   )
 ```
 
-## Or loop to plot every category seperately
+## Loop to plot every category seperately
 
-* Or to really study each chart, nest the data into a data frame of dataframes for each city. Then loop through each one and creating a plot in the data frame we plot.
+* To study each small plot in a larger size on its own quickly we can loop through every city and plot a full chart for each one. 
+
+* To do this we nest a dataframe for each city into one dataframe. Then loop through each nested dataframe creating a plot for each one.
+
+* First we group then "nest" by city using tidyr::nest() 
 
 ```{r loop_through_print}
 df_red_nest <-
@@ -142,16 +147,22 @@ df_red_nest <-
   tidyr::nest()
 ```
 
+* Let's look at what a nested dataframe looks like.
+
 ```{r, eval=FALSE}
 df_red_nest %>% View()
 ```
+
+* If we wanted we could view one of the nested data frames using square brackets. Think of the numbers in the square brackets like the co-ordiantes in Excel. The first number is the column position and the second number is the row position.
 
 ```{r, eval=FALSE}
 df_red_nest[[2]][[1]] %>% View()
 ```
 
+* We can now add a plot to each nested data frame. We use purrr::map2(). This is a compact way to loop two values of a parametere through one function. In this case the values are the data set insde each row and the value of city colun. 
+
 ```{r}
-df_red_nest_plot <-
+df_red_nest <-
   df_red_nest %>%
   dplyr::mutate(plot = purrr::map2(
     .x = data,
@@ -168,16 +179,23 @@ df_red_nest_plot <-
   ))
 ```
 
+* Take a look at both the new nested data frame.
 
 ```{r, eval=FALSE}
-df_red_nest_plot %>% View()
+df_red_nest %>% View()
 ```
 
+* And lets look at the information held for one of the plots, again using values in square brackets. You'll see that it's a series of nested lists that describe every element of the plot.
+
+```{r, eval=FALSE}
+df_red_nest[[3]][[1]] %>% View()
+```
+ 
+* Finally, let's print every plot quite simply like this.
 
 ```{r}
-print(df_red_nest_plot$plot)
+print(df_red_nest$plot)
 ```
-
 
 ## Polish your final plot
 
