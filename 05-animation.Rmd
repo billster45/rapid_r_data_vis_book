@@ -46,7 +46,7 @@ p <- df %>%
   gganimate::transition_states(states = year,
                                transition_length = 3,
                                state_length = 1) +
-  ggplot2::labs(title = "US Housing Sales in : {closest_state}",
+  ggplot2::labs(title = "Texas Housing Sales in : {closest_state}",
     caption = "Source: ggplot2 package demo data"
   ) +
 

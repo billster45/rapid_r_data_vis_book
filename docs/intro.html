@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-02" />
+<meta name="date" content="2019-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,8 +229,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>3.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>4</b> Why start with geom_point() ?</a><ul>
-<li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-problem-with-bars-and-columns"><i class="fa fa-check"></i><b>4.1</b> The problem with bars and columns</a></li>
-<li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#go-back-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Go back to geom_point()</a></li>
+<li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#ggplot-is-famed-for-annoying-errors"><i class="fa fa-check"></i><b>4.1</b> ggplot is famed for annoying errors</a></li>
+<li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#retreat-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Retreat to geom_point()</a></li>
 <li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#geom_point-and-geom_boxplot-is-better"><i class="fa fa-check"></i><b>4.3</b> geom_point() <strong>and</strong> geom_boxplot() is better</a></li>
 <li class="chapter" data-level="4.4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#final-choice-geom_jitter-and-stat_summary"><i class="fa fa-check"></i><b>4.4</b> Final choice: geom_jitter() <strong>and</strong> stat_summary()</a></li>
 </ul></li>
@@ -353,9 +353,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-data-to-visualise" class="section level2">
 <h2><span class="header-section-number">2.3</span> The data to visualise</h2>
 <ul>
-<li><p>A lot of data visilisation is about showing values change over time. For this reason, instead of using a <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html">built in data set</a> like iris or mtcars we are going to moslty use the <a href="http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html">txhousing</a> time series data built into ggplot. It provides house sales in American cities over several years.</p></li>
+<li><p>A lot of data visilisation is about showing values change over time. For this reason, instead of using a <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html">built in data set</a> like iris or mtcars we are going to moslty use the <a href="http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html">Texas housing sales</a> time series data built into ggplot.</p></li>
 <li><p>If you’re looking for more open data sets to test your data vis skills take a look at this <a href="https://vincentarelbundock.github.io/Rdatasets/">comprehensive list of R datasets</a>.</p></li>
-<li><p>The only manipulation we will do to the txhousing data set is create a real date using <a href="https://lubridate.tidyverse.org/">lubridate</a>. We also create a smaller data frame with fewer American cities so some plots aren’t too crowded.</p></li>
+<li><p>The only manipulation we will do to the Texas housing sales data is create a real date using <a href="https://lubridate.tidyverse.org/">lubridate</a>. We also create a smaller data frame with fewer Texas cities so some plots aren’t too crowded.</p></li>
 <li><p>We’ll alo use <a href="https://github.com/elbersb/tidylog/blob/master/README.md">tidylog</a> with dplyr. Tidylog is an easy way to include fast basic Quality Asssurance into your coding process. You just replace dplyr verbs with the same verb in tidylog. The tidylog version tells you what each dplyr verb has done to your data in terms of the number and percentage of changes. For example, how many rows are dropped or added by filters or joins, or what percentage of values changed after a mutate.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># create a data frame with a real date for plotting</span></a>

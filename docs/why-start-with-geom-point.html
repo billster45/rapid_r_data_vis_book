@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-02" />
+<meta name="date" content="2019-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,8 +229,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>3.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>4</b> Why start with geom_point() ?</a><ul>
-<li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#the-problem-with-bars-and-columns"><i class="fa fa-check"></i><b>4.1</b> The problem with bars and columns</a></li>
-<li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#go-back-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Go back to geom_point()</a></li>
+<li class="chapter" data-level="4.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#ggplot-is-famed-for-annoying-errors"><i class="fa fa-check"></i><b>4.1</b> ggplot is famed for annoying errors</a></li>
+<li class="chapter" data-level="4.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#retreat-to-geom_point"><i class="fa fa-check"></i><b>4.2</b> Retreat to geom_point()</a></li>
 <li class="chapter" data-level="4.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#geom_point-and-geom_boxplot-is-better"><i class="fa fa-check"></i><b>4.3</b> geom_point() <strong>and</strong> geom_boxplot() is better</a></li>
 <li class="chapter" data-level="4.4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#final-choice-geom_jitter-and-stat_summary"><i class="fa fa-check"></i><b>4.4</b> Final choice: geom_jitter() <strong>and</strong> stat_summary()</a></li>
 </ul></li>
@@ -289,25 +289,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="why-start-with-geom_point" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Why start with geom_point() ?</h1>
-<div id="the-problem-with-bars-and-columns" class="section level2">
-<h2><span class="header-section-number">4.1</span> The problem with bars and columns</h2>
+<div id="ggplot-is-famed-for-annoying-errors" class="section level2">
+<h2><span class="header-section-number">4.1</span> ggplot is famed for annoying errors</h2>
 <ul>
-<li><p>We start with ggplot2::geom_point() because it works for for both raw and summrarised data straight away. And makes ggplot less intimidating when you start. It is famed for giving you errors see this tweet <a href="https://twitter.com/thomasp85/status/1170998101101953025?s=12" class="uri">https://twitter.com/thomasp85/status/1170998101101953025?s=12</a></p></li>
-<li><p>For example, here is raw granular data where each row describes a person getting married.</p></li>
+<li><p>It’s a good idea to start with ggplot2::geom_point() because it works for for both raw and summarised data straight away. This both speeds up everyone’s EDA and makes ggplot less intimidating for beginners. It is famed for easily triggering errors that can confuse you. So much so that one of the maintainers of ggplot asked people on <a href="https://twitter.com/thomasp85/status/1170998101101953025?s=12">Twitter</a> what their most common ggplot error was.</p></li>
+<li><p>To show you some classic errors let’s explore more granular data where each row describes a person getting married. We just do a little data cleaning on the marriage date a column on whether they were married before.</p></li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">marriage &lt;-</a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span>mosaicData<span class="op">::</span>Marriage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">prev_marriage =</span> <span class="kw">as.character</span>(prevconc)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-4" title="4"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">prev_marriage =</span> <span class="kw">case_when</span>(</a>
-<a class="sourceLine" id="cb55-5" title="5">    <span class="kw">is.na</span>(prev_marriage) <span class="op">~</span><span class="st"> &quot;First Time&quot;</span>,</a>
-<a class="sourceLine" id="cb55-6" title="6">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>prev_marriage</a>
-<a class="sourceLine" id="cb55-7" title="7">  )) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-8" title="8"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">ceremonydate1 =</span> lubridate<span class="op">::</span><span class="kw">parse_date_time</span>(ceremonydate, <span class="st">&quot;mdy&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">marriage &lt;-</a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span>mosaicData<span class="op">::</span>Marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-3" title="3"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">prev_marriage =</span> <span class="kw">as.character</span>(prevconc)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-4" title="4"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">prev_marriage =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb58-5" title="5">    <span class="kw">is.na</span>(prev_marriage) <span class="op">~</span><span class="st"> &quot;First Time&quot;</span>,</a>
+<a class="sourceLine" id="cb58-6" title="6">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>prev_marriage</a>
+<a class="sourceLine" id="cb58-7" title="7">  )) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-8" title="8"><span class="st">  </span>tidylog<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">ceremonydate1 =</span> lubridate<span class="op">::</span><span class="kw">parse_date_time</span>(ceremonydate, <span class="st">&quot;mdy&quot;</span>))</a></code></pre></div>
 <pre><code>## mutate: new variable &#39;prev_marriage&#39; with 3 unique values and 49% NA</code></pre>
 <pre><code>## mutate: changed 48 values (49%) of &#39;prev_marriage&#39; (48 fewer NA)</code></pre>
 <pre><code>## mutate: new variable &#39;ceremonydate1&#39; with 49 unique values and 0% NA</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">kableExtra<span class="op">::</span><span class="kw">kable</span>(utils<span class="op">::</span><span class="kw">head</span>(marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb59-2" title="2"><span class="st">                                </span>dplyr<span class="op">::</span><span class="kw">select</span>(ceremonydate1, person, prev_marriage, age, race, sign)))</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">kableExtra<span class="op">::</span><span class="kw">kable</span>(utils<span class="op">::</span><span class="kw">head</span>(marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="st">                                </span>dplyr<span class="op">::</span><span class="kw">select</span>(ceremonydate1, person, prev_marriage, age, race, sign)))</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -455,37 +455,9 @@ Pisces
 </tbody>
 </table>
 <ul>
-<li><p>Before we had one value per city and date so geom_line worked fine as long as the date and the city were in the “aesthetics” of the plot (e.g. x,y, colour, category, or facet being the most common).</p></li>
-<li><p>A common error with raw data I keep making is to try and put it into a bar or line chart straight away then get confused by the error or the chart.</p></li>
-</ul>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">marriage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb60-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
-<a class="sourceLine" id="cb60-5" title="5">    <span class="dt">y =</span> age</a>
-<a class="sourceLine" id="cb60-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<pre><code>## Error: stat_count() must not be used with a y aesthetic.</code></pre>
-<p><img src="bookdown-demo_files/figure-html/plot_error-1.png" width="672" /></p>
-<ul>
-<li>ggplot2::geom_col() would be a better choice but we still have to think to much about what it’s showing. Yes a bar plot might be the right choice for our final plot but it’s sometimes troublesome when we want to explore quickly.</li>
-</ul>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">marriage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb62-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
-<a class="sourceLine" id="cb62-5" title="5">    <span class="dt">y =</span> age</a>
-<a class="sourceLine" id="cb62-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_col</span>()</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<ul>
-<li>One reason for this is with bars we can be starting a statistical transformation without realising it. This is well exlainned in the <a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations">Statistical Transformatoins</a> chapter of <a href="https://r4ds.had.co.nz/">R for Data Science</a></li>
-</ul>
-</div>
-<div id="go-back-to-geom_point" class="section level2">
-<h2><span class="header-section-number">4.2</span> Go back to geom_point()</h2>
-<ul>
-<li>Here we use ggplot2::geom_point() and facet by person</li>
+<li><p>In our previous data set we had one value per city and date so geom_line worked fine as long as the date and the city were in the “aesthetics” of the plot (e.g. x,y, colour, category, or facet being the most common).</p></li>
+<li><p>A common way to trigger ggplot2 errors or create confusing plots is using bar or line charts before the data is summarised.</p></li>
+<li><p>For example, a line chart is inappropriate with many ages per previous marriage status.</p></li>
 </ul>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb63-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -493,144 +465,198 @@ Pisces
 <a class="sourceLine" id="cb63-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
 <a class="sourceLine" id="cb63-5" title="5">    <span class="dt">y =</span> age</a>
 <a class="sourceLine" id="cb63-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb63-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person) <span class="op">+</span></a>
-<a class="sourceLine" id="cb63-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<a class="sourceLine" id="cb63-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_line</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/plot_error-1.png" width="672" /></p>
 <ul>
-<li><p>Immediately this is interesting as we see the ages of brides and grooms and what happened in their previous marriage! Death, Divorce or Unknown!</p></li>
-<li><p>Based on the distribution of those points that are so pleasingly intuitive we can go on to experiment with different classic ways to represent the distributions we see. So first histograms</p></li>
+<li>And here using a bar chart instead returns an error.</li>
 </ul>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> age) <span class="op">+</span></a>
-<a class="sourceLine" id="cb64-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>person <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb64-5" title="5"><span class="st">                        </span>prev_marriage) <span class="op">+</span></a>
-<a class="sourceLine" id="cb64-6" title="6"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_histogram</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb64-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb64-5" title="5">    <span class="dt">y =</span> age</a>
+<a class="sourceLine" id="cb64-6" title="6">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb64-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<pre><code>## Error: stat_count() must not be used with a y aesthetic.</code></pre>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<ul>
+<li>ggplot2::geom_col() or ggplot2::geom_bar(stat = “identity”) will plot the data for us but it’s showing the sum of all the ages in each group which doesn’t really mean much.</li>
+</ul>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb66-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb66-5" title="5">    <span class="dt">y =</span> age</a>
+<a class="sourceLine" id="cb66-6" title="6">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb66-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">  <span class="co">#ggplot2::geom_col()</span></a></code></pre></div>
+<ul>
+<li><p>A column may end up being the final plot choice, but for fast EDA let’s avoid bars, lines and columns and retreat to our friend geom_point()</p></li>
+<li><p>Another reason to avoid bars to begin with is they do a statistical transformation without us realising it. This is well explained in the <a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations">Statistical Transformatoins</a> chapter of <a href="https://r4ds.had.co.nz/">R for Data Science</a></p></li>
+</ul>
+</div>
+<div id="retreat-to-geom_point" class="section level2">
+<h2><span class="header-section-number">4.2</span> Retreat to geom_point()</h2>
+<ul>
+<li>Here we go back to using ggplot2::geom_point() and facet by person</li>
+</ul>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb68-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb68-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb68-5" title="5">    <span class="dt">y =</span> age</a>
+<a class="sourceLine" id="cb68-6" title="6">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb68-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person) <span class="op">+</span></a>
+<a class="sourceLine" id="cb68-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<ul>
+<li><p>Immediately this is interesting as we see the ages of brides and grooms and what if they are getting married for the first time or if they are divorced or widowed.</p></li>
+<li><p>We can then experiment with different ways of showing these distributions. Hadley Wickham’s <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a> has a good short chapter on <a href="https://ggplot2-book.org/statistical-summaries.html#distributions">displaying distributions</a></p></li>
+<li><p>First let’s try a histogram.</p></li>
+</ul>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb69-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb69-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> age) <span class="op">+</span></a>
+<a class="sourceLine" id="cb69-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>person <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb69-5" title="5"><span class="st">                        </span>prev_marriage) <span class="op">+</span></a>
+<a class="sourceLine" id="cb69-6" title="6"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_histogram</span>()</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="bookdown-demo_files/figure-html/plot_error_fix-1.png" width="672" /></p>
 <ul>
-<li>Or the density distribution with ggplot2::geom_density()</li>
+<li>We get a warning. We can set the bin width by hand, say 6 bins.</li>
 </ul>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">p &lt;-</a>
-<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span>marriage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb66-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb66-5" title="5">    <span class="dt">x =</span> age,</a>
-<a class="sourceLine" id="cb66-6" title="6">    <span class="dt">fill =</span> prev_marriage</a>
-<a class="sourceLine" id="cb66-7" title="7">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb66-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_density</span>(<span class="dt">adjust =</span> <span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb66-9" title="9">                        <span class="dt">alpha =</span> <span class="fl">0.5</span>, </a>
-<a class="sourceLine" id="cb66-10" title="10">                        <span class="dt">colour =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb66-11" title="11"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(person), </a>
-<a class="sourceLine" id="cb66-12" title="12">                      <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb66-13" title="13"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_minimal</span>()</a>
-<a class="sourceLine" id="cb66-14" title="14"></a>
-<a class="sourceLine" id="cb66-15" title="15">directlabels<span class="op">::</span><span class="kw">direct.label</span>(p, <span class="kw">list</span>(<span class="st">&quot;top.points&quot;</span>, <span class="dt">cex =</span> <span class="fl">.75</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="fl">-0.2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb71-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb71-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> age) <span class="op">+</span></a>
+<a class="sourceLine" id="cb71-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>person <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-5" title="5"><span class="st">                        </span>prev_marriage) <span class="op">+</span></a>
+<a class="sourceLine" id="cb71-6" title="6"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="st">&quot;6&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<ul>
+<li><p>This looks better but is there an optimum bin number? There is probably no “optimum” as this <a href="https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram">exchange</a> discusses.</p></li>
+<li><p>Or we might try the density distribution with ggplot2::geom_density()</p></li>
+</ul>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">p &lt;-</a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span>marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb72-5" title="5">    <span class="dt">x =</span> age,</a>
+<a class="sourceLine" id="cb72-6" title="6">    <span class="dt">fill =</span> prev_marriage</a>
+<a class="sourceLine" id="cb72-7" title="7">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_density</span>(<span class="dt">adjust =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb72-9" title="9">                        <span class="dt">alpha =</span> <span class="fl">0.5</span>, </a>
+<a class="sourceLine" id="cb72-10" title="10">                        <span class="dt">colour =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-11" title="11"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="kw">vars</span>(person), </a>
+<a class="sourceLine" id="cb72-12" title="12">                      <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-13" title="13"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_minimal</span>()</a>
+<a class="sourceLine" id="cb72-14" title="14"></a>
+<a class="sourceLine" id="cb72-15" title="15">directlabels<span class="op">::</span><span class="kw">direct.label</span>(p, <span class="kw">list</span>(<span class="st">&quot;top.points&quot;</span>, <span class="dt">cex =</span> <span class="fl">.75</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="fl">-0.2</span>))</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/plot_error_fix2-1.png" width="672" /></p>
 </div>
 <div id="geom_point-and-geom_boxplot-is-better" class="section level2">
 <h2><span class="header-section-number">4.3</span> geom_point() <strong>and</strong> geom_boxplot() is better</h2>
 <ul>
-<li>With so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well and would have been my final plot until I saw the fantastic plot in the next section.</li>
+<li>But with so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well.</li>
 </ul>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">marriage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb67-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb67-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
-<a class="sourceLine" id="cb67-5" title="5">    <span class="dt">y =</span> age</a>
-<a class="sourceLine" id="cb67-6" title="6">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb67-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person) <span class="op">+</span></a>
-<a class="sourceLine" id="cb67-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb67-9" title="9"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb67-10" title="10">                       <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb67-11" title="11"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">marriage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb73-4" title="4">    <span class="dt">x =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb73-5" title="5">    <span class="dt">y =</span> age</a>
+<a class="sourceLine" id="cb73-6" title="6">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-9" title="9"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb73-10" title="10">                       <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-11" title="11"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="final-choice-geom_jitter-and-stat_summary" class="section level2">
 <h2><span class="header-section-number">4.4</span> Final choice: geom_jitter() <strong>and</strong> stat_summary()</h2>
 <ul>
-<li>In this <a href="https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/">“evolution of a ggplot”</a> post it also starts with a boxplot but they finally choose ggplot2::geom_jitter() and ggpolt2::stat_summary(). The post gives the full code in a gradual story like the ggplot flipbooks styke.</li>
+<li><p>Until recently the chart above would have been my final plot. Until I saw the fantastic <a href="https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/">“evolution of a ggplot”</a> post.</p></li>
+<li><p>In the gif below you can see they also start with a boxplot but the final choices is ggplot2::geom_jitter() and ggplot2::stat_summary(). The post gives the full code in a gradual story like the ggplot flip books.</p></li>
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif" width="100%" /></p>
 <ul>
-<li>And their final plot is here..</li>
+<li>And here is the final plot.</li>
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png" width="100%" /></p>
 <ul>
-<li>Inspired by that plot and stealing its methods this is plot is much more engaging and intersestinng than the boxplot in the section above.</li>
+<li>Inspired by that plot and its code this final plot is much more engaging than he boxplot because it tells a story far more clearly with no explanation needed.</li>
 </ul>
 <p><img src="marriage.svg" /><!-- --></p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">p &lt;-<span class="st"> </span>marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(person,prev_marriage) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">pers_prev_avg =</span> <span class="kw">median</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(person) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">pers_avg =</span> <span class="kw">median</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-9" title="9"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb68-10" title="10">    <span class="dt">x =</span> prev_marriage,</a>
-<a class="sourceLine" id="cb68-11" title="11">    <span class="dt">y =</span> age,</a>
-<a class="sourceLine" id="cb68-12" title="12">    <span class="dt">colour =</span> prev_marriage</a>
-<a class="sourceLine" id="cb68-13" title="13">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-14" title="14"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-15" title="15"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, </a>
-<a class="sourceLine" id="cb68-16" title="16">                        <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, </a>
-<a class="sourceLine" id="cb68-17" title="17">                        <span class="dt">size =</span> <span class="dv">4</span>,</a>
-<a class="sourceLine" id="cb68-18" title="18">                        <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-19" title="19"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">label=</span> <span class="kw">paste</span>( <span class="kw">round</span>(..y..,<span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb68-20" title="20">                                          <span class="st">&quot; years&quot;</span>)),</a>
-<a class="sourceLine" id="cb68-21" title="21">                        <span class="dt">fun.y=</span>median, </a>
-<a class="sourceLine" id="cb68-22" title="22">                        <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb68-23" title="23">                        <span class="dt">geom=</span><span class="st">&quot;text&quot;</span>, </a>
-<a class="sourceLine" id="cb68-24" title="24">                        <span class="dt">size=</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb68-25" title="25">                        <span class="dt">vjust =</span> <span class="fl">-1.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-26" title="26"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> pers_avg), </a>
-<a class="sourceLine" id="cb68-27" title="27">                     <span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>, </a>
-<a class="sourceLine" id="cb68-28" title="28">                     <span class="dt">size =</span> <span class="fl">0.6</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-29" title="29"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">0.7</span>,</a>
-<a class="sourceLine" id="cb68-30" title="30">                         <span class="dt">y =</span> pers_avg,</a>
-<a class="sourceLine" id="cb68-31" title="31">                         <span class="dt">label =</span> <span class="kw">paste</span>(person,<span class="st">&quot; averge age&quot;</span>, <span class="kw">round</span>(pers_avg,<span class="dv">0</span>)), </a>
-<a class="sourceLine" id="cb68-32" title="32">                         <span class="co">#colour = &quot;white&quot;,</span></a>
-<a class="sourceLine" id="cb68-33" title="33">                         <span class="dt">hjust =</span> <span class="fl">1.05</span>),</a>
-<a class="sourceLine" id="cb68-34" title="34">                     <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb68-35" title="35">                     <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-36" title="36"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> prev_marriage, </a>
-<a class="sourceLine" id="cb68-37" title="37">                   <span class="dt">xend =</span> prev_marriage,</a>
-<a class="sourceLine" id="cb68-38" title="38">                   <span class="dt">y =</span> pers_avg, </a>
-<a class="sourceLine" id="cb68-39" title="39">                   <span class="dt">yend =</span> pers_prev_avg),</a>
-<a class="sourceLine" id="cb68-40" title="40">               <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-41" title="41"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb68-42" title="42">                       <span class="dt">alpha =</span> <span class="fl">0.4</span>, </a>
-<a class="sourceLine" id="cb68-43" title="43">                       <span class="dt">width =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-44" title="44"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>,</a>
-<a class="sourceLine" id="cb68-45" title="45">                              <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-46" title="46"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_minimal</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb68-47" title="47"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme</span>(</a>
-<a class="sourceLine" id="cb68-48" title="48">                 <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>, </a>
-<a class="sourceLine" id="cb68-49" title="49">                                           <span class="dt">hjust =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb68-50" title="50">                 <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,</a>
-<a class="sourceLine" id="cb68-51" title="51">                 <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb68-52" title="52">                 <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb68-53" title="53">                 <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb68-54" title="54">                 <span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>,</a>
-<a class="sourceLine" id="cb68-55" title="55">                                             <span class="dt">hjust =</span> <span class="fl">0.1</span>),</a>
-<a class="sourceLine" id="cb68-56" title="56">                 <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </a>
-<a class="sourceLine" id="cb68-57" title="57">                                             <span class="dt">fill=</span><span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb68-58" title="58">                                             <span class="dt">size =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb68-59" title="59">                 ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-60" title="60"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span>base<span class="op">::</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">10</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-61" title="61"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-62" title="62"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb68-63" title="63">    <span class="dt">title =</span> <span class="st">&quot;Average median* age by previous marriage status&quot;</span>,</a>
-<a class="sourceLine" id="cb68-64" title="64">    <span class="dt">caption =</span> <span class="st">&quot;*The median is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it&quot;</span></a>
-<a class="sourceLine" id="cb68-65" title="65">  ) </a>
-<a class="sourceLine" id="cb68-66" title="66"></a>
-<a class="sourceLine" id="cb68-67" title="67">ggplot2<span class="op">::</span><span class="kw">ggsave</span>(<span class="dt">file=</span><span class="st">&quot;marriage.svg&quot;</span>, </a>
-<a class="sourceLine" id="cb68-68" title="68">                <span class="dt">device =</span> <span class="st">&quot;svg&quot;</span>,</a>
-<a class="sourceLine" id="cb68-69" title="69">                <span class="dt">plot=</span>p)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">p &lt;-<span class="st"> </span>marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(person,prev_marriage) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">pers_prev_avg =</span> <span class="kw">median</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(person) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">pers_avg =</span> <span class="kw">median</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-9" title="9"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(</a>
+<a class="sourceLine" id="cb74-10" title="10">    <span class="dt">x =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb74-11" title="11">    <span class="dt">y =</span> age,</a>
+<a class="sourceLine" id="cb74-12" title="12">    <span class="dt">colour =</span> prev_marriage</a>
+<a class="sourceLine" id="cb74-13" title="13">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-14" title="14"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-15" title="15"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, </a>
+<a class="sourceLine" id="cb74-16" title="16">                        <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, </a>
+<a class="sourceLine" id="cb74-17" title="17">                        <span class="dt">size =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb74-18" title="18">                        <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-19" title="19"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">label=</span> <span class="kw">paste</span>( <span class="kw">round</span>(..y..,<span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb74-20" title="20">                                          <span class="st">&quot; years&quot;</span>)),</a>
+<a class="sourceLine" id="cb74-21" title="21">                        <span class="dt">fun.y=</span>median, </a>
+<a class="sourceLine" id="cb74-22" title="22">                        <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb74-23" title="23">                        <span class="dt">geom=</span><span class="st">&quot;text&quot;</span>, </a>
+<a class="sourceLine" id="cb74-24" title="24">                        <span class="dt">size=</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb74-25" title="25">                        <span class="dt">vjust =</span> <span class="fl">-1.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-26" title="26"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> pers_avg), </a>
+<a class="sourceLine" id="cb74-27" title="27">                     <span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>, </a>
+<a class="sourceLine" id="cb74-28" title="28">                     <span class="dt">size =</span> <span class="fl">0.6</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-29" title="29"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">0.7</span>,</a>
+<a class="sourceLine" id="cb74-30" title="30">                         <span class="dt">y =</span> pers_avg,</a>
+<a class="sourceLine" id="cb74-31" title="31">                         <span class="dt">label =</span> <span class="kw">paste</span>(person,<span class="st">&quot; average age&quot;</span>, <span class="kw">round</span>(pers_avg,<span class="dv">0</span>)), </a>
+<a class="sourceLine" id="cb74-32" title="32">                         <span class="co">#colour = &quot;white&quot;,</span></a>
+<a class="sourceLine" id="cb74-33" title="33">                         <span class="dt">hjust =</span> <span class="fl">1.05</span>),</a>
+<a class="sourceLine" id="cb74-34" title="34">                     <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb74-35" title="35">                     <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-36" title="36"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> prev_marriage, </a>
+<a class="sourceLine" id="cb74-37" title="37">                   <span class="dt">xend =</span> prev_marriage,</a>
+<a class="sourceLine" id="cb74-38" title="38">                   <span class="dt">y =</span> pers_avg, </a>
+<a class="sourceLine" id="cb74-39" title="39">                   <span class="dt">yend =</span> pers_prev_avg),</a>
+<a class="sourceLine" id="cb74-40" title="40">               <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-41" title="41"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb74-42" title="42">                       <span class="dt">alpha =</span> <span class="fl">0.4</span>, </a>
+<a class="sourceLine" id="cb74-43" title="43">                       <span class="dt">width =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-44" title="44"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>,</a>
+<a class="sourceLine" id="cb74-45" title="45">                              <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-46" title="46"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_minimal</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb74-47" title="47"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb74-48" title="48">                 <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>, </a>
+<a class="sourceLine" id="cb74-49" title="49">                                           <span class="dt">hjust =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb74-50" title="50">                 <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,</a>
+<a class="sourceLine" id="cb74-51" title="51">                 <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb74-52" title="52">                 <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb74-53" title="53">                 <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb74-54" title="54">                 <span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>,</a>
+<a class="sourceLine" id="cb74-55" title="55">                                             <span class="dt">hjust =</span> <span class="fl">0.1</span>),</a>
+<a class="sourceLine" id="cb74-56" title="56">                 <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </a>
+<a class="sourceLine" id="cb74-57" title="57">                                             <span class="dt">fill=</span><span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb74-58" title="58">                                             <span class="dt">size =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb74-59" title="59">                 ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-60" title="60"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span>base<span class="op">::</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">10</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-61" title="61"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb74-62" title="62"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb74-63" title="63">    <span class="dt">title =</span> <span class="st">&quot;Average median* age by previous marriage status&quot;</span>,</a>
+<a class="sourceLine" id="cb74-64" title="64">    <span class="dt">caption =</span> <span class="st">&quot;*The median is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it&quot;</span></a>
+<a class="sourceLine" id="cb74-65" title="65">  ) </a>
+<a class="sourceLine" id="cb74-66" title="66"></a>
+<a class="sourceLine" id="cb74-67" title="67">ggplot2<span class="op">::</span><span class="kw">ggsave</span>(<span class="dt">file=</span><span class="st">&quot;marriage.svg&quot;</span>, </a>
+<a class="sourceLine" id="cb74-68" title="68">                <span class="dt">device =</span> <span class="st">&quot;svg&quot;</span>,</a>
+<a class="sourceLine" id="cb74-69" title="69">                <span class="dt">plot=</span>p)</a></code></pre></div>
 <pre><code>## Saving 7 x 5 in image</code></pre>
-<pre><code>## Warning: package &#39;gdtools&#39; was built under R version 3.6.1</code></pre>
 
 </div>
 </div>

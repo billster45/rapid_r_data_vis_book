@@ -1,10 +1,10 @@
 # Why start with geom_point() ?
 
-## The problem with bars and columns
+## ggplot is famed for annoying errors
 
-* We start with ggplot2::geom_point() because it works for for both raw and summrarised data straight away. And makes ggplot less intimidating when you start. It is famed for giving you errors see this tweet https://twitter.com/thomasp85/status/1170998101101953025?s=12
+* It's a good idea to start with ggplot2::geom_point() because it works for for both raw and summarised data straight away. This both speeds up everyone's EDA and makes ggplot less intimidating for beginners. It is famed for easily triggering errors that can confuse you. So much so that one of the maintainers of ggplot asked people on [Twitter](https://twitter.com/thomasp85/status/1170998101101953025?s=12) what their most common ggplot error was.
 
-* For example, here is raw granular data where each row describes a person getting married. 
+* To show you some classic errors let's explore more granular data where each row describes a person getting married. We just do a little data cleaning on the marriage date a column on whether they were married before.
 
 ```{r prep_case_data}
 marriage <-
@@ -20,11 +20,25 @@ kableExtra::kable(utils::head(marriage %>%
                                 dplyr::select(ceremonydate1, person, prev_marriage, age, race, sign)))
 ```
 
-* Before we had one value per city and date so geom_line worked fine as long as the date and the city were in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common). 
+* In our previous data set we had one value per city and date so geom_line worked fine as long as the date and the city were in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common). 
 
-* A common error with raw data I keep making is to try and put it into a bar or line chart straight away then get confused by the error or the chart.
+* A common way to trigger ggplot2 errors or create confusing plots is using bar or line charts before the data is summarised.
+
+* For example, a line chart is inappropriate with many ages per previous marriage status.
 
 ```{r plot_error, error = TRUE}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = prev_marriage,
+    y = age
+  ) +
+  ggplot2::geom_line()
+```
+
+* And here using a bar chart instead returns an error.
+
+```{r, error = TRUE}
 marriage %>%
   ggplot2::ggplot() +
   ggplot2::aes(
@@ -34,7 +48,7 @@ marriage %>%
   ggplot2::geom_bar()
 ```
 
-* ggplot2::geom_col() would be a better choice but we still have to think to much about what it's showing. Yes a bar plot might be the right choice for our final plot but it's sometimes troublesome when we want to explore quickly.
+* ggplot2::geom_col() or ggplot2::geom_bar(stat = "identity") will plot the data for us but it's showing the sum of all the ages in each group which doesn't really mean much.
 
 ```{r}
 marriage %>%
@@ -43,14 +57,17 @@ marriage %>%
     x = prev_marriage,
     y = age
   ) +
-  ggplot2::geom_col()
+  ggplot2::geom_bar(stat = "identity")
+  #ggplot2::geom_col()
 ```
 
-* One reason for this is with bars we can be starting a statistical transformation without realising it. This is well exlainned in the [Statistical Transformatoins](https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations) chapter of [R for Data Science](https://r4ds.had.co.nz/)
+* A column may end up being the final plot choice, but for fast EDA let's avoid bars, lines and columns and retreat to our friend geom_point()
 
-## Go back to geom_point() 
+* Another reason to avoid bars to begin with is they do a statistical transformation without us realising it. This is well explained in the [Statistical Transformatoins](https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations) chapter of [R for Data Science](https://r4ds.had.co.nz/)
 
-* Here we use ggplot2::geom_point() and facet by person
+## Retreat to geom_point() 
+
+* Here we go back to using ggplot2::geom_point() and facet by person
 
 ```{r}
 marriage %>%
@@ -63,9 +80,11 @@ marriage %>%
   ggplot2::geom_point(alpha = 0.3)
 ```
 
-* Immediately this is interesting as we see the ages of brides and grooms and what happened in their previous marriage! Death, Divorce or Unknown! 
+* Immediately this is interesting as we see the ages of brides and grooms and what if they are getting married for the first time or if they are divorced or widowed. 
 
-* Based on the distribution of those points that are so pleasingly intuitive we can go on to experiment with different classic ways to represent the distributions we see. So first histograms
+* We can then experiment with different ways of showing these distributions. Hadley Wickham's [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) has a good short chapter on [displaying distributions](https://ggplot2-book.org/statistical-summaries.html#distributions) 
+
+* First let's try a histogram.
 
 ```{r plot_error_fix}
 marriage %>%
@@ -76,7 +95,20 @@ marriage %>%
   ggplot2::geom_histogram()
 ```
 
-* Or the density distribution with ggplot2::geom_density()
+* We get a warning. We can set the bin width by hand, say 6 bins.
+
+```{r}
+marriage %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = age) +
+  ggplot2::facet_wrap(~ person + 
+                        prev_marriage) +
+  ggplot2::geom_histogram(bins = "6")
+```
+
+* This looks better but is there an optimum bin number? There is probably no "optimum" as this [exchange](https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram) discusses.
+
+* Or we might try the density distribution with ggplot2::geom_density()
 
 ```{r plot_error_fix2}
 p <-
@@ -98,7 +130,7 @@ directlabels::direct.label(p, list("top.points", cex = .75, hjust = 0, vjust = -
 
 ## geom_point() **and** geom_boxplot() is better
 
-* With so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well and would have been my final plot until I saw the fantastic plot in the next section.
+* But with so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well.
 
 ```{r}
 marriage %>%
@@ -116,19 +148,21 @@ marriage %>%
 
 ## Final choice: geom_jitter() **and** stat_summary()
 
-* In this ["evolution of a ggplot"](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) post it also starts with a boxplot but they finally choose ggplot2::geom_jitter() and ggpolt2::stat_summary(). The post gives the full code in a gradual story like the ggplot flipbooks styke. 
+* Until recently the chart above would have been my final plot. Until I saw the fantastic ["evolution of a ggplot"](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) post. 
+
+* In the gif below you can see they also start with a boxplot but the final choices is ggplot2::geom_jitter() and ggplot2::stat_summary(). The post gives the full code in a gradual story like the ggplot flip books. 
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif") 
 ```
 
-* And their final plot is here.. 
+* And here is the final plot.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
 ```
 
-* Inspired by that plot and stealing its methods this is plot is much more engaging and intersestinng than the boxplot in the section above.
+* Inspired by that plot and its code this final plot is much more engaging  than he boxplot because it tells a story far more clearly with no explanation needed.
 
 ```{r, echo=FALSE, fig.height=10}
 knitr::include_graphics(path = "marriage.svg") 
@@ -165,7 +199,7 @@ p <- marriage %>%
                      size = 0.6) +
   ggplot2::geom_text(aes(x = 0.7,
                          y = pers_avg,
-                         label = paste(person," averge age", round(pers_avg,0)), 
+                         label = paste(person," average age", round(pers_avg,0)), 
                          #colour = "white",
                          hjust = 1.05),
                      colour = "black",

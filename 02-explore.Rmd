@@ -81,6 +81,10 @@ df_red %>%
 
 * Beautiful. While sales have very different volumes in different cities we can see they follow the same seasonal pattern. To bring the patterns of sales closer to each other and easier to compare we can transform the sales value by taking its log. 
 
+* This is what Hadley Wickham does [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) though this transformation can only be seen in the [paid for version of his book](https://www.springer.com/gp/book/9783319242750).
+
+* He goes on to model this data by also removing the strong seasonal effects by fitting a linear model between the log of sales and the month, then plottinng the residuals (i.e. the change in sales not explained by the month). This is beyond the scope of this book and interestingly we get at that in the animation.
+
 ```{r ggplot_geom_line4}
 df_red %>%
   ggplot2::ggplot() +
@@ -205,7 +209,17 @@ print(df_red_nest$plot)
 
 * Also, we should use a code style recommended before that lays out your code cleanly. It's far quicker then to comment out or tweak the values of each part of your plot until it looks just right.
 
-* I won't explain each line below other than to say you can run it in chunks to understand it like the popular ggplot flip-books.
+* So this isn't necessarily the final perfect plot. There's things you may want to change depending on what story you want to tell or your personal style. But with this clear ladder of code you can more quickly read, edit, comment chunks out, or run in chunks from the top down (to understand what each bit does like the popular ggplot flip-books).
+
+* How did I create it? By Googling for what I wanted to do (e.g. "ggplot remove axis grid lines"), copying the code from a stackoverflow answer, and putting it into a clear struture as below.
+
+* Most of the tweaks or polish you will do will ggplot2::theme() or ggplot2::scale... But are you really going to remember what do to each time? I try not to worry about remembering how to do it and just focus on how I want it to look, getting absorbed in the look.
+
+* Then, after you have built a few of your own charts with clear code, you will end up going back to your own plots a store of code chunks you can re-use because your code is so well structured. But be prepared for this tweaking to take you much longer than you planned. Always.
+
+```{r, echo=FALSE, fig.height=10}
+knitr::include_graphics(path = "texas.svg") 
+```
 
 ```{r ggpot_bells_and_whistles}
 # a list of dates to add vertical lines to the plot
@@ -215,7 +229,7 @@ years <- base::seq.Date(
   by = "years"
 )
 
-df %>%
+p <- df %>%
   ggplot2::ggplot() +
   ggplot2::aes(
     x = date,
@@ -230,15 +244,15 @@ df %>%
   ggplot2::scale_y_continuous(labels = scales::comma) +
   ggplot2::scale_x_date(
     date_breaks = "1 year",
-    labels = scales::date_format("%b %Y"),
+    labels = scales::date_format("%b %y"),
     limits = c(
       as.Date("2000-01-01"),
       as.Date("2015-07-01")
     )
   ) +
   ggplot2::labs(
-    title = "US Housing Sales",
-    subtitle = "US cities with more than 5,000 sales in any month",
+    title = "Texas Housing Sales",
+    subtitle = "Texas cities with more than 5,000 sales in any month",
     caption = "Source: ggplot2 built in txhousing data set",
     x = "Month",
     y = "Volume of Sales"
@@ -274,6 +288,9 @@ df %>%
     ),
     legend.title = element_blank()
   )
-```
 
-So this isn't necessarily a good plot. There's things wrong with it I expect you'll want to change. But with this clear ladder of code you can more quickly read, edit, comment chunks out, or run in chunks from the top down. 
+ggplot2::ggsave(file="texas.svg", 
+                device = "svg",
+                plot=p)
+
+```

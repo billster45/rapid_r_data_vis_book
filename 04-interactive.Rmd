@@ -2,13 +2,11 @@
 
 ## Plotly cheat: convert ggplot with plotly::ggplotly()
 
-* Interactive plots help you and your audience find stories in data faster and more enjoyably. Carson Sievert (who maintains the Plotly R package) showed in a [talk](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we an "iterate quickly". And this is possible with how easy and tolerant plotly is to use.
+* Interactive plots can help both you and your audience find or tell stories in data faster and more enjoyably. 
 
-* However, while plotly is fast to explore, adding the final polish can be harder than ggplot.
+* Carson Sievert (who maintains the Plotly R package) [described](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we an "iterate quickly". And this really is possible with plotly that can be eaier to use than ggplot with fewer errors. However, while plotly is fast to explore, adding the final polish can be harder than ggplot.
 
-* Sievert also uses the same 
-
-* A quick way to use Plotly that builds on your ggplot skills is to put it through a plotly function called plotly::ggplotly() like this...
+* A quick way to use Plotly is to builds on your ggplot skills and put a ggplot through a plotly function called plotly::ggplotly() like this...
 
 ```{r ggplotly, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -23,15 +21,15 @@ plotly::ggplotly(p)
 
 ## Edit ggplot conversion with plotly::plotly_build()
 
-* Often, even with editing how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to what you wnat. If this happens use plotly::plotly_build() instead to build a plotly plot where you can edit all the settings.
+* Often, even with editing how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to what you wnat. If this happens using plotly::plotly_build() instead to build your plotly can let you edit many of the plotly plot settings
 
-* Plotly build is an R list which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) to create the web graphic. This diagram below from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Caron's book [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains it well.
+* Plotly build is an R list which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) uses to create the web graphic. This diagram from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Caron's Sievert's [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains that relationship.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://plotly-r.com/images/printing.svg") 
 ```
 
-* plotly::plotly_build() is a nested list of all the settings you can explore in RStudio using the viewer. Here is how we create a plotly_build() object we can edit.
+* plotly::plotly_build() is a nested list of all the settings. First, here is how we create a plotly_build() object we can edit.
 
 ```{r plotly_build, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -44,9 +42,18 @@ p <- df_red %>%
 p_build <- plotly::plotly_build(p)
 
 p_build
+
+str(p_build)
 ```
 
-* And now we later any of the setgins in p_build like this. Here we have edited the font size on the x axis to be a huge font size of 42. We found this setting by putting a dollar at the end of p_build and hitting the tab key to see the named elents of this list at different levels. This show us the top level of the list. We can then work our way down with dollars till we find the setting we want.
+* We can alter any of the settings in p_build by using utils::str(). This compactly displays the structure of any R object. 
+```{r}
+utils::str(p_build)
+```
+
+* In the code below we set the font size on the x axis to be a huge font size of 42. 
+
+* We found this setting by browsing the object structure above, then putting a dollar at the end of p_build and hitting the tab key to see the named elents of this list at different levels. This show us the top level of the list. We can then work our way down with dollars till we find the setting we want.
 
 ```{r}
 p_build$x$layout$xaxis$tickfont$size = 42
@@ -54,9 +61,11 @@ p_build$x$layout$xaxis$tickfont$size = 42
 p_build
 ```
 
-* However, this dollar and tab key method to search through the named elemnts of the plotly object is very fiddly and time consuming to find the value ou want to change. The gif below shows you an easier point and click way to do it. 
+* You can see the font size has changed to the massive 42 above.
 
-* In the environment pane, click on the magnifying glass to the right of p_build. You can then expand the nested lists like a tree till you reach the value to change. To the right of the value you will find an icon to click that automatically generates the code below. It can be used in place of the dollar and tab code method above.
+* However, this dollar and tab key method to search through the named elemnets of the plotly object is very fiddly and time consuming. The gif below shows you an easier point and click way to do it (but only in recent versions of RStudio).
+
+* To do this, in the environment pane, click on the magnifying glass to the right of p_build. You can then expand the nested lists like a tree till you reach the value to change. To the right of the value you will find an icon to click that automatically generates the code below. It can be used in place of the dollar and tab code method above.
 
 > p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]]
 
@@ -66,7 +75,9 @@ knitr::include_graphics(path = "plotly_build.gif")
 
 ## Plotly most basic
 
-* Plotly is very forgiving. Here we don't tell it what kind of plot we want (such as points or lines) but it still creates a plot. And thanfully it's our friend data points..
+* Often though passing ggplot through plotly does not give us what we want and using plotly itself is a better option. 
+
+* Plotly is very forgiving. Here we don't even tell plotly what kind of chart we want (such as points or lines). But it still creates a plot. And thanfully it's our friend from ggplot, data points. ANd it gives us lots of suggestions about what we might add inthe warnings.
 
 ```{r plotly_basic, warning=FALSE,message=FALSE}
 df_red %>% 
@@ -77,8 +88,8 @@ df_red %>%
 
 ## plotly (a few more settings)
 
-* with a few more settings we can make it a line plot
-https://plot.ly/r/line-and-scatter/
+* with a few more settings we can make it a [line plot](https://plot.ly/r/line-and-scatter/).
+
 
 ```{r plotly_further, warning=FALSE,message=FALSE}
 df_red %>% 
@@ -91,7 +102,7 @@ df_red %>%
 
 ## plotly (bells & whistles)
 
-* And as before add some bells and whistles to get close to our final plot.
+* And as before add some bells and whistles to get close to a final plot.
 
 ```{r plotly_bells_whistles, warning=FALSE,message=FALSE}
 df_red %>% 
@@ -126,8 +137,6 @@ base %>%
 ```
 
 
-
-
 ```{r}
 library(crosstalk)
 
@@ -150,7 +159,6 @@ select <- highlight(
 
 bscols(filter, select)
 ```
-
 
 ```{r}
 library(crosstalk)

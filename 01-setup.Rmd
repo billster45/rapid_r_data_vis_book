@@ -67,11 +67,11 @@ library(xfun)
 
 ## The data to visualise
 
-* A lot of data visilisation is about showing values change over time. For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we are going to moslty use the [txhousing](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) time series data built into ggplot. It provides house sales in American cities over several years. 
+* A lot of data visilisation is about showing values change over time. For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we are going to moslty use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) time series data built into ggplot.
 
 * If you're looking for more open data sets to test your data vis skills take a look at this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/).
 
-* The only manipulation we will do to the txhousing data set is create a real date using [lubridate](https://lubridate.tidyverse.org/). We also create a smaller data frame with fewer American cities so some plots aren't too crowded.
+* The only manipulation we will do to the Texas housing sales data is create a real date using [lubridate](https://lubridate.tidyverse.org/). We also create a smaller data frame with fewer Texas cities so some plots aren't too crowded.
 
 * We'll alo use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Asssurance into your coding process. You just replace dplyr verbs with the same verb in tidylog. The tidylog version tells you what each dplyr verb has done to your data in terms of the number and percentage of changes. For example, how many rows are dropped or added by filters or joins, or what percentage of values changed after a mutate.
 
