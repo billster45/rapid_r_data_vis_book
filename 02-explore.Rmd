@@ -197,9 +197,14 @@ df_red_nest[[3]][[1]] %>% View()
  
 * Finally, let's print every plot quite simply like this.
 
+<details><summary>Show all the looped prints</summary>
+<p>
 ```{r}
 print(df_red_nest$plot)
 ```
+</p>
+</details>
+<br/>
 
 ## Polish your final plot
 

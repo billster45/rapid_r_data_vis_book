@@ -10,7 +10,7 @@
 
 * And here is a good presentation on [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
 
-## R markdown with floating contents and tabbed pates
+## R markdown with floating contents and tabbed sections
 
 * When using R markdown I've found a [floating table of contents](https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents) and [tabbed sections](https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections) are the most effective for providing compact and easy to navigate html files.
 

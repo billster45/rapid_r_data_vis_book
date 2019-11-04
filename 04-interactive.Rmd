@@ -256,7 +256,7 @@ df_crosstalk %>%
 
 * ApexCharter is almost as good. It's inspried by highcharter but is free to use. Look how easily we can create a chart with this simple code.
 
-```{r apex_simple, fig.height=15}
+```{r apex_simple, fig.height=20}
 df_red %>% 
   apexcharter::apex(type = "line",
                   mapping = aes(x = date,
@@ -269,7 +269,7 @@ df_red %>%
 
 * To add the bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is very well laid out with good examples. Here I've put in some useful ones in a clear code format. 
 
-```{r apex_bells_whistles, out.width = "1100%"}
+```{r apex_bells_whistles, fig.height=20}
 df_red %>% 
   apexcharter::apex(aes(x = date, 
                         y = sales, 
