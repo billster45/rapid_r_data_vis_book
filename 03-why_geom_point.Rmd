@@ -128,7 +128,7 @@ p <-
 directlabels::direct.label(p, list("top.points", cex = .75, hjust = 0, vjust = -0.2))
 ```
 
-## geom_point() **and** geom_boxplot() is better
+## geom_jitter() **and** geom_boxplot() is better
 
 * But with so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well.
 

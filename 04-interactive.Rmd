@@ -118,12 +118,9 @@ df_red %>%
   rangeslider() 
 ```
 
-* However, Carson has already done some really nice bell and whislte plots on the Texas housing data already in his Plotly book: https://plotly-r.com/the-data-plot-pipeline.html
+* Also, Carson Sievert has created lots of bells and whistles plots on the same Texas housing data in his [Plotly book](https://plotly-r.com/client-side-linking.html). And more [here](https://plotly-r.com/the-data-plot-pipeline.html)
 
-
-* And more here https://plotly-r.com/client-side-linking.html
-
-* Below we re-produce Carson's plots with the identical code but it has been re-formatted applying the rules described earlier. This makes the examples easier to understand and re-use.
+* Below we re-produce some of Sievert's plots after re-formatting the code according to our [Code style] rules described earlier. This makes the examples easier to understand and re-use.
 
 * Try clicking on one of the lines to highlight it in this plot.
 

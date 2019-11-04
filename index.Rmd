@@ -10,11 +10,11 @@ link-citations: yes
 description: "Description"
 ---
 
-# Why read this?
-
-## [tl;dr](https://en.wiktionary.org/wiki/tl;dr)
+# [tl;dr](https://en.wiktionary.org/wiki/tl;dr)
 
 * Exploratory data analysis (EDA) is a key foundation for all data taksks. You can do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more tools to polish your final plot. But don't worry about remembering all the ggplot settings. Just use Google. Lay out your code really clearly so one line does one thing. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, and bookdown.  
+
+# Why read this?
 
 ## Good data analysis starts with fast & intuitive EDA
 
@@ -26,7 +26,7 @@ description: "Description"
 
 * The following chapters provide a series of linked methods in a logical order. First we start with exploring and visualising data quickly before you commit to the intense process of polishing your final plot. 
 
-* All the examples are aimed at beginners in R to those with an intermediate level of experince. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or adddition to the book as an issue here(add link).
+* All the examples are aimed at beginners in R to those with an intermediate level of experince. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or adddition to this book as an [issue](https://github.com/billster45/rapid_r_data_vis_book/issues).
 
 * Each section starts with a bare bones code example with no bells or whistles. This means each method could become one of a collection of tools you could pick from for fast Exploratory Data Analysis. 
 

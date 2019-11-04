@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Why read this? | Rapid R Data Viz Book</title>
+  <meta name="description" content="Description" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Why read this? | Rapid R Data Viz Book" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Description" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Why read this? | Rapid R Data Viz Book" />
+  
+  <meta name="twitter:description" content="Description" />
+  
+
+<meta name="author" content="Bill Cockerill" />
+
+
+<meta name="date" content="2019-11-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="intro.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/trelliscopejs_widget-0.3.0/trelliscope.min.js"></script>
+<script src="libs/trelliscopejs_widget-binding-0.2.1/trelliscopejs_widget.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="libs/ionrangeslider-2.1.2/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="libs/ionrangeslider-2.1.2/js/ion.rangeSlider.min.js"></script>
+<script src="libs/strftime-0.9.2/strftime-min.js"></script>
+<script src="libs/apexcharts-3.8.4/apexcharts.min.js"></script>
+<script src="libs/apexcharter-binding-0.1.2/apexcharter.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.8/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/dt-ext-fixedcolumns-1.10.16/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-fixedcolumns-1.10.16/js/dataTables.fixedColumns.min.js"></script>
+<link href="libs/dt-ext-buttons-1.10.16/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-buttons-1.10.16/js/dataTables.buttons.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.16/js/buttons.flash.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.16/js/buttons.html5.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.16/js/buttons.colVis.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.16/js/buttons.print.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/jquery-ui-1.11.4/jquery.ui.touch-punch.min.js"></script>
+<link href="libs/c3-0.4.11/c3.min.css" rel="stylesheet" />
+<script src="libs/c3-0.4.11/c3.min.js"></script>
+<script src="libs/d3-3.5.5/d3.v3.min.js"></script>
+<link href="libs/pivottable-2.19.0/pivot.min.css" rel="stylesheet" />
+<script src="libs/pivottable-2.19.0/pivot.min.js"></script>
+<script src="libs/pivottable-2.19.0/d3_renderers.min.js"></script>
+<script src="libs/pivottable-2.19.0/c3_renderers.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.cs.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.da.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.de.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.es.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.fr.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.it.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.nl.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.pl.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.pt.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.ru.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.sq.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.tr.min.js"></script>
+<script src="libs/pivottable-2.19.0/pivot.zh.min.js"></script>
+<link href="libs/subtotal-1.10.0/subtotal.min.css" rel="stylesheet" />
+<script src="libs/subtotal-1.10.0/subtotal.min.js"></script>
+<script src="libs/polyfill-0.1/polyfill.min.js"></script>
+<link href="libs/rpivotTable_style-0.1/rpivotTable.css" rel="stylesheet" />
+<script src="libs/rpivotTable-binding-0.3.0/rpivotTable.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rapid R Data Viz Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> <span>tl;dr</span></a></li>
+<li class="chapter" data-level="2" data-path="why-read-this.html"><a href="why-read-this.html"><i class="fa fa-check"></i><b>2</b> Why read this?</a><ul>
+<li class="chapter" data-level="2.1" data-path="why-read-this.html"><a href="why-read-this.html#good-data-analysis-starts-with-fast-intuitive-eda"><i class="fa fa-check"></i><b>2.1</b> Good data analysis starts with fast &amp; intuitive EDA</a></li>
+<li class="chapter" data-level="2.2" data-path="why-read-this.html"><a href="why-read-this.html#is-this-data-science"><i class="fa fa-check"></i><b>2.2</b> Is this Data Science?</a></li>
+<li class="chapter" data-level="2.3" data-path="why-read-this.html"><a href="why-read-this.html#what-about-python-for-data-viz"><i class="fa fa-check"></i><b>2.3</b> What about Python for data viz?</a></li>
+<li class="chapter" data-level="2.4" data-path="why-read-this.html"><a href="why-read-this.html#what-about-point-and-click-data-vis-tools"><i class="fa fa-check"></i><b>2.4</b> What about Point and Click data vis tools?</a></li>
+<li class="chapter" data-level="2.5" data-path="why-read-this.html"><a href="why-read-this.html#find-an-r-master-to-inspire-you"><i class="fa fa-check"></i><b>2.5</b> Find an R master to inspire you</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="why-read-this.html"><a href="why-read-this.html#david-robinson"><i class="fa fa-check"></i><b>2.5.1</b> David Robinson</a></li>
+<li class="chapter" data-level="2.5.2" data-path="why-read-this.html"><a href="why-read-this.html#claus-wilke"><i class="fa fa-check"></i><b>2.5.2</b> Claus Wilke</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>3</b> Setup</a><ul>
+<li class="chapter" data-level="3.1" data-path="intro.html"><a href="intro.html#navigate-r-markdown-quickly"><i class="fa fa-check"></i><b>3.1</b> Navigate R markdown quickly</a></li>
+<li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.2</b> Load R packages to your library</a></li>
+<li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.3</b> The data to visualise</a></li>
+<li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.4</b> Code style</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="intro.html"><a href="intro.html#include-the-package-and-parameter-names"><i class="fa fa-check"></i><b>3.4.1</b> Include the package and parameter names</a></li>
+<li class="chapter" data-level="3.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>3.4.2</b> One line does one thing - hit the return key a lot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#start-with-dplyr-counts-and-summaries-in-console"><i class="fa fa-check"></i><b>4.1</b> Start with dplyr counts and summaries in console</a></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>4.2</b> Plot data points with geom_point()</a></li>
+<li class="chapter" data-level="4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>4.3</b> Facet by categories</a></li>
+<li class="chapter" data-level="4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>4.4</b> Facet interactively (trelliscopejs)</a></li>
+<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category seperately</a></li>
+<li class="chapter" data-level="4.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>4.6</b> Polish your final plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>5</b> Why start with geom_point() ?</a><ul>
+<li class="chapter" data-level="5.1" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#ggplot-is-famed-for-annoying-errors"><i class="fa fa-check"></i><b>5.1</b> ggplot is famed for annoying errors</a></li>
+<li class="chapter" data-level="5.2" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#retreat-to-geom_point"><i class="fa fa-check"></i><b>5.2</b> Retreat to geom_point()</a></li>
+<li class="chapter" data-level="5.3" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#geom_jitter-and-geom_boxplot-is-better"><i class="fa fa-check"></i><b>5.3</b> geom_jitter() <strong>and</strong> geom_boxplot() is better</a></li>
+<li class="chapter" data-level="5.4" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html#final-choice-geom_jitter-and-stat_summary"><i class="fa fa-check"></i><b>5.4</b> Final choice: geom_jitter() <strong>and</strong> stat_summary()</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interactive-plots.html"><a href="interactive-plots.html"><i class="fa fa-check"></i><b>6</b> Interactive plots</a><ul>
+<li class="chapter" data-level="6.1" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-cheat-convert-ggplot-with-plotlyggplotly"><i class="fa fa-check"></i><b>6.1</b> Plotly cheat: convert ggplot with plotly::ggplotly()</a></li>
+<li class="chapter" data-level="6.2" data-path="interactive-plots.html"><a href="interactive-plots.html#edit-ggplot-conversion-with-plotlyplotly_build"><i class="fa fa-check"></i><b>6.2</b> Edit ggplot conversion with plotly::plotly_build()</a></li>
+<li class="chapter" data-level="6.3" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-most-basic"><i class="fa fa-check"></i><b>6.3</b> Plotly most basic</a></li>
+<li class="chapter" data-level="6.4" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-a-few-more-settings"><i class="fa fa-check"></i><b>6.4</b> plotly (a few more settings)</a></li>
+<li class="chapter" data-level="6.5" data-path="interactive-plots.html"><a href="interactive-plots.html#plotly-bells-whistles"><i class="fa fa-check"></i><b>6.5</b> plotly (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="6.6" data-path="interactive-plots.html"><a href="interactive-plots.html#crosstalk"><i class="fa fa-check"></i><b>6.6</b> crosstalk</a></li>
+<li class="chapter" data-level="6.7" data-path="interactive-plots.html"><a href="interactive-plots.html#apexchater-simple"><i class="fa fa-check"></i><b>6.7</b> apexchater simple</a></li>
+<li class="chapter" data-level="6.8" data-path="interactive-plots.html"><a href="interactive-plots.html#apexchater-with-bells-whistles"><i class="fa fa-check"></i><b>6.8</b> apexchater with bells &amp; whistles</a></li>
+<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-for-time-series-data"><i class="fa fa-check"></i><b>6.9</b> dygraphs for time series data</a></li>
+<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraphs bells &amp; whistles</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Animation</a><ul>
+<li class="chapter" data-level="7.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>7.1</b> ggplot animation</a></li>
+<li class="chapter" data-level="7.2" data-path="animation.html"><a href="animation.html#plotly-animation"><i class="fa fa-check"></i><b>7.2</b> plotly animation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>8</b> Tables</a><ul>
+<li class="chapter" data-level="8.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>8.1</b> DataTables (DT) basic</a></li>
+<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whisltes</a></li>
+<li class="chapter" data-level="8.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>8.3</b> Colour DataTable with formattable</a></li>
+<li class="chapter" data-level="8.4" data-path="tables.html"><a href="tables.html#rpivottable-simple"><i class="fa fa-check"></i><b>8.4</b> rpivottable simple</a></li>
+<li class="chapter" data-level="8.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>8.5</b> rpivottable (bells &amp; whistles)</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>9</b> Colours</a><ul>
+<li class="chapter" data-level="9.1" data-path="colours.html"><a href="colours.html#color-brewer"><i class="fa fa-check"></i><b>9.1</b> Color Brewer</a></li>
+<li class="chapter" data-level="9.2" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>9.2</b> Prismatic</a></li>
+<li class="chapter" data-level="9.3" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>9.3</b> Hand picked colours</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>10</b> Final document</a><ul>
+<li class="chapter" data-level="10.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>10.1</b> Picking a final output doc</a></li>
+<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard"><i class="fa fa-check"></i><b>10.2</b> flexdashboard</a></li>
+<li class="chapter" data-level="10.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>10.3</b> R markdown with floating contents and tabbed sections</a></li>
+<li class="chapter" data-level="10.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>10.4</b> bookdown</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rapid R Data Viz Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="why-read-this" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Why read this?</h1>
+<div id="good-data-analysis-starts-with-fast-intuitive-eda" class="section level2">
+<h2><span class="header-section-number">2.1</span> Good data analysis starts with fast &amp; intuitive EDA</h2>
+<ul>
+<li><p>Good Exploratory Data Analysis (EDA) is the foundation of most data work from data engineering to <a href="http://blog.kaggle.com/category/winners-interviews/">Kaggle Data Science competition winners</a>.</p></li>
+<li><p>Ideally, you can explore your data <strong>quickly</strong> and intuitively in a <a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a> absorbed by the patterns and stories your data reveals, not slowed by code errors and too many Google searches.</p></li>
+<li><p>This book aims to help you explore data faster with fewer errors. But at the same time, to not compromise on code clarity and quality. Your quickly created code can still be made easy to read and re-use with only a few extra tweaks as you go along.</p></li>
+<li><p>The following chapters provide a series of linked methods in a logical order. First we start with exploring and visualising data quickly before you commit to the intense process of polishing your final plot.</p></li>
+<li><p>All the examples are aimed at beginners in R to those with an intermediate level of experince. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or adddition to this book as an <a href="https://github.com/billster45/rapid_r_data_vis_book/issues">issue</a>.</p></li>
+<li><p>Each section starts with a bare bones code example with no bells or whistles. This means each method could become one of a collection of tools you could pick from for fast Exploratory Data Analysis.</p></li>
+<li><p>After each simple code example a more complex version is provided in well structured code. The more detailed examples you could use as a template to adapt into publication quality plots.</p></li>
+<li><p>The book is my <em>current</em> approach to data visualiation in R. But my methods keep changing and improving from reading <a href="https://www.r-bloggers.com/">R-Bloggers</a>, <a href="https://twitter.com/search?q=%23rstats&amp;src=typd&amp;lang=en">#rstats</a> daily, and learning from colleague’s work.</p></li>
+</ul>
+</div>
+<div id="is-this-data-science" class="section level2">
+<h2><span class="header-section-number">2.2</span> Is this Data Science?</h2>
+<ul>
+<li><p>This diagram is the Data Science workflow picture from <a href="https://r4ds.had.co.nz/introduction.html#what-you-will-learn">R for Data Science</a>. I’ve underlined the Visualise and Communicate parts of the Data Science process in R that this book seeks to help you with. I’ve also added code communication to emphasise the importance of well laid out code as another key part of communicating. Clear code is impotant both to anyone reading, re-using, or quality assuring your code. And it will help your future yourself when you have forgotten what you were trying to do.</p></li>
+<li><p>Modelling is still an imporant part of your data exploration and understanding and part of the Data Science process well covered and described in the R 4 Data Science <a href="https://r4ds.had.co.nz/model-intro.html">modelling chapter</a>.</p></li>
+</ul>
+<blockquote>
+<p>“The goal of a model is to provide a simple low-dimensional summary of a dataset. Ideally, the model will capture true “signals” (i.e. patterns generated by the phenomenon of interest), and ignore “noise” (i.e. random variation that you’re not interested in)."</p>
+</blockquote>
+<p>Another good guide to that on the same data used in this book is <a href="http://rstudio-pubs-static.s3.amazonaws.com/224425_2c2a324004384953a3a7ac12e6d36c87.html">here</a>.</p>
+<p><img src="data-science-explore_edit.png" width="100%" /></p>
+</div>
+<div id="what-about-python-for-data-viz" class="section level2">
+<h2><span class="header-section-number">2.3</span> What about Python for data viz?</h2>
+<ul>
+<li>Python is also a powerful coding language for data visualisation using packages like Pandas, Seaborn, Matplotlib, and Bokeh. My day to day work is usally limited to R so this is where I’ve built my data vis skills so far. A good place to find similar Python code examples to this book are the Python Notebooks on <a href="https://www.kaggle.com/kernels">Kaggle</a>. Use the filters at the top to select popular data visulisation notebooks in Python code and sort by the most votes.</li>
+</ul>
+</div>
+<div id="what-about-point-and-click-data-vis-tools" class="section level2">
+<h2><span class="header-section-number">2.4</span> What about Point and Click data vis tools?</h2>
+<ul>
+<li>Graphical User Interface (GUI) or Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place in EDA, as long as we recognise their strengths and weaknesses in comparison to code. Hadley Wickham contrasts PaC tools vs code tools well in this <a href="http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/">interview</a>.</li>
+</ul>
+<hr />
+<blockquote>
+<p><strong>Point-and-click interfaces are great, because they lay out all of your options in front of you, and you don’t have to remember anything. You can navigate through the set of pre-supplied options. And that’s also it’s greatest weakness, because first of all, you are constrained into what the developer thought you should be able to do.</strong> And secondly, because your primary interaction is with a mouse, it’s very <strong>difficult to record what you did. And I think that’s a problem for science, because ideally you want to say how you actually got these results. And then simply do that reliably and have other people critique you on that.</strong> But it’s also really hard when you are learning, because when you have a problem, how do you communicate that problem to someone else? You basically have to say, “I clicked here, then I clicked here, then I clicked here, and I did this.” Or you make a screen cast, and it’s just clunky.</p>
+</blockquote>
+<blockquote>
+<p>So, the advantages of programming languages like <strong>R or Python, is that the primary mechanism for communicating with the computer is text. And that is scary because there’s nothing like this blinking cursory in front of you; it doesn’t tell you what to do next. But it means you are unconstrained, because you can do anything you can imagine.</strong> And you have all these advantages of text, where if you have a problem with your code, you can copy and paste it into an email, you can Google it, you can check it and put it on GitHub, or you can share it by Twitter. <strong>There’s just so many advantages to the fact that the primary way you relate with a programming language is through code, which is just text. And so, as long as you are doing data analysis fairly regularly, I think all the advantages outweigh a point and click interface</strong> like Stata.</p>
+</blockquote>
+<hr />
+</div>
+<div id="find-an-r-master-to-inspire-you" class="section level2">
+<h2><span class="header-section-number">2.5</span> Find an R master to inspire you</h2>
+<ul>
+<li>This book is just one set of ideas in a certain style. It’s not a rigid formula you must follow. Seek ideas and inspiration from a variety of people and books. Find your own path in Data Science data exploration, visualsation and communication. Two people who have inspired me are David Robinson and Claus Wilke I describe below. I’ve also collected a series of <a href="https://github.com/billster45/r-guides-and-galleries/blob/master/README.md">R guides and galleries</a> in a logic order I have found useful and inspiring.</li>
+</ul>
+<div id="david-robinson" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> David Robinson</h3>
+<ul>
+<li><p>David Robinson explores, cleans then analystes data in R rapidly and intuiviely. Precislye what I’m trying to help you do with this book. Several methods here I saw Robinson do first on his Tidy Tuesday live coding YouTube videos. I’d strongly reccomend watching any of his <a href="https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday">coding videos</a>.</p></li>
+<li><p>While this book covers the exploration, visualisation and communication parts of Data Science, Robinson’s Tidy Tuesday videos take you through the complete R for Data Sciecne workflow. From import to communicate. And all in one hour (or less if you increase the playback speed to 1.5x).</p></li>
+</ul>
+</div>
+<div id="claus-wilke" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Claus Wilke</h3>
+<ul>
+<li><p>Another R master in data vis and communication is Claus Wilke. He recently created a guide similar to this book. It starts with simple examples that become more complex. In his <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> guide see how he starts with the bare minimum code you need to create the plot. He then gradually builds that code up layer by layer until it is publication quality.</p></li>
+<li><p>Wilke wrote <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> to help readers of his <a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a> book re-create his charts more easily on their own data. So give them an easier to follow recipie. This book is similar to that style but with a greater focus on exploratory data analysis, and offering more tools than just ggplot, particulary for interactive plots, as well as reccomending a clean code style.</p></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
