@@ -2,11 +2,9 @@
 
 ## ggplot animation
 
-* Animation is easy to add. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples you can easily adapt.
+* Animation can be easy to add to ggplot with the gganimate package. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples you could adapt.
 
-* However, I've found animation is most effective when you see changes over time. Here is the annual pattern of house sales changing each year.
-
-* Getting the labels to display at the end of each line as it animates is fiddly.
+* I've found animation is most effective to show changes over time. Here is the annual pattern of house sales changing each year.
 
 ```{r, echo=FALSE, out.width = "80%"}
 knitr::include_graphics("housing.gif") 
@@ -75,7 +73,6 @@ p <- df %>%
             hjust = 0,
             size = 8) 
 
-
 gganimate::animate(p, width = 900, 
                    height = 600, 
                    end_pause = 10,
@@ -88,7 +85,9 @@ gganimate::anim_save(filename = "housing.gif")
 
 ## plotly animation
 
-https://plotly-r.com/animating-views.html
+* Carson Sievert's book shows us how to [animate in plotly](https://plotly-r.com/animating-views.html).
+
+* The code is as simple as specifying which column of categories we animate over as frames.
 
 ```{r}
 df_red %>% 
@@ -96,13 +95,14 @@ df_red %>%
   plotly::add_lines(
     x = ~month, 
     y = ~sales,
-    frame = ~year, 
+    frame = ~year,  # this line does the animation
     color = ~factor(city),
     line = list(simplify = FALSE)
   ) %>%
   plotly::layout(yaxis = list(title = "Sales"))
 ```
 
+* Here we play around with the animation style.
 
 ```{r}
 df_red %>% 

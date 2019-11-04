@@ -162,7 +162,7 @@ knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
 ```
 
-* Inspired by that plot and its code this final plot is much more engaging  than he boxplot because it tells a story far more clearly with no explanation needed.
+* Inspired by that plot and its code this final plot is much more engaging  than the boxplot because it tells a story far more clearly with no explanation needed. Much like a chart in an online newspaper.
 
 ```{r, echo=FALSE, fig.height=10}
 knitr::include_graphics(path = "marriage.svg") 

@@ -34,6 +34,7 @@ library(png) # dunno
 library(directlabels) # for directly labelling lines for example
 library(gghighlight) # label points of interest on your charts
 library(ggrepel) # move labels so they don't overlap
+library(glue) # 
 
 # colours
 library(RColorBrewer) # ready to use colour pallets
@@ -50,7 +51,8 @@ library(tidylog) # great for QA on the fly
 
 # wrangling / munging / manipulating
 library(tidyverse) # loads of useful packages in one 
-library(glue) # not sure
+
+library(crosstalk) # link html widgets
 
 # time series tools
 library(anytime) # convert text into the right date type
@@ -60,9 +62,6 @@ library(tsbox) # easily convert to time series
 # sample data
 library(mosaicData) # sample data
 
-library(xfun)
-# https://github.com/vincentarelbundock/Rdatasets/blob/master/Rdatasets.R
-# https://vincentarelbundock.github.io/Rdatasets/
 ```
 
 ## The data to visualise

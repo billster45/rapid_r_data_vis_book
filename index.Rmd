@@ -12,6 +12,10 @@ description: "Description"
 
 # Why read this?
 
+## [tl;dr](https://en.wiktionary.org/wiki/tl;dr)
+
+* Exploratory data analysis (EDA) is a key foundation for all data taksks. You can do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more tools to polish your final plot. But don't worry about remembering all the ggplot settings. Just use Google. Lay out your code really clearly so one line does one thing. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, and bookdown.  
+
 ## Good data analysis starts with fast & intuitive EDA
 
 * Good Exploratory Data Analysis (EDA) is the foundation of most data work from data engineering to [Kaggle Data Science competition winners](http://blog.kaggle.com/category/winners-interviews/).
