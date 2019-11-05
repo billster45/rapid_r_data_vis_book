@@ -164,7 +164,7 @@ knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e27757
 
 * Inspired by that plot and its code this final plot is much more engaging  than the boxplot because it tells a story far more clearly with no explanation needed. Much like a chart in an online newspaper.
 
-```{r, echo=FALSE, fig.height=10}
+```{r, echo=FALSE, fig.height=12}
 knitr::include_graphics(path = "marriage.svg") 
 ```
 
@@ -231,8 +231,8 @@ p <- marriage %>%
   ggplot2::scale_y_continuous(breaks=base::seq(0,100,10)) +
   ggplot2::coord_flip() +
     ggplot2::labs(
-    title = "Average* age of brides and grooms by previous marriage status",
-    caption = "*The average is the median. This is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it"
+    title = "Age* of brides and grooms by previous marriage status",
+    caption = "*The average ages are the median. This is the middle age among all ages.\n i.e. 50% of ages fall below the median value and 50% above it"
   ) 
 
 ggplot2::ggsave(file="marriage.svg", 
