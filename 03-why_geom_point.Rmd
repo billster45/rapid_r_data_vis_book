@@ -231,11 +231,30 @@ p <- marriage %>%
   ggplot2::scale_y_continuous(breaks=base::seq(0,100,10)) +
   ggplot2::coord_flip() +
     ggplot2::labs(
-    title = "Average median* age by previous marriage status",
-    caption = "*The median is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it"
+    title = "Average* age of brides and grooms by previous marriage status",
+    caption = "*The average is the median. This is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it"
   ) 
 
 ggplot2::ggsave(file="marriage.svg", 
                 device = "svg",
                 plot=p)
 ```
+
+* In the plot above we can see grooms are older on average overall. But do they tend to be older or younger than their bride within each marriage? 
+
+* As a final quick exploratory chart we put the ceremondy ID on the x axi, use geom_point() for age and colour the dots for brides and grooms with their own colour. As we have added the ceremeony ID (bookpageID) to the group aesthetic, when we add geom_line this creates a line that joins the two data points for each marriage.
+
+* we can see that more often than not grooms are older than brides.
+
+```{r}
+marriage %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = bookpageID, 
+               y = age, 
+               colour = person, 
+               group = bookpageID) + 
+  ggplot2::geom_point() + 
+  ggplot2::geom_line() + 
+    ggplot2::coord_flip()
+```
+

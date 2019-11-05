@@ -14,6 +14,14 @@ The gif below shows you these three methods. It was recorded with [ScreenToGif](
 knitr::include_graphics("outline.gif") 
 ```
 
+## Rstudio shortcuts
+
+* Another tip to speed up coding in RStudio is to use shorcuts. Here is the full list of [RStudio shorcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
+
+* I use Ctrl+Shift+M in Windows (Cmd+Shift+M in Mac) to insert a pipe (%>%) with spaces. This makes coding really fast.
+
+* I also use Alt+- in Windows (Option+- in Mac) to create the assign operator (<-). So you just hold down Alt then press the hyphen key.
+
 ## Load R packages to your library
 
 Here are all the R packages used in this book. 

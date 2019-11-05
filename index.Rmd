@@ -14,6 +14,10 @@ description: "Description"
 
 * Exploratory data analysis (EDA) is a key foundation for all data taksks. You can do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more tools to polish your final plot. But don't worry about remembering all the ggplot settings. Just use Google. Lay out your code really clearly so one line does one thing. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, and bookdown.  
 
+```{r, echo=FALSE, fig.height=10}
+knitr::include_graphics(path = "marriage.svg") 
+```
+
 # Why read this?
 
 ## Good data analysis starts with fast & intuitive EDA

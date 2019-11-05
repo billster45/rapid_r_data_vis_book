@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-04" />
+<meta name="date" content="2019-11-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -214,11 +214,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>3</b> Setup</a><ul>
 <li class="chapter" data-level="3.1" data-path="intro.html"><a href="intro.html#navigate-r-markdown-quickly"><i class="fa fa-check"></i><b>3.1</b> Navigate R markdown quickly</a></li>
-<li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.2</b> Load R packages to your library</a></li>
-<li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.3</b> The data to visualise</a></li>
-<li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.4</b> Code style</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="intro.html"><a href="intro.html#include-the-package-and-parameter-names"><i class="fa fa-check"></i><b>3.4.1</b> Include the package and parameter names</a></li>
-<li class="chapter" data-level="3.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>3.4.2</b> One line does one thing - hit the return key a lot</a></li>
+<li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#rstudio-shortcuts"><i class="fa fa-check"></i><b>3.2</b> Rstudio shortcuts</a></li>
+<li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.3</b> Load R packages to your library</a></li>
+<li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.4</b> The data to visualise</a></li>
+<li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.5</b> Code style</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#include-the-package-and-parameter-names"><i class="fa fa-check"></i><b>3.5.1</b> Include the package and parameter names</a></li>
+<li class="chapter" data-level="3.5.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>3.5.2</b> One line does one thing - hit the return key a lot</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a><ul>
@@ -304,8 +305,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The gif below shows you these three methods. It was recorded with <a href="https://www.screentogif.com/">ScreenToGif</a>. I found it super easy to use and I felt worthy of donating to.</p>
 <p><img src="outline.gif" width="100%" /></p>
 </div>
+<div id="rstudio-shortcuts" class="section level2">
+<h2><span class="header-section-number">3.2</span> Rstudio shortcuts</h2>
+<ul>
+<li><p>Another tip to speed up coding in RStudio is to use shorcuts. Here is the full list of <a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts">RStudio shorcuts</a>.</p></li>
+<li><p>I use Ctrl+Shift+M in Windows (Cmd+Shift+M in Mac) to insert a pipe (%&gt;%) with spaces. This makes coding really fast.</p></li>
+<li><p>I also use Alt+- in Windows (Option+- in Mac) to create the assign operator (&lt;-). So you just hold down Alt then press the hyphen key.</p></li>
+</ul>
+</div>
 <div id="load-r-packages-to-your-library" class="section level2">
-<h2><span class="header-section-number">3.2</span> Load R packages to your library</h2>
+<h2><span class="header-section-number">3.3</span> Load R packages to your library</h2>
 <p>Here are all the R packages used in this book.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># data vis https://www.htmlwidgets.org/index.html</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(ggplot2) <span class="co"># static charts - amazing variety</span></a>
@@ -351,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-42" title="42"><span class="kw">library</span>(mosaicData) <span class="co"># sample data</span></a></code></pre></div>
 </div>
 <div id="the-data-to-visualise" class="section level2">
-<h2><span class="header-section-number">3.3</span> The data to visualise</h2>
+<h2><span class="header-section-number">3.4</span> The data to visualise</h2>
 <ul>
 <li><p>A lot of data visilisation is about showing values change over time. For this reason, instead of using a <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html">built in data set</a> like iris or mtcars we are going to moslty use the <a href="http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html">Texas housing sales</a> time series data built into ggplot.</p></li>
 <li><p>If you’re looking for more open data sets to test your data vis skills take a look at this <a href="https://vincentarelbundock.github.io/Rdatasets/">comprehensive list of R datasets</a>.</p></li>
@@ -603,9 +612,9 @@ Abilene
 </table>
 </div>
 <div id="code-style" class="section level2">
-<h2><span class="header-section-number">3.4</span> Code style</h2>
+<h2><span class="header-section-number">3.5</span> Code style</h2>
 <div id="include-the-package-and-parameter-names" class="section level3">
-<h3><span class="header-section-number">3.4.1</span> Include the package and parameter names</h3>
+<h3><span class="header-section-number">3.5.1</span> Include the package and parameter names</h3>
 <ul>
 <li><p>I started learning R using other people’s code. I got confused where functions came from when they used many packages, base functions and their own functions. It made their code appear more complex than it really was.</p></li>
 <li><p>To make your code more transparent I reccomend using the package name before every function. Even base R functions. This helps people new to R and your future self who may have forgtten what you were doing.</p></li>
@@ -619,7 +628,7 @@ Abilene
 <p><img src="package_name.gif" width="1100%" /></p>
 </div>
 <div id="one-line-does-one-thing---hit-the-return-key-a-lot" class="section level3">
-<h3><span class="header-section-number">3.4.2</span> One line does one thing - hit the return key a lot</h3>
+<h3><span class="header-section-number">3.5.2</span> One line does one thing - hit the return key a lot</h3>
 <ul>
 <li><p>Ideally one line of code does one thing. Hit the return key after every pipe (%&gt;%), comma or plus (+) and RStudio tabs will space your code out in just the right way.</p></li>
 <li><p>For example, the code below works but doesn’t follow the rules so far (Package &amp; Paramater names and one action per line). The code is cramped, and slow to understand, edit or re-use.</p></li>

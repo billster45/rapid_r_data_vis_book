@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-04" />
+<meta name="date" content="2019-11-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -214,11 +214,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>3</b> Setup</a><ul>
 <li class="chapter" data-level="3.1" data-path="intro.html"><a href="intro.html#navigate-r-markdown-quickly"><i class="fa fa-check"></i><b>3.1</b> Navigate R markdown quickly</a></li>
-<li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.2</b> Load R packages to your library</a></li>
-<li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.3</b> The data to visualise</a></li>
-<li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.4</b> Code style</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="intro.html"><a href="intro.html#include-the-package-and-parameter-names"><i class="fa fa-check"></i><b>3.4.1</b> Include the package and parameter names</a></li>
-<li class="chapter" data-level="3.4.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>3.4.2</b> One line does one thing - hit the return key a lot</a></li>
+<li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#rstudio-shortcuts"><i class="fa fa-check"></i><b>3.2</b> Rstudio shortcuts</a></li>
+<li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.3</b> Load R packages to your library</a></li>
+<li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.4</b> The data to visualise</a></li>
+<li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.5</b> Code style</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#include-the-package-and-parameter-names"><i class="fa fa-check"></i><b>3.5.1</b> Include the package and parameter names</a></li>
+<li class="chapter" data-level="3.5.2" data-path="intro.html"><a href="intro.html#one-line-does-one-thing---hit-the-return-key-a-lot"><i class="fa fa-check"></i><b>3.5.2</b> One line does one thing - hit the return key a lot</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a><ul>
@@ -480,7 +481,7 @@ Pisces
 <a class="sourceLine" id="cb64-6" title="6">  ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb64-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_bar</span>()</a></code></pre></div>
 <pre><code>## Error: stat_count() must not be used with a y aesthetic.</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ul>
 <li>ggplot2::geom_col() or ggplot2::geom_bar(stat = “identity”) will plot the data for us but it’s showing the sum of all the ages in each group which doesn’t really mean much.</li>
 </ul>
@@ -491,7 +492,7 @@ Pisces
 <a class="sourceLine" id="cb66-5" title="5">    <span class="dt">y =</span> age</a>
 <a class="sourceLine" id="cb66-6" title="6">  ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb66-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">  <span class="co">#ggplot2::geom_col()</span></a></code></pre></div>
 <ul>
 <li><p>A column may end up being the final plot choice, but for fast EDA let’s avoid bars, lines and columns and retreat to our friend geom_point()</p></li>
@@ -511,7 +512,7 @@ Pisces
 <a class="sourceLine" id="cb68-6" title="6">  ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb68-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span>person) <span class="op">+</span></a>
 <a class="sourceLine" id="cb68-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <ul>
 <li><p>Immediately this is interesting as we see the ages of brides and grooms and what if they are getting married for the first time or if they are divorced or widowed.</p></li>
 <li><p>We can then experiment with different ways of showing these distributions. Hadley Wickham’s <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a> has a good short chapter on <a href="https://ggplot2-book.org/statistical-summaries.html#distributions">displaying distributions</a></p></li>
@@ -534,7 +535,7 @@ Pisces
 <a class="sourceLine" id="cb71-4" title="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>person <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb71-5" title="5"><span class="st">                        </span>prev_marriage) <span class="op">+</span></a>
 <a class="sourceLine" id="cb71-6" title="6"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="st">&quot;6&quot;</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <ul>
 <li><p>This looks better but is there an optimum bin number? There is probably no “optimum” as this <a href="https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram">exchange</a> discusses.</p></li>
 <li><p>Or we might try the density distribution with ggplot2::geom_density()</p></li>
@@ -572,7 +573,7 @@ Pisces
 <a class="sourceLine" id="cb73-9" title="9"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>,</a>
 <a class="sourceLine" id="cb73-10" title="10">                       <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb73-11" title="11"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="final-choice-geom_jitter-and-stat_summary" class="section level2">
 <h2><span class="header-section-number">5.4</span> Final choice: geom_jitter() <strong>and</strong> stat_summary()</h2>
@@ -651,14 +652,29 @@ Pisces
 <a class="sourceLine" id="cb74-60" title="60"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span>base<span class="op">::</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">10</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb74-61" title="61"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb74-62" title="62"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb74-63" title="63">    <span class="dt">title =</span> <span class="st">&quot;Average median* age by previous marriage status&quot;</span>,</a>
-<a class="sourceLine" id="cb74-64" title="64">    <span class="dt">caption =</span> <span class="st">&quot;*The median is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it&quot;</span></a>
+<a class="sourceLine" id="cb74-63" title="63">    <span class="dt">title =</span> <span class="st">&quot;Average* age of brides and grooms by previous marriage status&quot;</span>,</a>
+<a class="sourceLine" id="cb74-64" title="64">    <span class="dt">caption =</span> <span class="st">&quot;*The average is the median. This is the middle age among all ages when sorted in order so that 50% of ages fall below that value and 50% above it&quot;</span></a>
 <a class="sourceLine" id="cb74-65" title="65">  ) </a>
 <a class="sourceLine" id="cb74-66" title="66"></a>
 <a class="sourceLine" id="cb74-67" title="67">ggplot2<span class="op">::</span><span class="kw">ggsave</span>(<span class="dt">file=</span><span class="st">&quot;marriage.svg&quot;</span>, </a>
 <a class="sourceLine" id="cb74-68" title="68">                <span class="dt">device =</span> <span class="st">&quot;svg&quot;</span>,</a>
 <a class="sourceLine" id="cb74-69" title="69">                <span class="dt">plot=</span>p)</a></code></pre></div>
 <pre><code>## Saving 7 x 5 in image</code></pre>
+<ul>
+<li><p>In the plot above we can see grooms are older on average overall. But do they tend to be older or younger than their bride within each marriage?</p></li>
+<li><p>As a final quick exploratory chart we put the ceremondy ID on the x axi, use geom_point() for age and colour the dots for brides and grooms with their own colour. As we have added the ceremeony ID (bookpageID) to the group aesthetic, when we add geom_line this creates a line that joins the two data points for each marriage.</p></li>
+<li><p>we can see that more often than not grooms are older than brides.</p></li>
+</ul>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb76-3" title="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> bookpageID, </a>
+<a class="sourceLine" id="cb76-4" title="4">               <span class="dt">y =</span> age, </a>
+<a class="sourceLine" id="cb76-5" title="5">               <span class="dt">colour =</span> person, </a>
+<a class="sourceLine" id="cb76-6" title="6">               <span class="dt">group =</span> bookpageID) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-9" title="9"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 
 </div>
 </div>
