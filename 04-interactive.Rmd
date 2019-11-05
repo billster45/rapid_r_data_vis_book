@@ -4,9 +4,9 @@
 
 * Interactive plots can help both you and your audience find or tell stories in data faster and more enjoyably. 
 
-* Carson Sievert (who maintains the Plotly R package) [described](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we an "iterate quickly". with plotly you can sometimes move faster than ggplot with fewer errors.
+* Carson Sievert maintains the Plotly R package. He [describes](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we an "iterate quickly". with plotly you can sometimes move faster than ggplot with fewer errors.
 
-* A quick way to use Plotly builds on your ggplot skills. Put a ggplot through a plotly function called plotly::ggplotly() like this...
+* A quick way to use Plotly builds on your ggplot skills. Put a ggplot through a plotly function called plotly::ggplotly() like this.
 
 ```{r ggplotly, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -21,11 +21,9 @@ plotly::ggplotly(p)
 
 ## Edit ggplot conversion with plotly::plotly_build()
 
-* Often, even when you have played around with how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to the plot you want. 
+* Often, even when you have played around with how the original ggplot looks, the plotly::ggplotly() function doesn't quite convert to the plot you want.  If that happens try using plotly::plotly_build() instead of plotly::ggplotly(). This gives you more control over the conversion from ggplot to plotly.
 
-* You can use plotly::plotly_build() instead of plotly::ggplotly() that gives you more control over the conversion.
-
-* Plotly build is a nested R list which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) uses to create the web graphic. This diagram from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Caron's Sievert's [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains that relationship.
+* Plotly build is a nested R list which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) uses to create the web graphic. This diagram from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Carson Sievert's [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains that relationship.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://plotly-r.com/images/printing.svg") 
@@ -59,7 +57,7 @@ utils::str(p_build)
 
 * In the code below we set the font size of the x axis to be a huge font size of 42. 
 
-* We found this setting by browsing the object structure of p_buid. We do this by putting a dollar at the end of **p_build** in the console then hit the tab key. This shows the named elements of the first nested level. We can then work our way down the nested levels by adding dollar signs and hitting tab till we find the setting we want.
+* We found this setting by browsing the object structure of p_build. We do this by putting a dollar at the end of **p_build** in the console then hit the tab key. This shows the named elements of the first nested level. We can then work our way down the nested levels by adding dollar signs and hitting tab till we find the setting we want.
 
 ```{r}
 p_build$x$layout$xaxis$tickfont$size = 42
@@ -69,7 +67,9 @@ p_build
 
 * You can see the code above has changed the font size to the massive 42 in the chart above.
 
-* However, this dollar and tab key method to search through the named elements of the neseted plotly object is fiddly and time consuming. The gif below shows you an easier point and click way to do it (but only in recent versions of RStudio). In the environment pane click on the magnifying glass to the right of p_build. You can then expand the nested lists as a tree and browse to find the value to change. To the right of each value is an icon. Clicking on it automatically generates the code you need to alter that value. Below is an example.
+* However, this dollar and tab key method to search through the named elements of the nested plotly object is fiddly and time consuming. The gif below shows you an easier point and click way to do it (but only in recent versions of RStudio). 
+
+* To do this, in the environment pane click on the magnifying glass to the right of p_build. You can then expand the nested lists as a tree and browse to find the value to change. To the right of each value is an icon. Clicking on it automatically generates the code you need to alter that value. Below is an example.
 
 > p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]]
 
@@ -79,7 +79,7 @@ knitr::include_graphics(path = "plotly_build.gif")
 
 ## Plotly most basic
 
-* Sometimes passing a ggplot through ggplotly does not give us what we want. So using plotly itself is a better option. 
+* Sometimes passing a ggplot through ggplotly does not give us what we want so using plotly itself is a better option. 
 
 * Plotly is very forgiving. Below we don't tell plotly what kind of chart we want (such as points or lines) but it still creates a plot. It's our friend from ggplot, data points. It also generates lots of suggestions about what we might add.
 
@@ -92,7 +92,7 @@ df_red %>%
 
 ## plotly (a few more settings)
 
-* Sith a few more settings we can turn it inot a [line plot](https://plot.ly/r/line-and-scatter/).
+* With a few more settings we can turn it into a [line plot](https://plot.ly/r/line-and-scatter/).
 
 
 ```{r plotly_further, warning=FALSE,message=FALSE}
@@ -106,7 +106,7 @@ df_red %>%
 
 ## plotly (bells & whistles)
 
-* Two more bells and whistles we can add are speciying the colour and a range slider.
+* Two more bells and whistles we can add are specifying the colour and a range slider.
 
 ```{r plotly_bells_whistles, warning=FALSE,message=FALSE}
 df_red %>% 
@@ -118,9 +118,9 @@ df_red %>%
   rangeslider() 
 ```
 
-* Also, Carson Sievert has created lots of bells and whistles plots on the same Texas housing data in his [Plotly book](https://plotly-r.com/client-side-linking.html). And more [here](https://plotly-r.com/the-data-plot-pipeline.html)
+* Carson Sievert has created lots of bells and whistles plotly plots on the same Texas housing data in his [Plotly book](https://plotly-r.com/client-side-linking.html). And a few more [here](https://plotly-r.com/the-data-plot-pipeline.html) on the Texas data.
 
-* Below we re-produce some of Sievert's plots after re-formatting the code according to our [Code style] rules described earlier. This makes the examples easier to understand and re-use.
+* Below we re-produce some of Sievert's plots after re-formatting the code according to our [Code style] rules described earlier. This makes his examples easier to understand and re-use.
 
 * Try clicking on one of the lines to highlight it in this plot.
 
@@ -142,7 +142,7 @@ base %>%
   plotly::add_lines(x = ~date, y = ~median)
 ```
 
-* In this plot we can look at cities in isloation or highlighged against all others. 
+* In this plot we can look at cities in isolation or highlighted against all others. 
 
 ```{r}
 # generally speaking, use a "unique" key for filter, 
@@ -224,7 +224,7 @@ crosstalk::bscols(
 
 ## crosstalk
 
-Finally, here is a more basic use of crosstalk with plotly that you may find easier to re-use as a code tempate.
+Finally, here is a more basic use of crosstalk with plotly that you may find easier to re-use as a code template.
 
 ```{r crosstalk}
 df_crosstalk <- crosstalk::SharedData$new(data = df, 
@@ -249,9 +249,9 @@ df_crosstalk %>%
 
 ## apexchater simple
 
-* The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisaiotns like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, it's not free to use.
+* The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisations like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, it's not free to use.
 
-* ApexCharter is almost as good. It's inspried by highcharter but is free to use. Look how easily we can create a chart with this simple code.
+* ApexCharter is almost as good. It's inspired by highcharter but is free to use. Look how easily we can create a chart with this simple code.
 
 ```{r apex_simple, fig.height=20}
 df_red %>% 
@@ -264,7 +264,7 @@ df_red %>%
 
 ## apexchater with bells & whistles
 
-* To add the bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is very well laid out with good examples. Here I've put in some useful ones in a clear code format. 
+* To add the bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is well laid out with good examples. Here I've put in some useful ones in a clear code format. 
 
 ```{r apex_bells_whistles, fig.height=20}
 df_red %>% 
@@ -311,9 +311,9 @@ df_red_ts %>%
 
 ## dygraphs bells & whistles
 
-* Here is a bells & whilstles version you can play around with as a template for your data.
+* Here is a bells & whistles version you can play around with as a template for your data.
 
-* The help pages for dygraphs are very well laid out. You really only need this one guide to find out how to change all the settings possible: https://rstudio.github.io/dygraphs/
+* The help pages for dygraphs are well laid out. You really only need this one guide to find out how to change all the settings: https://rstudio.github.io/dygraphs/
 
 ```{r dygraphs_bells}
 dateWindow <- c("2014-01-01", "2015-07-01")

@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>4.2</b> Plot data points with geom_point()</a></li>
 <li class="chapter" data-level="4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>4.3</b> Facet by categories</a></li>
 <li class="chapter" data-level="4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>4.4</b> Facet interactively (trelliscopejs)</a></li>
-<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category seperately</a></li>
+<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-separately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category separately</a></li>
 <li class="chapter" data-level="4.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>4.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>5</b> Why start with geom_point() ?</a><ul>
@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>8</b> Tables</a><ul>
 <li class="chapter" data-level="8.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>8.1</b> DataTables (DT) basic</a></li>
-<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whisltes</a></li>
+<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whistles"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whistles</a></li>
 <li class="chapter" data-level="8.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>8.3</b> Colour DataTable with formattable</a></li>
 <li class="chapter" data-level="8.4" data-path="tables.html"><a href="tables.html#rpivottable-simple"><i class="fa fa-check"></i><b>8.4</b> rpivottable simple</a></li>
 <li class="chapter" data-level="8.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>8.5</b> rpivottable (bells &amp; whistles)</a></li>
@@ -295,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ggplot-is-famed-for-annoying-errors" class="section level2">
 <h2><span class="header-section-number">5.1</span> ggplot is famed for annoying errors</h2>
 <ul>
-<li><p>It’s a good idea to start with ggplot2::geom_point() because it works for for both raw and summarised data straight away. This both speeds up everyone’s EDA and makes ggplot less intimidating for beginners. It is famed for easily triggering errors that can confuse you. So much so that one of the maintainers of ggplot asked people on <a href="https://twitter.com/thomasp85/status/1170998101101953025?s=12">Twitter</a> what their most common ggplot error was.</p></li>
-<li><p>To show you some classic errors let’s explore more granular data where each row describes a person getting married. We just do a little data cleaning on the marriage date a column on whether they were married before.</p></li>
+<li><p>It’s a good idea to start with ggplot2::geom_point() because it works for for both raw and summarised data straight away. This both speeds up EDA and makes ggplot less intimidating for beginners.</p></li>
+<li><p>Let’s explore more granular data to trigger some common errors using the marriage data from the mosaicData package. We do a little data cleaning on the ceremony date and on the column that describes any previous marriages.</p></li>
 </ul>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">marriage &lt;-</a>
 <a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span>mosaicData<span class="op">::</span>Marriage <span class="op">%&gt;%</span></a>
@@ -458,9 +458,8 @@ Pisces
 </tbody>
 </table>
 <ul>
-<li><p>In our previous data set we had one value per city and date so geom_line worked fine as long as the date and the city were in the “aesthetics” of the plot (e.g. x,y, colour, category, or facet being the most common).</p></li>
-<li><p>A common way to trigger ggplot2 errors or create confusing plots is using bar or line charts before the data is summarised.</p></li>
-<li><p>For example, a line chart is inappropriate with many ages per previous marriage status.</p></li>
+<li><p>In our previous data set we had one value of sales say per city and date. This meant geom_line worked fine as long as both the date and the city were in the “aesthetics” of the plot (e.g. x,y, colour, category, or facet being the most common).</p></li>
+<li><p>A common way to trigger ggplot2 errors or create confusing plots is using bar or line charts before the data is summarised. For example, a line chart is inappropriate with many ages per previous marriage status.</p></li>
 </ul>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb63-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -471,7 +470,7 @@ Pisces
 <a class="sourceLine" id="cb63-7" title="7"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/plot_error-1.png" width="672" /></p>
 <ul>
-<li>And here using a bar chart instead returns an error.</li>
+<li>And using a bar chart instead returns an error.</li>
 </ul>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -483,7 +482,7 @@ Pisces
 <pre><code>## Error: stat_count() must not be used with a y aesthetic.</code></pre>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ul>
-<li>ggplot2::geom_col() or ggplot2::geom_bar(stat = “identity”) will plot the data for us but it’s showing the sum of all the ages in each group which doesn’t really mean much.</li>
+<li>ggplot2::geom_col() or ggplot2::geom_bar(stat = “identity”) will plot the data for us but it’s showing the sum of all the ages in each group which doesn’t tells us much of interest.</li>
 </ul>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -496,13 +495,13 @@ Pisces
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">  <span class="co">#ggplot2::geom_col()</span></a></code></pre></div>
 <ul>
 <li><p>A column may end up being the final plot choice, but for fast EDA let’s avoid bars, lines and columns and retreat to our friend geom_point()</p></li>
-<li><p>Another reason to avoid bars to begin with is they do a statistical transformation without us realising it. This is well explained in the <a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations">Statistical Transformatoins</a> chapter of <a href="https://r4ds.had.co.nz/">R for Data Science</a></p></li>
+<li><p>Another reason to avoid bars to begin with is they do a statistical transformation without us realising it. This is explained in the <a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations">Statistical Transformations</a> chapter of <a href="https://r4ds.had.co.nz/">R for Data Science</a>.</p></li>
 </ul>
 </div>
 <div id="retreat-to-geom_point" class="section level2">
 <h2><span class="header-section-number">5.2</span> Retreat to geom_point()</h2>
 <ul>
-<li>Here we go back to using ggplot2::geom_point() and facet by person</li>
+<li>Let’s go back to using ggplot2::geom_point() and facet by person.</li>
 </ul>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -514,8 +513,8 @@ Pisces
 <a class="sourceLine" id="cb68-8" title="8"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <ul>
-<li><p>Immediately this is interesting as we see the ages of brides and grooms and what if they are getting married for the first time or if they are divorced or widowed.</p></li>
-<li><p>We can then experiment with different ways of showing these distributions. Hadley Wickham’s <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a> has a good short chapter on <a href="https://ggplot2-book.org/statistical-summaries.html#distributions">displaying distributions</a></p></li>
+<li><p>Immediately this is interesting as we see the ages of brides and grooms and by whether they are getting married for the first time or if they are divorced or widowed.</p></li>
+<li><p>As well as data points, We can also experiment with different ways of showing these distributions. Hadley Wickham’s <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a> has a good short chapter on <a href="https://ggplot2-book.org/statistical-summaries.html#distributions">displaying distributions</a>.</p></li>
 <li><p>First let’s try a histogram.</p></li>
 </ul>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">marriage <span class="op">%&gt;%</span></a>
@@ -527,7 +526,7 @@ Pisces
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="bookdown-demo_files/figure-html/plot_error_fix-1.png" width="672" /></p>
 <ul>
-<li>We get a warning. We can set the bin width by hand, say 6 bins.</li>
+<li>We get a warning about the bin width. We can set the bin width by hand, say 6 bins.</li>
 </ul>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb71-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -537,7 +536,7 @@ Pisces
 <a class="sourceLine" id="cb71-6" title="6"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="st">&quot;6&quot;</span>)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <ul>
-<li><p>This looks better but is there an optimum bin number? There is probably no “optimum” as this <a href="https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram">exchange</a> discusses.</p></li>
+<li><p>This looks better but is there an optimum bin number? There is probably no optimum width as discussed in this <a href="https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram">stackexchange</a> question.</p></li>
 <li><p>Or we might try the density distribution with ggplot2::geom_density()</p></li>
 </ul>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">p &lt;-</a>
@@ -560,7 +559,7 @@ Pisces
 <div id="geom_jitter-and-geom_boxplot-is-better" class="section level2">
 <h2><span class="header-section-number">5.3</span> geom_jitter() <strong>and</strong> geom_boxplot() is better</h2>
 <ul>
-<li>But with so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well.</li>
+<li>But with so few data points ggplot2::box_plot() with the data points overlaid with ggplot2::geom_jitter() works well as a data story.</li>
 </ul>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb73-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -579,15 +578,15 @@ Pisces
 <h2><span class="header-section-number">5.4</span> Final choice: geom_jitter() <strong>and</strong> stat_summary()</h2>
 <ul>
 <li><p>Until recently the chart above would have been my final plot. Until I saw the fantastic <a href="https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/">“evolution of a ggplot”</a> post.</p></li>
-<li><p>In the gif below you can see they also start with a boxplot but the final choices is ggplot2::geom_jitter() and ggplot2::stat_summary(). The post gives the full code in a gradual story like the ggplot flip books.</p></li>
+<li><p>In the gif below you can see they also start with a boxplot but their final choice is ggplot2::geom_jitter() and ggplot2::stat_summary(). The post gives the full code in a gradual code story presented like the ggplot flip books.</p></li>
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif" width="100%" /></p>
 <ul>
-<li>And here is the final plot.</li>
+<li>And here is their final plot at the end of the gif above.</li>
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png" width="100%" /></p>
 <ul>
-<li>Inspired by that plot and its code this final plot is much more engaging than the boxplot because it tells a story far more clearly with no explanation needed. Much like a chart in an online newspaper.</li>
+<li>Inspired by that plot and its code this final plot below on the marriage data is more engaging than the boxplot before. It tells the story more clearly with little or no explanation needed. Much like a chart in a good online newspaper.</li>
 </ul>
 <p><img src="marriage.svg" /><!-- --></p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">p &lt;-<span class="st"> </span>marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -662,8 +661,8 @@ Pisces
 <pre><code>## Saving 7 x 5 in image</code></pre>
 <ul>
 <li><p>In the plot above we can see grooms are older on average overall. But do they tend to be older or younger than their bride within each marriage?</p></li>
-<li><p>As a final quick exploratory chart we put the ceremondy ID on the x axi, use geom_point() for age and colour the dots for brides and grooms with their own colour. As we have added the ceremeony ID (bookpageID) to the group aesthetic, when we add geom_line this creates a line that joins the two data points for each marriage.</p></li>
-<li><p>we can see that more often than not grooms are older than brides.</p></li>
+<li><p>As a final quick exploratory chart we put the ceremony ID on the x axis, use geom_point() for age, and give the data points for brides and grooms their own colour. As we have added the ceremony ID (bookpageID) to the group aesthetic, when we add geom_line this creates a line that joins the two data points for each marriage.</p></li>
+<li><p>We can see that most grooms are older than most brides in each ceremony.</p></li>
 </ul>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb76-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>

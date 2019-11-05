@@ -2,9 +2,9 @@
 
 ## ggplot animation
 
-* Animation can be easy to add to ggplot with the gganimate package. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples you could adapt.
+* Animation is quick to add to ggplot using the gganimate package. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples..
 
-* I've found animation is most effective to show changes over time. Here is the annual pattern of house sales changing each year.
+* I've found animation is most effective at showing changes over time. Here is the annual pattern of house sales changing each year.
 
 ```{r, echo=FALSE, out.width = "80%"}
 knitr::include_graphics("housing.gif") 
@@ -87,7 +87,7 @@ gganimate::anim_save(filename = "housing.gif")
 
 * Carson Sievert's book shows us how to [animate in plotly](https://plotly-r.com/animating-views.html).
 
-* The code is as simple as specifying which column of categories we animate over as frames.
+* The code is as simple as specifying which column to animate over as frames. The frames code line is commented on below.
 
 ```{r}
 df_red %>% 

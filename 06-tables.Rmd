@@ -5,9 +5,7 @@
 
 ## DataTables (DT) basic
 
-* For plotting we usually have [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) where the data frame is "long" and each row represents one observation. 
-
-* But for easy to read tables we usually need to make our long tidy data "wide" with many observations across columns. To create a wide interactive table we use tidyr::pivot_wider() then pipe that wide data into DT::datatable()
+* For plotting we usually use [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) where the data frame is "long". But for easy to read tables we usually need to make our long tidy data "wide" (e.g. one column per month). To create a wide interactive table we use tidyr::pivot_wider() then pipe that wide data into DT::datatable()
 
 ```{r}
 # first reshape with new tidyr
@@ -24,11 +22,11 @@ df_wide %>%
   DT::datatable(df_wide)
 ```
 
-## DataTables bells & whisltes
+## DataTables bells & whistles
 
 * The [DataTables reference](https://rstudio.github.io/DT/) is excellent for showing all the elements you can change with clear examples. 
 
-* Often you have decided on lots of differet [options][https://rstudio.github.io/DT/options.html] that you want apply to many tables. Reduce the amount of by setting your main DT table options globally like this.
+* Often you have decided on lots of different [DataTable options][https://rstudio.github.io/DT/options.html] that you want apply to many tables. Reduce the amount of by setting your main DT table options globally like this.
 
 ```{r}
 options(DT.options = list(
@@ -96,7 +94,7 @@ df_wide %>%
 
 ## rpivottable simple
 
-* I love Excel pivot tables and charts for exploring data.rpivotables are a similar exploratory tool in R. We simply put the data frame into the function rpivotTable::rpviotTable() Then play around with the html output below as you would an Excel pivot table.
+* I love Excel pivot tables and charts for exploring data. rpivotables are a similar exploratory tool in R. We simply put the data frame into the function rpivotTable::rpviotTable() then play around with the html output below (as you would with an Excel pivot table).
 
 ```{r}
 df_red %>% 
@@ -105,7 +103,7 @@ df_red %>%
 
 ## rpivottable (bells & whistles)
 
-* Once we've decided how we want the rpivotTable to look manually we can specify the layout that tells our story as follows.
+* Once we've decided how we want the rpivotTable to look manually we can specify the layout that tells our story.
 
 ```{r}
 df_red %>% 

@@ -2,13 +2,13 @@
 
 ## Picking a final output doc
 
-* After all our hard work to explore and polish a final plot we should show off our work using an impactful easy to navigate html document. Here are three good options.
+* After all our hard work to explore and polish a final plot we should show off our work using an impactful and easy to navigate html document. Here are three good options.
 
 ## flexdashboard
 
-* [Flexdashboard example by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) is a fantastic working example of how to use flexdashboard including some of the interactivty we saw earlier using crosstalk, plotly and DT tables.
+* This [Flexdashboard by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) is a fantastic working example of how to use flexdashboard. It includes some of the interactivty we saw earlier using crosstalk, plotly and DT tables in the [Interactive plots] chapter.
 
-* And here is a good presentation on [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
+* Also, here is a good presentation on [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
 
 ## R markdown with floating contents and tabbed sections
 
@@ -16,7 +16,7 @@
 
 ## bookdown
 
-* Finally, how this book itself was created is very quick and in an impactful format. Here is a board [bookdown guide](https://bookdown.org/home/about/) to follow. This is how I built this book:
+* Finally, how this book itself was created is very quick to do. Here is a board [bookdown guide](https://bookdown.org/home/about/) to follow. This is how I built this book:
  
 1. Clone or download this [minimal example](https://github.com/rstudio/bookdown-demo).  
 

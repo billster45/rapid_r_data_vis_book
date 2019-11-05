@@ -2,22 +2,22 @@
 
 ## Color Brewer
 
-* We've already used colours in some of the code. Particularly the pallettes in the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette).
+* We've already used colours in some of the previous code examples. Particularly the palettes in the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette).
 
-* It has some ready made palletes that we can view like this.
+* RColourBrewer contains ready made colour palettes we can view all at once like this.
 
 ```{r RColourBrewer}
 # easy colours
 RColorBrewer::display.brewer.all()
 ```
 
-* And the display can be limited to colour blind friendly palettes.
+* That display can be limited to colour blind friendly palettes.
 
 ```{r}
 display.brewer.all(colorblindFriendly = TRUE)
 ```
 
-* we can set up a pallete of colours like this and view them in a simple bar plot
+* We can set up a palette of colours with a set number of colours like this and view them in a simple bar plot.
 
 ```{r}
 mypalette <- RColorBrewer::brewer.pal(9,"Set2") 
@@ -26,28 +26,28 @@ graphics::barplot(1:9,col = mypalette)
 
 ## Prismatic
 
-* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with palettes by shifting the entire set at once. For example, starting with terrain..
+* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with palettes by shifting the entire range of colours at once. For example, starting with terrain.
 
 ```{r}
 terrain <- prismatic::colour(terrain.colors(10))
 plot(terrain)
 ```
 
-* Turn the pallete grey
+* Turn the palette grey.
 
 ```{r}
 terrain_gray <- prismatic::clr_grayscale(terrain)
 plot(terrain_gray)
 ```
 
-* Darken the pallete
+* Darken the palette.
 
 ```{r}
 terrain_darken <- prismatic::clr_darken(terrain)
 plot(terrain_darken)
 ```
 
-* Make the pallete negative
+* Make the palette negative.
 
 ```{r}
 terrain_negate <- prismatic::clr_negate(terrain)
@@ -56,7 +56,7 @@ plot(terrain_negate)
 
 ## Hand picked colours
 
-* You can also hand pick your own colours from this [colour picking website](http://tristen.ca/hcl-picker/) reccomedned on an [excellent blog post on using colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html) in ggplot by by Michael Toth.
+* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/) recommended on an [excellent blog post on using colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html) in ggplot by by Michael Toth.
 
 * The [colour picking website](http://tristen.ca/hcl-picker/) was used to create then copy and paste the colours below.
 

@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>4.2</b> Plot data points with geom_point()</a></li>
 <li class="chapter" data-level="4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>4.3</b> Facet by categories</a></li>
 <li class="chapter" data-level="4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>4.4</b> Facet interactively (trelliscopejs)</a></li>
-<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category seperately</a></li>
+<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-separately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category separately</a></li>
 <li class="chapter" data-level="4.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>4.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>5</b> Why start with geom_point() ?</a><ul>
@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>8</b> Tables</a><ul>
 <li class="chapter" data-level="8.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>8.1</b> DataTables (DT) basic</a></li>
-<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whisltes</a></li>
+<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whistles"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whistles</a></li>
 <li class="chapter" data-level="8.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>8.3</b> Colour DataTable with formattable</a></li>
 <li class="chapter" data-level="8.4" data-path="tables.html"><a href="tables.html#rpivottable-simple"><i class="fa fa-check"></i><b>8.4</b> rpivottable simple</a></li>
 <li class="chapter" data-level="8.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>8.5</b> rpivottable (bells &amp; whistles)</a></li>
@@ -295,19 +295,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="color-brewer" class="section level2">
 <h2><span class="header-section-number">9.1</span> Color Brewer</h2>
 <ul>
-<li><p>We’ve already used colours in some of the code. Particularly the pallettes in the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>.</p></li>
-<li><p>It has some ready made palletes that we can view like this.</p></li>
+<li><p>We’ve already used colours in some of the previous code examples. Particularly the palettes in the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>.</p></li>
+<li><p>RColourBrewer contains ready made colour palettes we can view all at once like this.</p></li>
 </ul>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="co"># easy colours</span></a>
 <a class="sourceLine" id="cb115-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/RColourBrewer-1.png" width="672" /></p>
 <ul>
-<li>And the display can be limited to colour blind friendly palettes.</li>
+<li>That display can be limited to colour blind friendly palettes.</li>
 </ul>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <ul>
-<li>we can set up a pallete of colours like this and view them in a simple bar plot</li>
+<li>We can set up a palette of colours with a set number of colours like this and view them in a simple bar plot.</li>
 </ul>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
 <pre><code>## Warning in RColorBrewer::brewer.pal(9, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
@@ -318,25 +318,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="prismatic" class="section level2">
 <h2><span class="header-section-number">9.2</span> Prismatic</h2>
 <ul>
-<li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with palettes by shifting the entire set at once. For example, starting with terrain..</li>
+<li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with palettes by shifting the entire range of colours at once. For example, starting with terrain.</li>
 </ul>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
 <a class="sourceLine" id="cb120-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <ul>
-<li>Turn the pallete grey</li>
+<li>Turn the palette grey.</li>
 </ul>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
 <a class="sourceLine" id="cb121-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <ul>
-<li>Darken the pallete</li>
+<li>Darken the palette.</li>
 </ul>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
 <a class="sourceLine" id="cb122-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <ul>
-<li>Make the pallete negative</li>
+<li>Make the palette negative.</li>
 </ul>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
 <a class="sourceLine" id="cb123-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
@@ -345,7 +345,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hand-picked-colours" class="section level2">
 <h2><span class="header-section-number">9.3</span> Hand picked colours</h2>
 <ul>
-<li><p>You can also hand pick your own colours from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a> reccomedned on an <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">excellent blog post on using colours</a> in ggplot by by Michael Toth.</p></li>
+<li><p>You can also hand pick your own colour palette from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a> recommended on an <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">excellent blog post on using colours</a> in ggplot by by Michael Toth.</p></li>
 <li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create then copy and paste the colours below.</p></li>
 </ul>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>

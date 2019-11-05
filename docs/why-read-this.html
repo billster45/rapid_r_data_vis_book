@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#plot-data-points-with-geom_point"><i class="fa fa-check"></i><b>4.2</b> Plot data points with geom_point()</a></li>
 <li class="chapter" data-level="4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-by-categories"><i class="fa fa-check"></i><b>4.3</b> Facet by categories</a></li>
 <li class="chapter" data-level="4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#facet-interactively-trelliscopejs"><i class="fa fa-check"></i><b>4.4</b> Facet interactively (trelliscopejs)</a></li>
-<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-seperately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category seperately</a></li>
+<li class="chapter" data-level="4.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#loop-to-plot-every-category-separately"><i class="fa fa-check"></i><b>4.5</b> Loop to plot every category separately</a></li>
 <li class="chapter" data-level="4.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#polish-your-final-plot"><i class="fa fa-check"></i><b>4.6</b> Polish your final plot</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="why-start-with-geom-point.html"><a href="why-start-with-geom-point.html"><i class="fa fa-check"></i><b>5</b> Why start with geom_point() ?</a><ul>
@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>8</b> Tables</a><ul>
 <li class="chapter" data-level="8.1" data-path="tables.html"><a href="tables.html#datatables-dt-basic"><i class="fa fa-check"></i><b>8.1</b> DataTables (DT) basic</a></li>
-<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whisltes"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whisltes</a></li>
+<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatables-bells-whistles"><i class="fa fa-check"></i><b>8.2</b> DataTables bells &amp; whistles</a></li>
 <li class="chapter" data-level="8.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>8.3</b> Colour DataTable with formattable</a></li>
 <li class="chapter" data-level="8.4" data-path="tables.html"><a href="tables.html#rpivottable-simple"><i class="fa fa-check"></i><b>8.4</b> rpivottable simple</a></li>
 <li class="chapter" data-level="8.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>8.5</b> rpivottable (bells &amp; whistles)</a></li>
@@ -296,37 +296,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.1</span> Good data analysis starts with fast &amp; intuitive EDA</h2>
 <ul>
 <li><p>Good Exploratory Data Analysis (EDA) is the foundation of most data work from data engineering to <a href="http://blog.kaggle.com/category/winners-interviews/">Kaggle Data Science competition winners</a>.</p></li>
-<li><p>Ideally, you can explore your data <strong>quickly</strong> and intuitively in a <a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a> absorbed by the patterns and stories your data reveals, not slowed by code errors and too many Google searches.</p></li>
-<li><p>This book aims to help you explore data faster with fewer errors. But at the same time, to not compromise on code clarity and quality. Your quickly created code can still be made easy to read and re-use with only a few extra tweaks as you go along.</p></li>
-<li><p>The following chapters provide a series of linked methods in a logical order. First we start with exploring and visualising data quickly before you commit to the intense process of polishing your final plot.</p></li>
-<li><p>All the examples are aimed at beginners in R to those with an intermediate level of experince. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or adddition to this book as an <a href="https://github.com/billster45/rapid_r_data_vis_book/issues">issue</a>.</p></li>
-<li><p>Each section starts with a bare bones code example with no bells or whistles. This means each method could become one of a collection of tools you could pick from for fast Exploratory Data Analysis.</p></li>
-<li><p>After each simple code example a more complex version is provided in well structured code. The more detailed examples you could use as a template to adapt into publication quality plots.</p></li>
-<li><p>The book is my <em>current</em> approach to data visualiation in R. But my methods keep changing and improving from reading <a href="https://www.r-bloggers.com/">R-Bloggers</a>, <a href="https://twitter.com/search?q=%23rstats&amp;src=typd&amp;lang=en">#rstats</a> daily, and learning from colleague’s work.</p></li>
+<li><p>Ideally, you are able to explore your data <strong>quickly</strong> and intuitively in a <a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a>. You become absorbed by the patterns and stories that your data reveals, not slowed by code errors and Google searches.</p></li>
+<li><p>In this book I aim to help you explore data faster and with fewer errors. And at the same time not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only a few simple rules to follow.</p></li>
+<li><p>The following chapters are a series of linked methods presented in a logical order. First we start with exploring and visualising data quickly before you commit to the intense process of polishing your final plot.</p></li>
+<li><p>All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or addition to this book as an <a href="https://github.com/billster45/rapid_r_data_vis_book/issues">issue</a>.</p></li>
+<li><p>Each section starts with a bare bones code example with no bells or whistles. This means each method could become part of your fast Exploratory Data Analysis toolbox.</p></li>
+<li><p>After each simple code example a more complex version is provided in well structured code. The more detailed examples you can use as a template to adapt for your own final polished plots.</p></li>
+<li><p>The book is my <em>current</em> approach to data visualisation in R. But my methods keep changing and improving from reading <a href="https://www.r-bloggers.com/">R-Bloggers</a> and <a href="https://twitter.com/search?q=%23rstats&amp;src=typd&amp;lang=en">#rstats</a> and Slack channels every day.</p></li>
 </ul>
 </div>
 <div id="is-this-data-science" class="section level2">
 <h2><span class="header-section-number">2.2</span> Is this Data Science?</h2>
 <ul>
-<li><p>This diagram is the Data Science workflow picture from <a href="https://r4ds.had.co.nz/introduction.html#what-you-will-learn">R for Data Science</a>. I’ve underlined the Visualise and Communicate parts of the Data Science process in R that this book seeks to help you with. I’ve also added code communication to emphasise the importance of well laid out code as another key part of communicating. Clear code is impotant both to anyone reading, re-using, or quality assuring your code. And it will help your future yourself when you have forgotten what you were trying to do.</p></li>
-<li><p>Modelling is still an imporant part of your data exploration and understanding and part of the Data Science process well covered and described in the R 4 Data Science <a href="https://r4ds.had.co.nz/model-intro.html">modelling chapter</a>.</p></li>
+<li><p>The diagram below is the Data Science workflow from <a href="https://r4ds.had.co.nz/introduction.html#what-you-will-learn">R for Data Science</a>. I’ve underlined the <strong>Visualise</strong> and <strong>Communicate</strong> parts of the Data Science process which this book aims help you with.</p></li>
+<li><p>I’ve also added Code Communication to emphasise the importance of well laid out code as another important part of communicating. Clear code should be easy to read and understand, re-use, and quality assure. You are also helping your future yourself if you have forgotten what you were trying to do.</p></li>
+<li><p>Modelling is still an important part of your data exploration and understanding and part of the Data Science process. This is well explained in the R 4 Data Science <a href="https://r4ds.had.co.nz/model-intro.html">modelling chapter</a>.</p></li>
 </ul>
 <blockquote>
 <p>“The goal of a model is to provide a simple low-dimensional summary of a dataset. Ideally, the model will capture true “signals” (i.e. patterns generated by the phenomenon of interest), and ignore “noise” (i.e. random variation that you’re not interested in)."</p>
 </blockquote>
-<p>Another good guide to that on the same data used in this book is <a href="http://rstudio-pubs-static.s3.amazonaws.com/224425_2c2a324004384953a3a7ac12e6d36c87.html">here</a>.</p>
+<ul>
+<li>Also, here is <a href="http://rstudio-pubs-static.s3.amazonaws.com/224425_2c2a324004384953a3a7ac12e6d36c87.html">good example of modelling</a> that uses the same housing sales data we will use later in this book.</li>
+</ul>
 <p><img src="data-science-explore_edit.png" width="100%" /></p>
 </div>
 <div id="what-about-python-for-data-viz" class="section level2">
 <h2><span class="header-section-number">2.3</span> What about Python for data viz?</h2>
 <ul>
-<li>Python is also a powerful coding language for data visualisation using packages like Pandas, Seaborn, Matplotlib, and Bokeh. My day to day work is usally limited to R so this is where I’ve built my data vis skills so far. A good place to find similar Python code examples to this book are the Python Notebooks on <a href="https://www.kaggle.com/kernels">Kaggle</a>. Use the filters at the top to select popular data visulisation notebooks in Python code and sort by the most votes.</li>
+<li>Python is also a powerful data visualisation programming language using packages such as Pandas, Seaborn, Matplotlib, and Bokeh. My working day usually limited to R so this is where I’ve built my data visualisation skills so far. A good place to find similar data vis code examples to this book in Python are <a href="https://www.kaggle.com/kernels">Kaggle notebooks</a>. Use the filters at the top to select popular data visualisation notebooks in Python code. Sort them by the most votes.</li>
 </ul>
 </div>
 <div id="what-about-point-and-click-data-vis-tools" class="section level2">
 <h2><span class="header-section-number">2.4</span> What about Point and Click data vis tools?</h2>
 <ul>
-<li>Graphical User Interface (GUI) or Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place in EDA, as long as we recognise their strengths and weaknesses in comparison to code. Hadley Wickham contrasts PaC tools vs code tools well in this <a href="http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/">interview</a>.</li>
+<li>Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place in EDA, as long as we understand their strengths and weaknesses compared to code. Hadley Wickham compares PaC tools with code in this <a href="http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/">interview</a>.</li>
 </ul>
 <hr />
 <blockquote>
@@ -340,20 +343,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="find-an-r-master-to-inspire-you" class="section level2">
 <h2><span class="header-section-number">2.5</span> Find an R master to inspire you</h2>
 <ul>
-<li>This book is just one set of ideas in a certain style. It’s not a rigid formula you must follow. Seek ideas and inspiration from a variety of people and books. Find your own path in Data Science data exploration, visualsation and communication. Two people who have inspired me are David Robinson and Claus Wilke I describe below. I’ve also collected a series of <a href="https://github.com/billster45/r-guides-and-galleries/blob/master/README.md">R guides and galleries</a> in a logic order I have found useful and inspiring.</li>
+<li>This book is just one set of ideas in a certain style. It’s not a rigid formula you must follow. Seek ideas and inspiration from a variety of people and books. Find your own path in Data Science, data exploration, visualisation, and communication. Two people who have inspired me are David Robinson and Claus Wilke I describe below. I’ve also collected a series of <a href="https://github.com/billster45/r-guides-and-galleries/blob/master/README.md">R guides and galleries</a> in a logic order I have found useful and inspiring.</li>
 </ul>
 <div id="david-robinson" class="section level3">
 <h3><span class="header-section-number">2.5.1</span> David Robinson</h3>
 <ul>
-<li><p>David Robinson explores, cleans then analystes data in R rapidly and intuiviely. Precislye what I’m trying to help you do with this book. Several methods here I saw Robinson do first on his Tidy Tuesday live coding YouTube videos. I’d strongly reccomend watching any of his <a href="https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday">coding videos</a>.</p></li>
-<li><p>While this book covers the exploration, visualisation and communication parts of Data Science, Robinson’s Tidy Tuesday videos take you through the complete R for Data Sciecne workflow. From import to communicate. And all in one hour (or less if you increase the playback speed to 1.5x).</p></li>
+<li><p>I recommend watching any of David Robinson’s <a href="https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday">live coding Tidy Tuesday videos</a> to improve your Data Science skills. Robinson explores, cleans then analyses data in R rapidly and intuitively. Precisely what I’m trying to help you do with this book. Several methods I use in this book I saw Robinson do first on his videos.</p></li>
+<li><p>While this book covers the exploration, visualisation and communication parts of Data Science, Robinson takes you through the complete R for Data Science workflow from import to communicate. And all in one hour (or less if you increase the playback speed to 1.5x).</p></li>
 </ul>
 </div>
 <div id="claus-wilke" class="section level3">
 <h3><span class="header-section-number">2.5.2</span> Claus Wilke</h3>
 <ul>
-<li><p>Another R master in data vis and communication is Claus Wilke. He recently created a guide similar to this book. It starts with simple examples that become more complex. In his <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> guide see how he starts with the bare minimum code you need to create the plot. He then gradually builds that code up layer by layer until it is publication quality.</p></li>
-<li><p>Wilke wrote <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> to help readers of his <a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a> book re-create his charts more easily on their own data. So give them an easier to follow recipie. This book is similar to that style but with a greater focus on exploratory data analysis, and offering more tools than just ggplot, particulary for interactive plots, as well as reccomending a clean code style.</p></li>
+<li><p>Another R master in data vis and communication is Claus Wilke. He recently created a guide similar to this book. It starts with simple examples that become more complex. In his <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> guide he starts with the bare minimum code you need to create the plot. He then gradually builds the code up layer by layer until it is publication quality.</p></li>
+<li><p>Wilke wrote <a href="https://github.com/wilkelab/practicalgg">Practical ggplot2</a> to help people re-create some of the charts in his excellent <a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a> more easily on their own data. This book offers a similar gradual method to Wilke’s but with a greater focus on exploratory data analysis, and offering examples with more tools, particulary for interactive plots, as well as recommending a clean code style.</p></li>
 </ul>
 
 </div>
