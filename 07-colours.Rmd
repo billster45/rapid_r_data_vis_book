@@ -11,29 +11,30 @@
 RColorBrewer::display.brewer.all()
 ```
 
-* That display can be limited to colour blind friendly palettes.
+* We can also limit the display above to just those palettes that are friendly to people who are colour blind.
 
 ```{r}
 display.brewer.all(colorblindFriendly = TRUE)
 ```
 
-* We can set up a palette of colours with a set number of colours like this and view them in a simple bar plot.
+* We can create a palette of colours with a specific number of colours like this. And view them in a simple bar plot.
 
 ```{r}
 mypalette <- RColorBrewer::brewer.pal(9,"Set2") 
+
 graphics::barplot(1:9,col = mypalette)
 ```
 
 ## Prismatic
 
-* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with palettes by shifting the entire range of colours at once. For example, starting with terrain.
+* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting the entire range of colours at once. For example, below we start with the terrain pallete in the prismatic package.
 
 ```{r}
 terrain <- prismatic::colour(terrain.colors(10))
 plot(terrain)
 ```
 
-* Turn the palette grey.
+* Now we turn the palette grey.
 
 ```{r}
 terrain_gray <- prismatic::clr_grayscale(terrain)
@@ -56,11 +57,12 @@ plot(terrain_negate)
 
 ## Hand picked colours
 
-* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/) recommended on an [excellent blog post on using colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html) in ggplot by by Michael Toth.
+* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). It is recommended on a [detailed guid to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html) by Michael Toth.
 
-* The [colour picking website](http://tristen.ca/hcl-picker/) was used to create then copy and paste the colours below.
+* The [colour picking website](http://tristen.ca/hcl-picker/) was used to create and then copy and paste the colours in this palette below.
 
 ```{r colour_picker}
 newpalette <- c("#804759","#713E4E","#633543","#562D39","#48252F","#3B1D25")
+
 barplot(1:6,col = newpalette)
 ```

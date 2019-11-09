@@ -2,21 +2,21 @@
 
 ## Picking a final output doc
 
-* After all our hard work to explore and polish a final plot we should show off our work using an impactful and easy to navigate html document. Here are three good options.
+* After all our hard work to explore and polish a final plot we should show it off in an easy to navigate html document. Here are three good options I reccomend.
 
 ## flexdashboard
 
-* This [Flexdashboard by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) is a fantastic working example of how to use flexdashboard. It includes some of the interactivty we saw earlier using crosstalk, plotly and DT tables in the [Interactive plots] chapter.
+* This [Flexdashboard by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) is a fantastic working example. It includes some of the interactivty we saw earlier using crosstalk, plotly and DT tables described in the earlier [Interactive plots] chapter.
 
-* Also, here is a good presentation on [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
+* Also, here is an easy to follow tutorial presentation on [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
 
 ## R markdown with floating contents and tabbed sections
 
-* When using R markdown I've found a [floating table of contents](https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents) and [tabbed sections](https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections) are the most effective for providing compact and easy to navigate html files.
+* When using R markdown I've found a [floating table of contents](https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents) and [tabbed sections](https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections) are the most effective for providing compact and easy to navigate html documents.
 
 ## bookdown
 
-* Finally, how this book itself was created is very quick to do. Here is a board [bookdown guide](https://bookdown.org/home/about/) to follow. This is how I built this book:
+* Finally, how this book itself was created is suprisingly quick to do. Here is a board [bookdown guide](https://bookdown.org/home/about/) to follow. This is how I built this book:
  
 1. Clone or download this [minimal example](https://github.com/rstudio/bookdown-demo).  
 

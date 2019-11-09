@@ -12,7 +12,7 @@ description: "Description"
 
 # [tl;dr](https://en.wiktionary.org/wiki/tl;dr)
 
-* Exploratory data analysis (EDA) is the foundation for all data tasks. Do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more ggplot functions to polish your final plot. But don't worry about remembering all the ggplot settings. Just use Google. Lay out your code really clearly so that one line does one thing. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, or bookdown.  
+* Exploratory data analysis (EDA) is the foundation for all data tasks. Do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more ggplot functions to polish your final plot. But don't worry about remembering all the ggplot settings, just use Google. Follow 3 simple rules to lay out your code clearly so that one line does one thing and you know where each function comes from. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, or bookdown.  
 
 ```{r, echo=FALSE, fig.height=12}
 knitr::include_graphics(path = "marriage.svg") 
@@ -24,17 +24,17 @@ knitr::include_graphics(path = "marriage.svg")
 
 * Good Exploratory Data Analysis (EDA) is the foundation of most data work from data engineering to [Kaggle Data Science competition winners](http://blog.kaggle.com/category/winners-interviews/).
 
-* Ideally, you are able to explore your data **quickly** and intuitively in a [flow state](https://en.wikipedia.org/wiki/Flow_(psychology)). You become absorbed by the patterns and stories that your data reveals, not slowed by code errors and Google searches. 
+* Ideally, you are able to explore your data **quickly** and intuitively in a [flow state](https://en.wikipedia.org/wiki/Flow_(psychology)). You become absorbed by the patterns and stories the exploration of your data reveals, not slowed by code errors and Google searches. 
 
-* In this book I aim to help you explore data faster and with fewer errors. And at the same time not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only a few simple rules to follow.
+* This book aims to help you explore data faster and with fewer errors. While at the same time to not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only a three simple [Code style] rules to follow.
 
-* The following chapters are a series of linked methods presented in a logical order. First we start with exploring and visualising data quickly before you commit to the intense process of polishing your final plot. 
+* The following chapters describe a set of linked methods in a logical order. First, we start with what methods let you explore and visualise data quickly before you commit to the intense process of polishing your final plot. Then how interactivity can be part of that rapid exploration too.
 
 * All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or addition to this book as an [issue](https://github.com/billster45/rapid_r_data_vis_book/issues).
 
 * Each section starts with a bare bones code example with no bells or whistles. This means each method could become part of your fast Exploratory Data Analysis toolbox. 
 
-* After each simple code example a more complex version is provided in well structured code. The more detailed examples you can use as a template to adapt for your own final polished plots.
+* After each simple code example a more complex version is provided in well structured code. The more detailed examples you can use as a template to re-use for your own final polished plots.
 
 * The book is my *current* approach to data visualisation in R. But my methods keep changing and improving from reading [R-Bloggers](https://www.r-bloggers.com/) and [#rstats](https://twitter.com/search?q=%23rstats&src=typd&lang=en) and Slack channels every day.
 
@@ -42,13 +42,13 @@ knitr::include_graphics(path = "marriage.svg")
 
 * The diagram below is the Data Science workflow from [R for Data Science](https://r4ds.had.co.nz/introduction.html#what-you-will-learn). I've underlined the **Visualise** and **Communicate** parts of the Data Science process which this book aims help you with. 
 
-* I've also added Code Communication to emphasise the importance of well laid out code as another important part of communicating. Clear code should be easy to read and understand, re-use, and quality assure. You are also helping your future yourself if you have forgotten what you were trying to do.
+* I've also added "Code Communication" to emphasise how well laid out code is another important part of communicating. Clear code should be easy to read and understand, re-use, and quality assure. You are also helping your future yourself in case you forget what you were trying to do.
 
-* Modelling is still an important part of your data exploration and understanding and part of the Data Science process. This is well explained in the R 4 Data Science [modelling chapter](https://r4ds.had.co.nz/model-intro.html). 
+* Modelling is still an important part of both your data exploration and understanding and the overall Data Science process. This is well explained in the R 4 Data Science [modelling chapter](https://r4ds.had.co.nz/model-intro.html). 
 
 > "The goal of a model is to provide a simple low-dimensional summary of a dataset. Ideally, the model will capture true “signals” (i.e. patterns generated by the phenomenon of interest), and ignore “noise” (i.e. random variation that you’re not interested in)."
 
-* Also, here is [good example of modelling](http://rstudio-pubs-static.s3.amazonaws.com/224425_2c2a324004384953a3a7ac12e6d36c87.html) that uses the same housing sales data we will use later in this book. 
+* Also, here is [good example of modelling](http://rstudio-pubs-static.s3.amazonaws.com/224425_2c2a324004384953a3a7ac12e6d36c87.html) that conveniently uses the same Texas housing sales data we will use later in this book. 
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "data-science-explore_edit.png") 
@@ -56,11 +56,11 @@ knitr::include_graphics(path = "data-science-explore_edit.png")
 
 ## What about Python for data viz?
 
-* Python is also a powerful data visualisation programming language using packages such as Pandas, Seaborn, Matplotlib, and Bokeh. My working day usually limited to R so this is where I've built my data visualisation skills so far. A good place to find similar data vis code examples to this book in Python are [Kaggle notebooks](https://www.kaggle.com/kernels). Use the filters at the top to select popular data visualisation notebooks in Python code. Sort them by the most votes. 
+* Python is also a powerful data visualisation programming language. You will use packages such as Pandas, Seaborn, Matplotlib, and Bokeh.A good place to find similar data visualisation code examples to this book in Python are [Kaggle notebooks](https://www.kaggle.com/kernels). This [link](https://www.kaggle.com/kernels?sortBy=voteCount&group=everyone&pageSize=20&language=Python&outputType=Visualization&kernelType=Notebook) sets the filters at the top of the notebooks to show the most popular Python notebooks for visualisation. And here is the same [link](https://www.kaggle.com/kernels?sortBy=voteCount&group=everyone&pageSize=20&language=R&outputType=Visualization&kernelType=Notebook) but filtering to the R language. 
 
 ## What about Point and Click data vis tools? 
 
-* Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place in EDA, as long as we understand their strengths and weaknesses compared to code. Hadley Wickham compares PaC tools with code in this [interview](http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/).
+* Point and Click (PaC) tools like Excel, PowerBI and Tableau still have their place in EDA as long as we understand their strengths and weaknesses compared to using code. Hadley Wickham compares PaC tools with code in this [interview](http://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/).
 
 ---
 
@@ -72,16 +72,16 @@ knitr::include_graphics(path = "data-science-explore_edit.png")
 
 ## Find an R master to inspire you
 
-* This book is just one set of ideas in a certain style. It's not a rigid formula you must follow. Seek ideas and inspiration from a variety of people and books. Find your own path in Data Science, data exploration, visualisation, and communication. Two people who have inspired me are David Robinson and Claus Wilke I describe below. I've also collected a series of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md) in a logic order I have found useful and inspiring.
+* This book is just one set of ideas in a certain style. It's not a rigid formula you must follow. Seek ideas and inspiration from a variety of people and books. Find your own path in Data Science, data exploration, visualisation, and communication. Two people who have inspired me are David Robinson and Claus Wilke I describe below. I've also collected a series of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md) in a logical order I have found useful and inspiring.
 
 ### David Robinson
 
-* I recommend watching any of David Robinson's [live coding Tidy Tuesday videos](https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday) to improve your Data Science skills. Robinson explores, cleans then analyses data in R rapidly and intuitively. Precisely what I'm trying to help you do with this book. Several methods I use in this book I saw Robinson do first on his videos.
+* I recommend watching any of David Robinson's [live coding Tidy Tuesday videos](https://www.youtube.com/results?search_query=david+robinson+tidy+tuesday) to improve your Data Science skills. Robinson explores, cleans and then analyses data in R rapidly and intuitively. Precisely what I'm trying to help you do with this book. Several methods I use in this book I saw Robinson do first on his videos.
 
-* While this book covers the exploration, visualisation and communication parts of Data Science, Robinson takes you through the complete R for Data Science workflow from import to communicate. And all in one hour (or less if you increase the playback speed to 1.5x).
+* While this book covers the exploration, visualisation and communication parts of Data Science, Robinson takes you through the complete R for Data Science workflow from import to communicate. And all in one hour (or less if you increase the playback speed to 1.5x). Amazingly Robinson has never seen the data he analyses before he starts so you get to witness how truly rapid it is possible to be doing Data Science with R.
 
 ### Claus Wilke
 
 * Another R master in data vis and communication is Claus Wilke. He recently created a guide similar to this book. It starts with simple examples that become more complex. In his [Practical ggplot2](https://github.com/wilkelab/practicalgg) guide he starts with the bare minimum code you need to create the plot. He then gradually builds the code up layer by layer until it is publication quality. 
 
-* Wilke wrote [Practical ggplot2](https://github.com/wilkelab/practicalgg) to help people re-create some of the charts in his excellent [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/) more easily on their own data. This book offers a similar gradual method to Wilke's but with a greater focus on exploratory data analysis, and offering examples with more tools, particulary for interactive plots, as well as recommending a clean code style.
+* Wilke wrote [Practical ggplot2](https://github.com/wilkelab/practicalgg) to help people re-create some of the charts in his excellent [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/). This book offers a similar gradual method to Wilke's but with a greater focus on exploratory data analysis, and it offers examples with more tools (particularly interactive ones) as well as recommending a clean code style.

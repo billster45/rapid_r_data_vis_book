@@ -2,9 +2,9 @@
 
 ## Start with dplyr counts and summaries in console
 
-* David Robinson often starts exploring data with simple counts in the console.
+* David Robinson often starts exploring data with simple counts in the console. I reccomend this as the first step in your EDA.
 
-* Here we don't use the package name (so breaking the rule I just told you) in the console so we can type more quickly and explore the data with dplyr verbs faster.
+* In the code below we don't use the package name in the console (so breaking the rule I just told you). We won't save this code for others to read so this is ok. It means we can type more quickly and explore the data with dplyr verbs faster.
 
 ```{r explore_like_David_Robinson, eval = FALSE}
 df %>% count(city) %>% View()
@@ -20,9 +20,9 @@ knitr::include_graphics("console_coding.gif")
 
 ## Plot data points with geom_point()
 
-* After using dplyr count(), group_by() and summarise(), try plotting all data points with ggplot2::geom_point(). It almost NEVER fails to show you what's going on quickly and is unlikely to return errors. 
+* After using dplyr count(), group_by() and summarise(), try plotting all the data points with ggplot2::geom_point(). It almost **NEVER** fails to show you what's going on quickly and is unlikely to return a confusing error message. 
 
-* ggplot2::geom_point() is the minimum and most reliable ggplot plot type (or geom) to start with. 
+* ggplot2::geom_point() is the minimum and most reliable ggplot plot type (or geom) to start visualising. Increasingly I'm finding it is often a good choice to end with and use it in your final plot too.
 
 * Let's look at all the values of sales for each date.
 
@@ -36,7 +36,7 @@ df %>%
   ggplot2::geom_point()
 ```
 
-* Now let's look at the individual sales values over the values of the city column.
+* Now let's look at the individual sales values for each city.
 
 ```{r ggplot_geom_point1}
 df %>%
@@ -48,9 +48,9 @@ df %>%
   ggplot2::geom_point()
 ```
 
-* The points make very dark lines. This is where we can't see separate data points as so many overlap. This is known as over plotting. Solve this by replacing geom_point() with geom_jitter(). This randomly "jitters" the data points around so that they are less likely to overlap.
+* Becuase there are so many points make very dark lines where they overlap. This is known as "over plotting". Reduce over plotting by replacing geom_point() with geom_jitter(). This randomly "jitters" the location of the data points by a small amount so that they are less likely to overlap.
 
-* Sometimes there are so many data points the jitter is not enough to reduce over plotting. We can also make the dots lighter using a a parameter called alpha. The lower the value of alpha the fainter the data points.
+* Sometimes there are so many data points that jittering does not reduce over plotting enough. Next try making the dots lighter using a a parameter called "alpha" as in the code below. The lower the value of alpha the fainter the data points.
 
 ```{r ggplot_geom_point2}
 df %>%
@@ -62,11 +62,11 @@ df %>%
   ggplot2::geom_jitter(alpha = 0.01)
 ```
 
-Hadley Wickham has a few more tricks to solve over plotting in the [overplotting chapter](https://ggplot2-book.org/statistical-summaries.html#overplotting) of his ggplot book.
+* Hadley Wickham has a few more tricks to in the [overplotting chapter](https://ggplot2-book.org/statistical-summaries.html#overplotting) of his ggplot book.
 
-* We all know sales of most things vary by the time of the year. So let's now put date on the x axis, make city the colour, and because the data is over time we can join the data points using ggplot2::geom_line().
+* We all know sales of most things vary by the time of the year. So let's now put date on the x axis, make city the colour, and because the data is over time we join the data points using ggplot2::geom_line().
 
-* We're also using the reduced data set with fewer cities so the plot is less crowded with fewer lines.
+* We also use the reduced data set with fewer cities so that the plot is less crowded with fewer lines.
 
 ```{r ggplot_geom_line3}
 df_red %>%
@@ -79,9 +79,11 @@ df_red %>%
   ggplot2::geom_line()
 ```
 
-* Beautiful. While sales have very different volumes in different cities we can see they follow the same seasonal pattern. To bring the patterns of sales closer to each other and easier to compare we can transform the sales value by taking its log. This is Hadley Wickham's approach in [ggplot2: Elegant Graphics for Data Analysis](https://www.springer.com/gp/book/9783319242750).
+* Beautiful. While sales have very different volumes between cities we can see they all tend to follow the same seasonal pattern. To bring the patterns of sales closer to each other so that they are easier to compare we can transform the sales value by taking its log. This is Hadley Wickham's approach in [ggplot2: Elegant Graphics for Data Analysis](https://www.springer.com/gp/book/9783319242750).
 
-* He goes on to model the data by fitting a linear model between the log of sales and the month, then plotting the residuals (i.e. the change in sales not explained by the month). This removes the strong seasonal effects. We will take a simpler approach to reducing the seasonal effect in the final plot in this chapter by presenting the entire series zoomed out with years clearly marked.
+* Wikham goes on to model the Texas housing sales data by fitting a linear model between the log of sales and the month, then plotting the residuals (i.e. the change in sales not explained by the month). This removes the strong seasonal effects. This is similar to the decomposition part of a classic time series analysis. Take a look at the recent [fable forecasting package](https://tidyverts.github.io/tidy-forecasting-principles/index.html#background) for an easy way to try this. 
+
+* We will take a visual approach to reduce the seasonal effect in the [Polish your final plot] part of this chapter. The entire time series is plotted zoomed out with years clearly marked so that the strong monthly sales pattern that is repeated each year is more obvious.
 
 ```{r ggplot_geom_line4}
 df_red %>%
@@ -96,9 +98,9 @@ df_red %>%
 
 ## Facet by categories
 
-* Another logical step after showing categories by colour is to use "small multiples". This is a fancy way of saying draw a chart for each value in one or more columns then look at all the plots at once. Usually in a grid. 
+* So far we have shown the different sales patterns for each city by putting city into the "colour" arugment of ggplot. However, with lots of cities the plot gets too crowded. In such situations facets or "small multiples" are a good choice. This is a fancy way of saying draw a chart for each value in one or more columns then look at all the plots at once, usually in a grid. 
 
-* An important setting for facets is to specify scales = "free" so each small plot has its own scale. This lets us more easily spot interesting differences in the patterns over time between plots. 
+* An important setting for facets is to specify **scales = "free"** so that each small plot has its own scale set to the maximum of each city's sales. This lets us more easily spot interesting differences in the patterns over time between plots. 
 
 ```{r ggplot_facet}
 df_red %>%
@@ -116,7 +118,7 @@ df_red %>%
 
 ## Facet interactively (trelliscopejs)
 
-* An interactive way to facet and explore your data with a GUI in R is trelliscopejs. Below we facet all the Texas cities in a trelliscope web page. Have a play with all the settings and see what it does.
+* An interactive way to facet and explore your data with a GUI is trelliscopejs. Below we facet all the Texas cities in a trelliscope web page. Have a play with all the settings and see what it does.
 
 ```{r trelliscopejs, message=FALSE, warning=FALSE}
 df %>%
@@ -138,11 +140,11 @@ df %>%
 
 ## Loop to plot every category separately
 
-* To study each city as a full single chart automatically we can loop through our data. 
+* To study each city as a full single chart on its own we can loop through the cities and plot them automatically with very little code. 
 
-* We can nest a dataframe for each city into one dataframe. Then loop through each nested dataframe creating a plot for each one.
+* To do this we "nest" a dataframe for each city into one dataframe. Then loop through each of the nested city dataframes creating a plot for each one.
 
-* First we use dplyr::group_by() for city and then nest by that grouping using tidyr::nest().
+* Here we use dplyr::group_by() on city then use tidyr::nest() to create the indivdiual nested dataframes.
 
 ```{r loop_through_print}
 df_red_nest <-
@@ -151,36 +153,36 @@ df_red_nest <-
   tidyr::nest()
 ```
 
-* This shows us what a nested dataframe looks like.
+* Pipine the nested dataframe into View() shows us what a nested dataframe looks like.
 
 ```{r, eval=FALSE}
 df_red_nest %>% View()
 ```
 
-* We can also view one of the nested data frames using square brackets. Think of the numbers in the square brackets like the co-ordinates in Excel. The first number is the column position and the second number is the row position.
+* We can also view one of the nested data frames using square brackets. Think of the numbers in the square brackets like the co-ordinates in Excel. The first number is the column position and the second number is the row position of the data frame.
 
 ```{r, eval=FALSE}
 df_red_nest[[2]][[1]] %>% View()
 ```
 
-* We can now add a plot to each nested data frame. We use purrr::map2(). This is a compact way to loop through two arguments in a function. In this case the values being set are the data set inside each row and the value of city column. 
+* Once you get used to square brackets it is a powerful way to navigate through nested R objects. The code above showed us the data in the first nested data frame of one city. The code below now drills down into the first column and first row of that single nested dataframe. This is just one cell so the most granular drill down possible for this object.
+
+```{r, eval=FALSE}
+df_red_nest[[2]][[1]][[1]][[1]] %>% View()
+```
+
+* We can now add a plot to each nested data frame for each city. We use purrr::map2(). This is a compact way to loop through two arguments in a function. The function arguments being set by map2() are the nested dataframes in the data column and the city name inside the city column of the nested dataframe df_red_nest.
 
 ```{r}
 df_red_nest <-
   df_red_nest %>%
-  dplyr::mutate(plot = purrr::map2(
-    .x = data,
-    .y = city,
-    ~ ggplot2::ggplot(
-      data = .x,
-      aes(
-        x = date,
-        y = sales
-      )
-    ) +
-      ggtitle(glue::glue("Plot of {.y}")) +
-      geom_line()
-  ))
+  dplyr::mutate(plot = purrr::map2(.x = data,
+                                   .y = city,
+                                   ~ ggplot2::ggplot(data = .x,
+                                                     aes(x = date,
+                                                         y = sales)) +
+                                     ggtitle(glue::glue("Plot of {.y}")) +
+                                     geom_line()))
 ```
 
 * Take a look at the new nested data frame with a new column added containing a plot for each city.
@@ -208,21 +210,21 @@ print(df_red_nest$plot)
 
 ## Polish your final plot
 
-* We now have a bare minimum Exploratory Data Analysis toolkit of how to explore the data both wtih dplyr counts from the console and with points and lines in ggplot.
+* We now have a bare minimum Exploratory Data Analysis toolkit. We explore the data with dplyr::count() from the console then visualise it with ggplot2::geom_point().
 
-* We will soon be ready to select a plot that tells an interesting story we have found by exploring the data. But adding all the bells and whistles to make the plot customer or publication ready can and does take a long time. So this polish shouldn't be part of your exploratory data analysis.
+* From exploring the data quickly we are soon ready to select a plot that tells an interesting story. But adding all the bells and whistles to make the final plot for a customer or publication can and does take a long time. So this polish shouldn't be part of your exploratory data analysis.
 
-* Also, make sure the polishing is done with the clean code style recommended earlier. It's far quicker then to comment out or tweak the values of each part of your plot until it looks just right. Clean code is faster to iterate.
+* Also, make sure the polishing is done with the clean [Code style] recommended earlier. You will find it quicker to comment out or tweak specific parts of your plot code until it looks just right. Clean code is faster to iterate.
 
-* The plot below isn't perfect. There may be things you want to change depending on what story you want to tell or your personal style.
+* The plot below isn't perfect. There may be things you want to change depending both on what story you want to tell and your personal style.
 
-* How did I create it? By Googling for what I wanted to do (e.g. "ggplot remove axis grid lines"), copying the code from a stackoverflow answer, and putting it into a clear structure as below.
+* How did I write this code? By Googling for what I wanted to do (e.g. "ggplot remove axis grid lines"), copying the code from a stackoverflow answer, then pasting the code into a clear structure as below.
 
-* Many of the tweaks or polish will be to ggplot2::theme() or ggplot2::scale... But are you really going to remember what do to each time? I try not to worry about remembering how to do it and just focus on how I want it to look and get absorbed in the creation and satisfaction of it gradually improving.
+* Many of the tweaks or polish will be to ggplot2::theme() or ggplot2::scale... but are you really going to remember the ggplot code you need for every adjustment you want to make? I no longer worry about remembering how to do it and just focus on how I want it to look and get absorbed in the creation and satisfaction of the plot gradually improving.
 
-* After you have built a few of your own charts with clear code you will soon be using your own plots as a store of code chunks to re-use. 
+* After you have built a few of your own publication quality pots with clear code you will soon be using your own plot code as a store of examples to re-use meaning that you will Google less.
 
-* Be prepared for this tweaking and polishing to take you much longer than you planned. Always.
+* Be prepared for this code tweaking and plot polishing to take longer than you planned. Always.
 
 ```{r, echo=FALSE, fig.height=10}
 knitr::include_graphics(path = "texas.svg") 

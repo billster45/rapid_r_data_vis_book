@@ -2,13 +2,13 @@
 
 ## Navigate R markdown quickly 
 
-* Instead of scrolling up and down your R Markdown code looking for certain chunk, jump quickly to the right bit of code you want to edit in RStudio using the document outline. View the doc outline in one of three ways:
+* When you want to quickly find a bit if your code to edit instead of scrolling up and down your R Markdown code jump quickly to the right bit using the document outline. You can show the outline in one of three ways:
 
 1. Hold down Ctrl+Shift+O. 
 2. Click the top right icon in the code pane.
 3. Left click on the bottom bar of the R markdown file. 
 
-The gif below shows these three methods. It was recorded with [ScreenToGif](https://www.screentogif.com/). I found it super easy to use and so gave a donation.
+The gif below shows these three methods. It was recorded with [ScreenToGif](https://www.screentogif.com/). I gave a donation as I found it so easy to use and it includes genuinely useful features like a progress bar and the ability to pixelate out sections of the recording.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("outline.gif") 
@@ -31,14 +31,13 @@ Here are all the R packages used in this book.
 library(ggplot2) # static charts - amazing variety
 library(plotly) # interactive charts
 library(apexcharter) # much like the paid for highchater js library. Powerful
-library(rayshader) # 3D charts
 library(trelliscopejs) #  small multiples
 library(dygraphs) # awesome interactive timeseries
 
 # ggplot extensions https://www.ggplot2-exts.org/gallery/
 library(scales) # improve your scales
 library(gganimate) # animate your ggplot
-library(png) # dunno
+library(png) # 
 library(directlabels) # for directly labelling lines for example
 library(gghighlight) # label points of interest on your charts
 library(ggrepel) # move labels so they don't overlap
@@ -60,12 +59,11 @@ library(tidylog) # great for QA on the fly
 # wrangling / munging / manipulating
 library(tidyverse) # loads of useful packages in one 
 
-library(crosstalk) # link html widgets
+library(crosstalk) # link html widgets like plotly to DT tables
 
 # time series tools
 library(anytime) # convert text into the right date type
-library(xts) # convert to time series for dygraphs
-library(tsbox) # easily convert to time series
+library(tsbox) # convert to time series for dygraphs
 
 # sample data
 library(mosaicData) # sample data
@@ -73,13 +71,13 @@ library(mosaicData) # sample data
 
 ## The data to visualise
 
-* A lot of data visualisation looks at values changing over time. For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we are going to mostly use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) time series data built into ggplot.
+* Often in EDA and data visualisation we are most interested in values changing over time. For example, are things getting worse, better, higher, lower etc...For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we mostly use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) data in this book. This is a time series data set built into ggplot.
 
-* You may want to find more open data sets to develop your data vis skills. If so, take a look at this carefully curated and [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/).
+* To improve your own skills I recommend finding other open data sets to develop your data vis skills. I found the marriage data we look at later in this carefully curated and [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/). The [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) data sets are also a great source where you also get to learn from seeing how others (including David Robinson) have tackled them. Finally, look for data or stories that interest you. I recently saw a data visualisation in The Times newspaper on [smoking vs vaping](https://github.com/billster45/improve_a_data_viz/blob/master/README.md) that I thought I could improve.
 
-* The only manipulation we will do to the Texas housing sales data is create a real date using [lubridate](https://lubridate.tidyverse.org/). 
+* The only manipulation we will do to the Texas housing sales data is to create a real date using [lubridate](https://lubridate.tidyverse.org/). 
 
-* We'll also use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Assurance into your coding process. You just replace dplyr verbs with the same verb in tidylog. The tidylog version tells you what each dplyr verb has done to your data in terms of the number and percentage of changes. For example, how many rows are dropped or added by filters or joins, or what percentage of values changed after a mutate.
+* We'll also use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Assurance while you code. Just replace the dplyr verbs with the same verb in tidylog. The tidylog version tells you what each dplyr verb has done to your data. For example, how many rows are dropped or added by filters and joins, or what percentage of values have changed after a mutate.
 
 ```{r create_df, message=TRUE}
 # create a data frame with a real date for plotting
@@ -89,7 +87,7 @@ df <- ggplot2::txhousing %>%
                                               day =1)) 
 ```
 
-* Let's also create a data frame with fewer cities to make some plots less crowded later. Here we select only cities where the maximum number in any month is 800 or more.
+* Let's also create a data frame with fewer cities so that some plots we draw later are less crowded. Here we select only cities where the maximum number of sales in any month is 800 or more.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -100,7 +98,7 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 500)
 ```
 
-* Hold on. Look! Read the tidylog messages above. It tells us the percentage of values that are "NA". The mutate must have gone wrong as 43% are NA. Well spotted tidylog. We correct it below by removing NAs from the maximum sales value using **na.rm = TRUE**.
+* Hold on. Look! Read the tidylog messages above. It tells us the percentage of values that are "NA" is 43% ("new variable 'sales_max' with 27 unique values and 43% NA"). Well spotted tidylog. We correct it below by removing NAs from the maximum sales value using **na.rm = TRUE**.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -112,7 +110,7 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 500)
 ```
 
-* We know the code above has been corrected as its tidylog message now tells us there are 0% that are NA.
+* We know the code above has been corrected as its tidylog message now tells us that the new variable 'sales_max' has 0% NA as we would expect.
 
 * Let's also look at the top few rows of the data frame we created using a kableExtra table. The [Tables] chapter later on in this book describes different table methods in more detail.
 
@@ -122,33 +120,31 @@ kableExtra::kable(utils::head(df))
 
 ## Code style 
 
-### Include the package and parameter names
+### Rule 1: Add package names to all functions
 
-* To make your code more transparent use the package name before every function. Even base R functions. 
+* Use the package name before every function to make your code easier to read, even for [base R](https://rstudio.com/wp-content/uploads/2016/05/base-r.pdf) functions. 
 
-* When I started learning R using other people's code. I got confused where functions came from. Particularly when the functions came from many packages (including base functions) and even their own functions. It made their code appear more complex and intimidating than it should have.
+* When I started learning R I tried to do it using other people's code. But I got confused where functions came from. Particularly when they had used lots of different packages mixed with base functions and their own functions. It made their code appear more complex and intimidating than it should have.
 
-* Another benefit of typing the package name first you can hit the tab key at the end of the double colon and browse all the functions in that package.
+* Another benefit of typing the package name before each function is you can hit the tab key at the end of the double colon. From here you can browse all the functions in that package that appear as a scrollable list.
 
-* Also, try highlighting a function and its package name then hit the F1 key to see the help pages for that function. While hitting the F2 key can be a quick way to see all the possible parameters in a function including default values. 
+> ggplot2::
 
-* Finally, name the arguments in each function instead of relying on the expected argument order. Your code will be quicker to understand when we know exactly what arguments are being set without reading the help page.
+* Also, try highlighting a function and its package name then hit the F1 key to see the help pages for that particular function. While hitting the F2 key can be a quick way to see all the possible arguments in a function including the default values the author of the package has chosen you might not be aware of. 
 
-```{r package_name, eval=FALSE}
-ggplot2::
+## Rule 2: Add argument names to all functions
 
-ggrepel::geom_text_repel(mapping = )
-```
+* Finally, instead of relying on the order of the arguments that the function expects, name every argument you set. Your code will be quicker to understand when we know exactly what arguments are being set without having to read the help page for that function.
 
 ```{r, echo=FALSE, out.width = "1100%"}
 knitr::include_graphics("package_name.gif") 
 ```
 
-### One line does one thing - hit the return key a lot
+### Rule 3: One line does one thing
 
 * Ideally one line of code does one thing. Hit the return key after every pipe (%>%), comma, or plus (+) and RStudio tabs will space your code out in just the right way.
 
-* For example, the code below works but doesn't follow the rules so far (package & argument names and one action per line). The code is cramped, slow to understand, and can be difficult edit or re-use.
+* For example, the code below works but doesn't follow the rules 1 to 3. The code is cramped, slow to understand, and can be difficult edit or re-use.
 
 ```{r cramped_code, eval=FALSE}
 ggplot(df) +
@@ -162,15 +158,7 @@ ggplot(df) +
   theme(panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), strip.text.x = element_text(size = 10), axis.text.x = element_text(angle = 60, hjust = 1, size = 9), legend.text = element_text(size = 12), legend.position = "right", legend.direction = "vertical", plot.title = element_text(size = 22, face = "bold"), plot.subtitle = element_text(color = "grey", size = 18), plot.caption = element_text(hjust = 0, size = 12, color = "darkgrey"), legend.title = element_blank())
 ```
 
-* In contrast, the code below is the identical to the code above but it follows these 5 rules:
-
-1. Include package names before each function. Even for [base functions](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html).
-2. Name every argument you set in a function.
-3. Each line does one thing by hitting the return key after each pipe ( %>% ), comma or plus symbol (+).
-4. Put spaces around equals.
-5. Use [styler](https://styler.r-lib.org/) to automatically apply some of these rules. 
-
-The benefits of following these rules are that you can more easily:
+* In contrast, the code below is the identical to the code above but it follows the 3 rules. The benefits of following these rules are that you can more easily:
 
 1. Run your code top downwards in chunks adding more lines each time (like the popular ggplot flip-books I describe at bullet 11 in my collection of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r)
 2. Comment out whole lines of code or parameters in a function to understand what they are doing.
@@ -178,6 +166,8 @@ The benefits of following these rules are that you can more easily:
 4. Help others QA or re-use your code more quickly.
 5. Help others new to R understand what you are doing and learn faster.
 6. Avoid being a "gatekeeper" of your R knowledge and skills. Share, explain and democratise what you know. You can then move on to more complex analysis in R with an even higher value (as proposed by Richard Susskind in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)).
+
+* Further tweaks to improve code clarity are to put spaces either side of the equals sign and to use use [styler](https://styler.r-lib.org/) to automatically apply some of these rules. You can also [customise styler](https://cran.r-project.org/web/packages/styler/vignettes/customizing_styler.html) to apply your own rules. I would like to try customising styler to apply rules 1 to 3 above.
 
 ```{r clean_code, eval=FALSE}
 df %>%

@@ -5,7 +5,9 @@
 
 ## DataTables (DT) basic
 
-* For plotting we usually use [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) where the data frame is "long". But for easy to read tables we usually need to make our long tidy data "wide" (e.g. one column per month). To create a wide interactive table we use tidyr::pivot_wider() then pipe that wide data into DT::datatable()
+* For plotting we usually use [tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) where the data frame is "long". But for easy to read tables we usually need to make our long data "wide". In the Texas housing sales this means showing one column per month. 
+
+* To make the data wide we use tidyr::pivot_wider() then pipe that wide data into DT::datatable() to create an interactive table very easily.
 
 ```{r}
 # first reshape with new tidyr
@@ -24,9 +26,9 @@ df_wide %>%
 
 ## DataTables bells & whistles
 
-* The [DataTables reference](https://rstudio.github.io/DT/) is excellent for showing all the elements you can change with clear examples. 
+* The [DT DataTables reference](https://rstudio.github.io/DT/) is describes all the elements of the table you can change with clear examples and code. This resource is usually all you need to refer to. 
 
-* Often you have decided on lots of different [DataTable options][https://rstudio.github.io/DT/options.html] that you want apply to many tables. Reduce the amount of by setting your main DT table options globally like this.
+* Eventually you have decide upon on lots of different [DataTable options][https://rstudio.github.io/DT/options.html] that you want apply to your table. However, if your work includes many tables this will lead to lots of repeated settings code. Reduce the amount of code by setting your main DT table options globally like this.
 
 ```{r}
 options(DT.options = list(
@@ -39,7 +41,7 @@ options(DT.options = list(
 ))
 ```
 
-* Then the settings above will be applied to every later use of DT::datatable()
+* The settings above will then be applied every time you use DT::datatable()
 
 ```{r}
 df_wide %>% 
@@ -94,7 +96,7 @@ df_wide %>%
 
 ## rpivottable simple
 
-* I love Excel pivot tables and charts for exploring data. rpivotables are a similar exploratory tool in R. We simply put the data frame into the function rpivotTable::rpviotTable() then play around with the html output below (as you would with an Excel pivot table).
+* I love Excel pivot tables and charts for exploring data. rpivotTables are a similar exploratory tool in R. We simply put the data frame into the function rpivotTable::rpviotTable() then play around with the html output below (as you would with an Excel pivot table).
 
 ```{r}
 df_red %>% 
@@ -103,7 +105,7 @@ df_red %>%
 
 ## rpivottable (bells & whistles)
 
-* Once we've decided how we want the rpivotTable to look manually we can specify the layout that tells our story.
+* Once we've decided how we want the rpivotTable to look manually we can hard code the layout that tells the story we want to present.
 
 ```{r}
 df_red %>% 
