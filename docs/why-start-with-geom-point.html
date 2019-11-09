@@ -218,10 +218,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.3</b> Load R packages to your library</a></li>
 <li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.4</b> The data to visualise</a></li>
 <li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.5</b> Code style</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#rule-1-add-package-names-to-all-functions"><i class="fa fa-check"></i><b>3.5.1</b> Rule 1: Add package names to all functions</a></li>
+<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#rule-1-include-names-before-all-functions"><i class="fa fa-check"></i><b>3.5.1</b> Rule 1: Include names before all functions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="intro.html"><a href="intro.html#rule-2-add-argument-names-to-all-functions"><i class="fa fa-check"></i><b>3.6</b> Rule 2: Add argument names to all functions</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="intro.html"><a href="intro.html#rule-3-one-line-does-one-thing"><i class="fa fa-check"></i><b>3.6.1</b> Rule 3: One line does one thing</a></li>
+<li class="chapter" data-level="3.6.1" data-path="intro.html"><a href="intro.html#rule-3-each-line-does-one-thing"><i class="fa fa-check"></i><b>3.6.1</b> Rule 3: Each line does one thing</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a><ul>
@@ -297,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ggplot-is-famed-for-annoying-errors" class="section level2">
 <h2><span class="header-section-number">5.1</span> ggplot is famed for annoying errors</h2>
 <ul>
-<li><p>It’s a good idea to start with ggplot2::geom_point() because it works for for both raw and summarised data straight away. This both speeds up EDA and makes ggplot less intimidating for beginners.</p></li>
+<li><p>It’s a good idea to start with <code>ggplot2::geom_point()</code> because it works for for both raw and summarised data straight away. This both speeds up EDA and makes ggplot less intimidating for beginners.</p></li>
 <li><p>Let’s explore more granular data to trigger some common errors using the marriage data from the mosaicData package. We do a little data cleaning on the ceremony date and on the column that describes any previous marriages.</p></li>
 </ul>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">marriage &lt;-</a>
@@ -484,7 +484,7 @@ Pisces
 <pre><code>## Error: stat_count() must not be used with a y aesthetic.</code></pre>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <ul>
-<li>ggplot2::geom_col() or ggplot2::geom_bar(stat = “identity”) will plot the data for us without and error but it’s showing the sum of all the ages in each previous marriage category which doesn’t tell us an interesting story in th data.</li>
+<li><code>ggplot2::geom_col()</code> or <code>ggplot2::geom_bar(stat = "identity")</code> will plot the data for us without and error but it’s showing the sum of all the ages in each previous marriage category which doesn’t tell us an interesting story in th data.</li>
 </ul>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -497,13 +497,13 @@ Pisces
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">  <span class="co">#ggplot2::geom_col()</span></a></code></pre></div>
 <ul>
 <li><p>Another reason to avoid bars to begin with is they may perform a statistical transformation without us realising. This is explained in the <a href="https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations">Statistical Transformations</a> chapter of <a href="https://r4ds.had.co.nz/">R for Data Science</a>.</p></li>
-<li><p>A bar or line may end up being the final plot choice, but for fast EDA let’s avoid them and retreat to our friend ggplot2::geom_point()</p></li>
+<li><p>A bar or line may end up being the final plot choice, but for fast EDA let’s avoid them and retreat to our friend <code>ggplot2::geom_point()</code></p></li>
 </ul>
 </div>
 <div id="retreat-to-geom_point" class="section level2">
 <h2><span class="header-section-number">5.2</span> Retreat to geom_point()</h2>
 <ul>
-<li>Let’s go back to using ggplot2::geom_point() and facet by person.</li>
+<li>Let’s go back to using <code>ggplot2::geom_point()</code> and facet by person.</li>
 </ul>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -539,7 +539,7 @@ Pisces
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <ul>
 <li><p>This looks better but is there an optimum bin number? There is probably no optimum width as discussed in this <a href="https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram">stackexchange</a> question.</p></li>
-<li><p>Let’s also try a density distribution plot using ggplot2::geom_density()</p></li>
+<li><p>Let’s also try a density distribution plot using <code>ggplot2::geom_density()</code></p></li>
 </ul>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">p &lt;-</a>
 <a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span>marriage <span class="op">%&gt;%</span></a>
@@ -561,7 +561,7 @@ Pisces
 <div id="geom_jitter-and-geom_boxplot-is-better" class="section level2">
 <h2><span class="header-section-number">5.3</span> geom_jitter() <strong>and</strong> geom_boxplot() is better</h2>
 <ul>
-<li>But with so few data points I think that ggplot2::box_plot() with the data points overlaid using ggplot2::geom_jitter() works well as a data story.</li>
+<li>But with so few data points I think that <code>ggplot2::box_plot()</code> with the data points overlaid using <code>ggplot2::geom_jitter()</code> tells the data story well.</li>
 </ul>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">marriage <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb73-2" title="2"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
@@ -579,8 +579,8 @@ Pisces
 <div id="final-choice-geom_jitter-and-stat_summary" class="section level2">
 <h2><span class="header-section-number">5.4</span> Final choice: geom_jitter() <strong>and</strong> stat_summary()</h2>
 <ul>
-<li><p>The plot above would have been my final choice intil I saw the fantastic <a href="https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/">“evolution of a ggplot”</a> post by Cedric Sherer.</p></li>
-<li><p>In the gif below you can see Sherer also starts with a boxplot but his final choice is ggplot2::geom_jitter() and ggplot2::stat_summary(). His post gives the full code in a gradual code story presented like the ggplot flip books.</p></li>
+<li><p>The plot above would have been my final choice until I saw the fantastic <a href="https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/">“evolution of a ggplot”</a> post by Cedric Sherer.</p></li>
+<li><p>In the gif below you can see Sherer also starts with a boxplot but his final choice is <code>ggplot2::geom_jitter()</code> and <code>ggplot2::stat_summary()</code>. His post gives the full code in a gradual code story presented like the ggplot flip books.</p></li>
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif" width="100%" /></p>
 <ul>
@@ -588,7 +588,7 @@ Pisces
 </ul>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png" width="100%" /></p>
 <ul>
-<li>Inspired by that plot and its code I prefer this final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed, much like a plot in a good online newspaper can.</li>
+<li>Inspired by that plot and its code I prefer my final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed, more like a plot in a good online newspaper can.</li>
 </ul>
 <p><img src="marriage.svg" /><!-- --></p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">p &lt;-<span class="st"> </span>marriage <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -663,7 +663,7 @@ Pisces
 <pre><code>## Saving 7 x 5 in image</code></pre>
 <ul>
 <li><p>In the plot above we can see grooms are older on average overall. But do they tend to be older or younger than their bride within each marriage?</p></li>
-<li><p>As a final quick exploratory chart let’s put the ceremony ID on the x axis, use geom_point() for age, and give the data points for brides and grooms their own colour. Adding the ceremony ID (bookpageID) to the group aesthetic means that when we add ggplot2::geom_line() this creates a line that joins the two data points for each marriage.</p></li>
+<li><p>As a final quick exploratory chart let’s put the ceremony ID on the x axis, use <code>ggplot2::geom_point()</code> for age, and give the data points for brides and grooms their own colour. Adding the ceremony ID <code>bookpageID</code> to the group aesthetic means that when we add <code>ggplot2::geom_line()</code> this creates a line that joins the two data points for each marriage.</p></li>
 <li><p>We can see that most grooms are older than most brides in each ceremony.</p></li>
 </ul>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">marriage <span class="op">%&gt;%</span><span class="st"> </span></a>

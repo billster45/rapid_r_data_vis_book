@@ -218,10 +218,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.3</b> Load R packages to your library</a></li>
 <li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.4</b> The data to visualise</a></li>
 <li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.5</b> Code style</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#rule-1-add-package-names-to-all-functions"><i class="fa fa-check"></i><b>3.5.1</b> Rule 1: Add package names to all functions</a></li>
+<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#rule-1-include-names-before-all-functions"><i class="fa fa-check"></i><b>3.5.1</b> Rule 1: Include names before all functions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="intro.html"><a href="intro.html#rule-2-add-argument-names-to-all-functions"><i class="fa fa-check"></i><b>3.6</b> Rule 2: Add argument names to all functions</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="intro.html"><a href="intro.html#rule-3-one-line-does-one-thing"><i class="fa fa-check"></i><b>3.6.1</b> Rule 3: One line does one thing</a></li>
+<li class="chapter" data-level="3.6.1" data-path="intro.html"><a href="intro.html#rule-3-each-line-does-one-thing"><i class="fa fa-check"></i><b>3.6.1</b> Rule 3: Each line does one thing</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a><ul>
@@ -323,25 +323,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Add this line….</p></li>
 </ol>
 <blockquote>
-<p>output_dir: “docs”</p>
+<p><code>output_dir: "docs"</code></p>
 </blockquote>
-<p>…to the configuration file _bookdown.yml (as described <a href="https://bookdown.org/yihui/bookdown/github.html">here</a>)</p>
+<p>…to the configuration file <code>_bookdown.yml</code> (as described <a href="https://bookdown.org/yihui/bookdown/github.html">here</a>)</p>
 <ol start="3" style="list-style-type: decimal">
-<li>In RStudio build the book to gitbook format either using the drop down in the build tab (next to Environment tab)
-or by using this line of code..</li>
+<li>In RStudio build the book to gitbook format either using the drop down in the build tab (next to Environment tab), or by running this line of code..</li>
 </ol>
 <blockquote>
-<p>rmarkdown::render_site(output_format = ‘bookdown::gitbook’, encoding = ‘UTF-8’)</p>
+<p><code>rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')</code></p>
 </blockquote>
 <p>…this builds the book into a single doc folder holding all the html files needed in it.</p>
 <ol start="4" style="list-style-type: decimal">
 <li><p>Push the docs folder to your repo so it’s ready to publish.</p></li>
-<li><p>Now on GitHub website follow this <a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">guidance</a>. It describes how you go to the “Settings” of the repo, then “GitHub Pages” section, then the “Source” section that has a drop down.
+<li><p>Now on GitHub website follow this <a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">guidance</a>. It describes how you go to the <code>Settings</code> of the repo, then <code>GitHub Pages</code> section, then the <code>Source</code> section that has a drop down.
 Select the third option of the Source drop down that is….</p></li>
 </ol>
 <blockquote>
-<p>“master branch/docs folder
-Use only the docs folder for Github pages”</p>
+<p><code>master branch/docs folder  Use only the docs folder for Github pages</code></p>
 </blockquote>
 <p>..it then has a bit of a think then tells you when the published book is ready to view and at what web address.</p>
 

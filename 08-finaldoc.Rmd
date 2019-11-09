@@ -22,23 +22,22 @@
 
 2. Add this line....
 
-> output_dir: "docs" 
+> `output_dir: "docs"` 
   
-  ...to the configuration file _bookdown.yml (as described [here](https://bookdown.org/yihui/bookdown/github.html))
+  ...to the configuration file `_bookdown.yml` (as described [here](https://bookdown.org/yihui/bookdown/github.html))
   
-3. In RStudio build the book to gitbook format either using the drop down in the build tab (next to Environment tab)
- or by using this line of code..
+3. In RStudio build the book to gitbook format either using the drop down in the build tab (next to Environment tab), or by running  this line of code..
    
-> rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')
+> `rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')`
  
   ...this builds the book into a single doc folder holding all the html files needed in it. 
 
 4. Push the docs folder to your repo so it's ready to publish.
 
-5. Now on GitHub website follow this [guidance](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site). It describes how you go to the "Settings" of the repo, then "GitHub Pages" section, then the "Source" section that has a drop down.
+5. Now on GitHub website follow this [guidance](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site). It describes how you go to the `Settings` of the repo, then `GitHub Pages` section, then the `Source` section that has a drop down.
 Select the third option of the Source drop down that is....
    
-> "master branch/docs folder 
-   Use only the docs folder for Github pages"
+> `master branch/docs folder 
+   Use only the docs folder for Github pages`
    
    ..it then has a bit of a think then tells you when the published book is ready to view and at what web address.

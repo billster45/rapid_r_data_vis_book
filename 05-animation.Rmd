@@ -87,7 +87,7 @@ gganimate::anim_save(filename = "housing.gif")
 
 * Carson Sievert's book shows us how to [animate in plotly](https://plotly-r.com/animating-views.html).
 
-* The code to animate a plotly plot is easier than for ggplot. Simply specify which column to animate over in the frame argument of plotly::add_lines().
+* The code to animate a plotly plot is easier than for ggplot. Simply specify which column to animate over in the `frame` argument of `plotly::add_lines()`.
 
 ```{r}
 df_red %>% 
@@ -122,6 +122,3 @@ df_red %>%
   plotly::animation_slider(currentvalue = list(prefix = "YEAR ", 
                                                font = list(color="blue")))
 ```
-
-
-

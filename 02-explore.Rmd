@@ -2,9 +2,9 @@
 
 ## Start with dplyr counts and summaries in console
 
-* David Robinson often starts exploring data with simple counts in the console. I reccomend this as the first step in your EDA.
+* In his Tidy Tuesday live coding vidoes David Robinson usually starts exploring new data with `dplyr::count()` in the console. I reccomend this as the first step in your EDA too.
 
-* In the code below we don't use the package name in the console (so breaking the rule I just told you). We won't save this code for others to read so this is ok. It means we can type more quickly and explore the data with dplyr verbs faster.
+* In the code below we don't use the package name in the console (so breaking rule 1 I just told you). We don't need the package name as we won't save this code for others to read. This means we can type more quickly to explore the data with dplyr verbs faster.
 
 ```{r explore_like_David_Robinson, eval = FALSE}
 df %>% count(city) %>% View()
@@ -20,9 +20,9 @@ knitr::include_graphics("console_coding.gif")
 
 ## Plot data points with geom_point()
 
-* After using dplyr count(), group_by() and summarise(), try plotting all the data points with ggplot2::geom_point(). It almost **NEVER** fails to show you what's going on quickly and is unlikely to return a confusing error message. 
+* After using `dplyr::count()`, `dplyr::group_by()` and `dplyr::summarise()`, try plotting the data points with `ggplot2::geom_point()`. It almost **NEVER** fails to show you what's going on quickly. And it is unlikely to return a confusing ggplot error message.
 
-* ggplot2::geom_point() is the minimum and most reliable ggplot plot type (or geom) to start visualising. Increasingly I'm finding it is often a good choice to end with and use it in your final plot too.
+* `ggplot2::geom_point()` is the minimum and most reliable ggplot plot type (or geom) to start visualising data. Increasingly, I'm finding `ggpplot2::geom_point()` is often a good choice to include in the final pot too.
 
 * Let's look at all the values of sales for each date.
 
@@ -48,9 +48,9 @@ df %>%
   ggplot2::geom_point()
 ```
 
-* Becuase there are so many points make very dark lines where they overlap. This is known as "over plotting". Reduce over plotting by replacing geom_point() with geom_jitter(). This randomly "jitters" the location of the data points by a small amount so that they are less likely to overlap.
+* With so many data points to plotthey overlap to create thick dark lines that might hide interesting variation. This is known as over plotting. Reduce over plotting by replacing `ggplot2::geom_point()` with `ggplot2::geom_jitter()`. It randomly jitters the location of the data points by a small amount so that fewer points overlap.
 
-* Sometimes there are so many data points that jittering does not reduce over plotting enough. Next try making the dots lighter using a a parameter called "alpha" as in the code below. The lower the value of alpha the fainter the data points.
+* Sometimes there are so many data points that jittering does not reduce over plotting enough. You can also make the data points lighter using the `alpha` arugment of `ggplot2::geom_jitter()` as in the code below. The lower the value of `alpha` the fainter the points.
 
 ```{r ggplot_geom_point2}
 df %>%
@@ -62,11 +62,11 @@ df %>%
   ggplot2::geom_jitter(alpha = 0.01)
 ```
 
-* Hadley Wickham has a few more tricks to in the [overplotting chapter](https://ggplot2-book.org/statistical-summaries.html#overplotting) of his ggplot book.
+* Hadley Wickham has a few more tricks you can use in the free to access [overplotting chapter](https://ggplot2-book.org/statistical-summaries.html#overplotting) of his [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) book.
 
-* We all know sales of most things vary by the time of the year. So let's now put date on the x axis, make city the colour, and because the data is over time we join the data points using ggplot2::geom_line().
+* We all know sales of most things vary by the time of year. So let's now put date on the x axis, make city the colour, and because the data is over time we can join the data points by using `ggplot2::geom_line()`.
 
-* We also use the reduced data set with fewer cities so that the plot is less crowded with fewer lines.
+* We also use the reduced dataframe with fewer cities to create a plot that is less crowded.
 
 ```{r ggplot_geom_line3}
 df_red %>%
@@ -79,11 +79,11 @@ df_red %>%
   ggplot2::geom_line()
 ```
 
-* Beautiful. While sales have very different volumes between cities we can see they all tend to follow the same seasonal pattern. To bring the patterns of sales closer to each other so that they are easier to compare we can transform the sales value by taking its log. This is Hadley Wickham's approach in [ggplot2: Elegant Graphics for Data Analysis](https://www.springer.com/gp/book/9783319242750).
+* Beautiful. While sales have very different volumes between cities we can see they all follow a similar same seasonal pattern. To bring the patterns of sales closer to each other so that they are easier to compare we can transform the sales value by showing the log of sales. This is Hadley Wickham's approach in [ggplot2: Elegant Graphics for Data Analysis](https://www.springer.com/gp/book/9783319242750).
 
-* Wikham goes on to model the Texas housing sales data by fitting a linear model between the log of sales and the month, then plotting the residuals (i.e. the change in sales not explained by the month). This removes the strong seasonal effects. This is similar to the decomposition part of a classic time series analysis. Take a look at the recent [fable forecasting package](https://tidyverts.github.io/tidy-forecasting-principles/index.html#background) for an easy way to try this. 
+* Wickham goes on to model the Texas housing sales data by fitting a linear model between the log of sales and the month, then plotting the residuals (i.e. the change in sales not explained by the month). This removes the strong seasonal effects. This is similar to the decomposition part of a classic time series analysis. Take a look at the recent [fable forecasting package](https://tidyverts.github.io/tidy-forecasting-principles/) for another way to decompose a time series. 
 
-* We will take a visual approach to reduce the seasonal effect in the [Polish your final plot] part of this chapter. The entire time series is plotted zoomed out with years clearly marked so that the strong monthly sales pattern that is repeated each year is more obvious.
+* We will take a visual approach to reduce the seasonal effect in the [Polish your final plot] part of this chapter. The entire time series is simply plotted zoomed out with years clearly marked so that you can easily see the strong monthly sales pattern repeated each year.
 
 ```{r ggplot_geom_line4}
 df_red %>%
@@ -98,9 +98,9 @@ df_red %>%
 
 ## Facet by categories
 
-* So far we have shown the different sales patterns for each city by putting city into the "colour" arugment of ggplot. However, with lots of cities the plot gets too crowded. In such situations facets or "small multiples" are a good choice. This is a fancy way of saying draw a chart for each value in one or more columns then look at all the plots at once, usually in a grid. 
+* So far we have shown the different sales patterns for each city by putting city into the `colour` arugment of ggplot. However, with lots of cities the plot gets too crowded. When you have many categories to compare like this then facets or "small multiples" are a good choice. This is a fancy way of saying draw a chart for each value in one or more columns then look at all the plots at once, usually in a grid. 
 
-* An important setting for facets is to specify **scales = "free"** so that each small plot has its own scale set to the maximum of each city's sales. This lets us more easily spot interesting differences in the patterns over time between plots. 
+* An important setting for facets is to set the `scales` argument to `"free"` like this `scales = "free"`. Each plot will then have its own scale set to the maximum of each city's sales. This lets us more easily spot interesting differences or similarities in the patterns over time between each city. 
 
 ```{r ggplot_facet}
 df_red %>%
@@ -118,7 +118,7 @@ df_red %>%
 
 ## Facet interactively (trelliscopejs)
 
-* An interactive way to facet and explore your data with a GUI is trelliscopejs. Below we facet all the Texas cities in a trelliscope web page. Have a play with all the settings and see what it does.
+* You can also facet and explore your data interactively with a GUI using trelliscopejs piped onto the end of your ggplot. Below we facet all the Texas cities in a trelliscopejs web page. Have a play with all the settings in the chart below to see what it does.
 
 ```{r trelliscopejs, message=FALSE, warning=FALSE}
 df %>%
@@ -144,7 +144,7 @@ df %>%
 
 * To do this we "nest" a dataframe for each city into one dataframe. Then loop through each of the nested city dataframes creating a plot for each one.
 
-* Here we use dplyr::group_by() on city then use tidyr::nest() to create the indivdiual nested dataframes.
+* Here we use `dplyr::group_by()` on city, then use `tidyr::nest()` to create the indivdiual nested dataframes.
 
 ```{r loop_through_print}
 df_red_nest <-
@@ -153,25 +153,25 @@ df_red_nest <-
   tidyr::nest()
 ```
 
-* Pipine the nested dataframe into View() shows us what a nested dataframe looks like.
+* If we pipe the nested dataframe into `View()` this shows us what a nested dataframe looks like.
 
 ```{r, eval=FALSE}
 df_red_nest %>% View()
 ```
 
-* We can also view one of the nested data frames using square brackets. Think of the numbers in the square brackets like the co-ordinates in Excel. The first number is the column position and the second number is the row position of the data frame.
+* We can also view one of the nested data frames using square brackets. Think of the numbers in the square brackets like the co-ordinates in Excel. The first number is the column position and the second number is the row position. In the example below we view the second column along of the nested dataframe `[[2]]` and the first row of that column `[[1]]`.
 
 ```{r, eval=FALSE}
 df_red_nest[[2]][[1]] %>% View()
 ```
 
-* Once you get used to square brackets it is a powerful way to navigate through nested R objects. The code above showed us the data in the first nested data frame of one city. The code below now drills down into the first column and first row of that single nested dataframe. This is just one cell so the most granular drill down possible for this object.
+* Once you start to get comforable with how square brackets work it is a powerful way to navigate through nested R objects. The code above showed us the data in the first nested data frame of one city. The code below now drills down into the first column and first row of that single nested dataframe. This is just one cell so is the most granular drill down possible for the object `df_red_nest`.
 
 ```{r, eval=FALSE}
 df_red_nest[[2]][[1]][[1]][[1]] %>% View()
 ```
 
-* We can now add a plot to each nested data frame for each city. We use purrr::map2(). This is a compact way to loop through two arguments in a function. The function arguments being set by map2() are the nested dataframes in the data column and the city name inside the city column of the nested dataframe df_red_nest.
+* We can now add a plot to each nested data frame for each city. We use `purrr::map2()`. This purr function is a compact way to loop through two arguments in another function. The function arguments of `ggplot2::ggplot()` being set by `purrr::map2()` are the `.x` and `.y` values. They are the nested dataframes in the `data` column, and the city names inside the `city` column of the nested dataframe `df_red_nest` respectively.
 
 ```{r}
 df_red_nest <-
@@ -210,7 +210,7 @@ print(df_red_nest$plot)
 
 ## Polish your final plot
 
-* We now have a bare minimum Exploratory Data Analysis toolkit. We explore the data with dplyr::count() from the console then visualise it with ggplot2::geom_point().
+* We now have a bare minimum Exploratory Data Analysis toolkit. We explore the data with `dplyr::count()` from the console then visualise it with `ggplot2::geom_point()`.
 
 * From exploring the data quickly we are soon ready to select a plot that tells an interesting story. But adding all the bells and whistles to make the final plot for a customer or publication can and does take a long time. So this polish shouldn't be part of your exploratory data analysis.
 
@@ -220,7 +220,7 @@ print(df_red_nest$plot)
 
 * How did I write this code? By Googling for what I wanted to do (e.g. "ggplot remove axis grid lines"), copying the code from a stackoverflow answer, then pasting the code into a clear structure as below.
 
-* Many of the tweaks or polish will be to ggplot2::theme() or ggplot2::scale... but are you really going to remember the ggplot code you need for every adjustment you want to make? I no longer worry about remembering how to do it and just focus on how I want it to look and get absorbed in the creation and satisfaction of the plot gradually improving.
+* Many of the tweaks or polish will be to `ggplot2::theme()` or `ggplot2::scale()` but are you really going to remember the ggplot code you need for every adjustment you want to make? I no longer worry about remembering how to do it and just focus on how I want it to look and get absorbed in the creation and satisfaction of the plot gradually improving.
 
 * After you have built a few of your own publication quality pots with clear code you will soon be using your own plot code as a store of examples to re-use meaning that you will Google less.
 

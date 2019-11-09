@@ -12,7 +12,7 @@ description: "Description"
 
 # [tl;dr](https://en.wiktionary.org/wiki/tl;dr)
 
-* Exploratory data analysis (EDA) is the foundation for all data tasks. Do most of your EDA with just dplyr::count and ggplot2::geom_point(). Use more ggplot functions to polish your final plot. But don't worry about remembering all the ggplot settings, just use Google. Follow 3 simple rules to lay out your code clearly so that one line does one thing and you know where each function comes from. Use interactive tools too (plotly, dygraphs, apexcharter, DT tables). Present in flexdashhboard, R Markdown with a floating contents, or bookdown.  
+* Exploratory data analysis (EDA) is the foundation for all data tasks. Do most of your EDA with just `dplyr::count()` and `ggplot2::geom_point()`. Use more ggplot functions to polish your final plot. But don't worry about remembering all the ggplot functions and arguments, just use Google. Follow 3 simple rules to lay out your code clearly so that each line does one thing, name where each function comes from, and name all function arguments you set. Use interactive tools for EDA and presenting your final plot too (plotly, dygraphs, apexcharter, and rpivotTables). Use animation sparingly, and usually only to show change over time. Present your final plots in one of: flexdashhboards, R Markdown with a floating table of contents and tabbed sections, or a bookdown book. 
 
 ```{r, echo=FALSE, fig.height=12}
 knitr::include_graphics(path = "marriage.svg") 
