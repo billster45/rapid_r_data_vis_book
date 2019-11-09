@@ -134,13 +134,13 @@ kableExtra::kable(utils::head(df))
 
 * Also, try highlighting a function and its package name then hit the `F1` key.  This will show the help page for that function. Also, try hitting the `F2` key when a function name is highlighted and see what happens. This can be a quick way to see all the possible arguments in a function including the default values the author of the package has chosen that you might not be aware of. 
 
-### Rule 2: Add argument names to all functions
-
-* Finally, instead of relying on the order of the arguments that the function expects, name every argument you set. Your code will be quicker to understand when we know exactly what arguments are being set without having to read the help pages.
-
 ```{r, echo=FALSE, out.width = "1100%"}
 knitr::include_graphics("package_name.gif") 
 ```
+
+### Rule 2: Add argument names to all functions
+
+* Finally, instead of relying on the order of the arguments that the function expects, name every argument you set. Your code will be quicker to understand when we know exactly what arguments are being set without having to read the help pages.
 
 ### Rule 3: Each line does one thing
 

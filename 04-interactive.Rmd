@@ -250,7 +250,7 @@ df_crosstalk %>%
                   mode = 'lines')
 ```
 
-## apexchater basic
+## apexcharter basic
 
 * The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisations like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, highcharter not free to use.
 
@@ -265,7 +265,7 @@ df_red %>%
                                 ))
 ```
 
-## apexchater (bells & whistles)
+## apexcharter (bells & whistles)
 
 * To add bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is well laid out with good examples. Here I've put in some useful settings in a clear code format for you to re-use. 
 
@@ -279,7 +279,7 @@ df_red %>%
   apexcharter::ax_stroke(width = 2) %>% 
   apexcharter::ax_yaxis(title = list(text = "Sales")) %>% 
   apexcharter::ax_xaxis(labels = list(format = "yyyy")) %>% 
-  apexcharter::ax_labs(title = "apexcharter chart for sales by City",
+  apexcharter::ax_labs(title = "House sales in Texas cities",
                        subtitle = "this is a subtitle") %>% 
   apexcharter::ax_title(style = list(fontSize = "22px")) %>% 
   apexcharter::ax_subtitle(style = list(fontSize = "16px", 
@@ -288,7 +288,7 @@ df_red %>%
                                     type = "xy")) 
 ```
 
-## dygraphs basic
+## dygraph basic
 
 * [Dygraphs](http://rstudio.github.io/dygraphs/) are another great choice for time series data but they need the dataframe to be a time series object. One quick way to convert a data frame to a time series is the [tsbox package](https://www.tsbox.help/articles/tsbox.html).
 
@@ -301,7 +301,7 @@ df_red_ts %>%
   dygraphs::dygraph()
 ```
 
-## dygraphs (bells & whistles)
+## dygraph (bells & whistles)
 
 * Here is a bells & whistles version you can play around with as a template for your own data.
 
@@ -322,7 +322,7 @@ presBankHolidays <- function(dygraph) {
 }
 
 df_red_ts %>%
-  dygraphs::dygraph(main = "Housing Sales USA") %>%
+  dygraphs::dygraph(main = "House sales in Texas cities") %>%
   # https://github.com/rstudio/dygraphs/issues/80
   dyAxis(
     "y",

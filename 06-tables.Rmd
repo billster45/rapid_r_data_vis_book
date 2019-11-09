@@ -94,7 +94,7 @@ df_wide %>%
                      mark = ',') 
 ```
 
-## rpivottable simple
+## rpivottable basic
 
 * I love Excel pivot tables and charts for exploring data. rpivotTables are a similar exploratory tool in R. We simply put the data frame into the function `rpivotTable::rpviotTable()` then play around with the html output below (as you would with an Excel pivot table).
 
