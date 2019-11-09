@@ -1,6 +1,6 @@
 # Colours
 
-## Color Brewer
+## RColorBrewer
 
 * We've already used colours in some of the previous code examples. Particularly the palettes in the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette).
 

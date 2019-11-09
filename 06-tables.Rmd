@@ -3,7 +3,7 @@
 ```{r}
 ```
 
-## DataTables (DT) basic
+## DataTable basic
 
 * For plotting we usually use [tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) where the data frame is "long". But for easy to read tables we usually need to make our long data "wide". In the Texas housing sales this means showing one column per month. 
 
@@ -24,7 +24,7 @@ df_wide %>%
   DT::datatable(df_wide)
 ```
 
-## DataTables bells & whistles
+## DataTable (bells & whistles)
 
 * The [DT DataTables reference](https://rstudio.github.io/DT/) is describes all the elements of the table you can change with clear examples and code. This resource is usually all you need to refer to. 
 

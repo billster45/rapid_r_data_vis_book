@@ -81,7 +81,7 @@ p_build
 knitr::include_graphics(path = "plotly_build.gif") 
 ```
 
-## Plotly most basic
+## Plotly basic
 
 * Sometimes even passing a ggplot object through `plotly::plotly_build()` does not give us what we want (or it's too time consuming to edit it) so using plotly itself is a better option. 
 
@@ -229,7 +229,7 @@ crosstalk::bscols(
 
 Finally, here is a more basic use of crosstalk with plotly that you may find easier to re-use as a code template for your own data.
 
-```{r crosstalk, message=FALSE}
+```{r crosstalk, message=FALSE, warning=FALSE}
 df_crosstalk <- crosstalk::SharedData$new(data = df, 
                                           key = ~year)
 
@@ -250,7 +250,7 @@ df_crosstalk %>%
                   mode = 'lines')
 ```
 
-## apexchater simple
+## apexchater basic
 
 * The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisations like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, highcharter not free to use.
 
@@ -265,7 +265,7 @@ df_red %>%
                                 ))
 ```
 
-## apexchater with bells & whistles
+## apexchater (bells & whistles)
 
 * To add bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is well laid out with good examples. Here I've put in some useful settings in a clear code format for you to re-use. 
 
@@ -288,11 +288,11 @@ df_red %>%
                                     type = "xy")) 
 ```
 
-## dygraphs for time series data
+## dygraphs basic
 
 * [Dygraphs](http://rstudio.github.io/dygraphs/) are another great choice for time series data but they need the dataframe to be a time series object. One quick way to convert a data frame to a time series is the [tsbox package](https://www.tsbox.help/articles/tsbox.html).
 
-```{r dygraphss}
+```{r dygraphss, message=FALSE,warning=FALSE}
 df_red_ts <- df_red %>% 
   dplyr::select(date,city,sales) %>% 
   tsbox::ts_xts()
@@ -301,7 +301,7 @@ df_red_ts %>%
   dygraphs::dygraph()
 ```
 
-## dygraphs bells & whistles
+## dygraphs (bells & whistles)
 
 * Here is a bells & whistles version you can play around with as a template for your own data.
 
