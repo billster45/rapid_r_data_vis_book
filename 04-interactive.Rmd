@@ -6,7 +6,7 @@
 
 * Carson Sievert maintains the Plotly R package. He [describes](https://talks.cpsievert.me/20180202/#1) how interactive plots can "augment" your data exploration but only if we can "iterate quickly". With plotly you can sometimes move faster than ggplot with fewer errors.
 
-* A quick way to use Plotly is to and put a ggplot you have already built through a plotly function called `plotly::ggplotly()`, like this below.
+* A quick way to use Plotly is to put a ggplot you have already built through a plotly function called `plotly::ggplotly()`, like this below.
 
 ```{r ggplotly, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -21,7 +21,7 @@ plotly::ggplotly(p)
 
 ## Edit ggplot conversion with plotly::plotly_build()
 
-* Often, even when you have played around with how the original ggplot looks, the `plotly::ggplotly()` function doesn't quite convert to the plot you want. If that happens try using `plotly::plotly_build()` instead of `plotly::ggplotly()`. This gives you more control over the conversion from ggplot to plotly.
+* Often, even when you have played around with how the original ggplot looks, the `plotly::ggplotly()` function doesn't quite convert to the plot you want. If that happens, try using `plotly::plotly_build()` instead of `plotly::ggplotly()`. It gives you more control over the conversion from ggplot to plotly.
 
 * Plotly build is a nested R object which [plotly.js](https://plotly-r.com/overview.html#intro-plotly-js) uses to create the web graphic. This diagram from [chapter 2](https://plotly-r.com/overview.html#intro-plotly-js) of Carson Sievert's [Interactive web-based data visualization with R, plotly, and shiny](https://plotly-r.com/introduction.htmlbook) explains that relationship.
 
@@ -29,7 +29,7 @@ plotly::ggplotly(p)
 knitr::include_graphics(path = "https://plotly-r.com/images/printing.svg") 
 ```
 
-* `plotly::plotly_build()` is a nested object of all the settings used to create the plotly plot that we can now edit.
+* `plotly::plotly_build()` contains all the settings used to create the plotly plot that we can now edit.
 
 ```{r plotly_build, warning=FALSE,message=FALSE}
 p <- df_red %>% 
@@ -44,7 +44,7 @@ p_build <- plotly::plotly_build(p)
 p_build
 ```
 
-* We can alter any of the settings in `p_build` we have created above. One way to find the setting we want to edit is to use `utils::str()` to browse all the settings as a large nested tree. This function compactly displays the structure of any R object. We run it on `p_build` below.
+* We can alter any of the settings in `p_build` we have created above. One way to find the setting we want to edit is to use `utils::str()` to browse every setting in a large nested tree. `str()` compactly displays the structure of any R object. We run it on `p_build` below.
 
 <details><summary>Show full structure of p_build</summary>
 <p>
@@ -55,9 +55,9 @@ utils::str(p_build)
 </details>
 <br/>
 
-* In the code below we set the font size of the x axis to be font size of 42. We found this setting by browsing the object structure of `p_build` with `utils::str()` above. 
+* In the code below we set the font size of the x axis to be 42. We found this font setting by browsing the object structure of `p_build` with `utils::str()` in the tree shown above. 
 
-* Then to create the code that alters the value we have found with `str()` put a `$` at the end of `p_build` in the console and hit the tab key. This shows all the named elements of the first nested level. We can then work our way down the nested levels by adding dollar signs at each level and hitting tab till we find the setting we want at the bottom of the tree.
+* Then, to create the code that alters the value we have found with `str()`, put a `$` at the end of `p_build` in the console and hit the tab key. This shows all the named elements of the first nested level. We can then work our way down the nested levels by adding dollar signs to the next level and hitting tab. Repeat this until you have worked your way to the bottom of the tree and found the setting you want to change.
 
 ```{r}
 p_build$x$layout$xaxis$tickfont$size = 42
@@ -65,15 +65,13 @@ p_build$x$layout$xaxis$tickfont$size = 42
 p_build
 ```
 
-* You can see the code above has changed the font size to the massive 42 in the chart above.
+* The code above has changed the font size to a massive 42 in the chart above. However, this dollar and tab key method to search through the named elements of the nested plotly object is fiddly and time consuming. The gif below shows an easier Point and Click method. Unfortunately this feature is only available in recent versions of RStudio.
 
-* However, this dollar and tab key method to search through the named elements of the nested plotly object is fiddly and time consuming. The gif below shows an easier point and click method. Unfortunately this only works in recent versions of RStudio. You may have to use the dollar method only. 
-
-* To do this, in the Environment pane click on the magnifying glass to the right of p_build. You can then expand the nested lists as a tree and browse to find the value to change. To the right of each value at the bottom of the tree is an icon. Clicking on the icon automatically generates the code you need to alter that value. Below is an example generated by that method.
+* To do this, in the Environment pane click on the magnifying glass to the right of p_build. You can then expand the nested lists as a tree. Broswe the tree to find the value you want to change. To the right of each value at the bottom of the tree is an icon. Clicking on the icon automatically generates the code you need to alter that value. Below is example code generated by this PaC method.
 
 > `p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]]`
 
-* And here is how we would edit that code to change the font size to 42.
+* And here is how we alter that code to change the font size to 42 as we did with the dollar and tab method previously.
 
 > `p_build[["x"]][["layout"]][["xaxis"]][["tickfont"]][["size"]] = 42`
 
@@ -83,9 +81,9 @@ knitr::include_graphics(path = "plotly_build.gif")
 
 ## Plotly basic
 
-* Sometimes even passing a ggplot object through `plotly::plotly_build()` does not give us what we want (or it's too time consuming to edit it) so using plotly itself is a better option. 
+* Sometimes even passing a ggplot object through `plotly::plotly_build()` does not create the plot we want. Or it's just too time consuming to edit the plot in this way. Using plotly itself can be a better option. 
 
-* Plotly is very forgiving. Below we don't tell plotly what kind of chart we want (such as points or lines) but it still creates a plot. And plotly picks our friend from ggplot a data points plot. Plotly also generates lots of suggestions about what we might add to improve the plot.
+* Plotly is very forgiving. Below we don't tell plotly what kind of chart we want (such as points or lines) but it still creates a plot. And plotly picks our friend from ggplot, a data points plot. Plotly also generates lots of suggestions to improve the plot.
 
 ```{r plotly_basic, warning=FALSE,message=TRUE}
 df_red %>% 
@@ -125,7 +123,7 @@ df_red %>%
 
 * Below we re-produce some of Sievert's plots after re-formatting his code according to our three [Code style] rules described earlier. This makes his examples easier to understand and re-use.
 
-* In this plot try clicking on one of the lines to highlight it against all the other lines.
+* In this plot try clicking on one of the lines to highlight one city against all the other cities.
 
 ```{r}
 # declare `city` as the SQL 'query by' column
@@ -145,7 +143,7 @@ base %>%
   plotly::add_lines(x = ~date, y = ~median)
 ```
 
-* In this plot we can look at cities in isolation and also highlighted against all others. 
+* In this plot we can look at cities in isolation as well as highlighted against all others. 
 
 ```{r}
 # generally speaking, use a "unique" key for filter, 
@@ -227,7 +225,7 @@ crosstalk::bscols(
 
 ## crosstalk
 
-Finally, here is a more basic use of crosstalk with plotly that you may find easier to re-use as a code template for your own data.
+Finally, here is a more basic use of crosstalk with plotly that you may find easier to re-use on your own data.
 
 ```{r crosstalk, message=FALSE, warning=FALSE}
 df_crosstalk <- crosstalk::SharedData$new(data = df, 
@@ -252,9 +250,9 @@ df_crosstalk %>%
 
 ## apexcharter basic
 
-* The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisations like these [poll tracking charts](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, highcharter not free to use.
+* The [highcharter](https://github.com/jbkunst/highcharter) package creates interactive charts to the quality you often see on newspaper websites. It can produce great data visualisations like these [poll tracking plots](https://www.politico.eu/europe-poll-of-polls/united-kingdom/). However, highcharter not free to use.
 
-* ApexCharter is almost as good. It's inspired by highcharter and it is free to use. Look how easily we can create a chart with this simple code.
+* ApexCharter is almost as good. It's inspired by highcharter, and it is free to use. Look how easily we can create a chart with this simple code.
 
 ```{r apex_simple, fig.height=20}
 df_red %>% 
@@ -267,7 +265,7 @@ df_red %>%
 
 ## apexcharter (bells & whistles)
 
-* To add bells and whistles the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html) is well laid out with good examples. Here I've put in some useful settings in a clear code format for you to re-use. 
+* To add bells and whistles use the [apexcharter reference](https://dreamrs.github.io/apexcharter/reference/index.html), It is well laid out with good examples. Below I've added several useful settings in a clear code format for you to re-use. 
 
 ```{r apex_bells_whistles, fig.height=20}
 df_red %>% 
@@ -288,9 +286,9 @@ df_red %>%
                                     type = "xy")) 
 ```
 
-## dygraph basic
+## dygraphs basic
 
-* [Dygraphs](http://rstudio.github.io/dygraphs/) are another great choice for time series data but they need the dataframe to be a time series object. One quick way to convert a data frame to a time series is the [tsbox package](https://www.tsbox.help/articles/tsbox.html).
+* [Dygraphs](http://rstudio.github.io/dygraphs/) are another great choice for time series data. Dygraphs require the dataframe to be a time series object. One quick way to convert to a time series object is the [tsbox package](https://www.tsbox.help/articles/tsbox.html).
 
 ```{r dygraphss, message=FALSE,warning=FALSE}
 df_red_ts <- df_red %>% 
@@ -301,11 +299,11 @@ df_red_ts %>%
   dygraphs::dygraph()
 ```
 
-## dygraph (bells & whistles)
+## dygraphs (bells & whistles)
 
-* Here is a bells & whistles version you can play around with as a template for your own data.
+* Below is a bells & whistles version you can play around with as a code template for your own data.
 
-* The help pages for dygraphs are well laid out. You really only need this one [guide](https://rstudio.github.io/dygraphs/) to find out how to change all the dygraph settings. 
+* The help pages for dygraphs are well laid out. You really only need this one [guide](https://rstudio.github.io/dygraphs/) to find out how to change all of dygraphs settings. 
 
 ```{r dygraphs_bells}
 dateWindow <- c("2014-01-01", "2015-07-01")

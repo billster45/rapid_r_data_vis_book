@@ -4,7 +4,7 @@
 
 * Animation is quick to add to ggplot using the gganimate package. I've had a play [here](https://github.com/billster45/gganimate-experiments/blob/master/README.md) inspired by a good Tweet of examples.
 
-* I've found animation is usually most effective at showing changes over time. Here is the annual pattern of house sales changing each year.
+* I've found animation, while fun to create and watch, should only be used where you can be sure the movement tells a story more effectively than a static plot. This is sometimes true for showing changes over time. Here is the monthly pattern of house sales we can see change each year. However, the static plot in the [Polish your final plot] section of this book probably gives the audience a better understanding of the change in sales over each year.
 
 ```{r, echo=FALSE, out.width = "80%"}
 knitr::include_graphics("housing.gif") 

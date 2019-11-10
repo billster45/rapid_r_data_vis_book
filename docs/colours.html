@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-09" />
+<meta name="date" content="2019-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -246,8 +246,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="interactive-plots.html"><a href="interactive-plots.html#crosstalk"><i class="fa fa-check"></i><b>6.6</b> crosstalk</a></li>
 <li class="chapter" data-level="6.7" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-basic"><i class="fa fa-check"></i><b>6.7</b> apexcharter basic</a></li>
 <li class="chapter" data-level="6.8" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-bells-whistles"><i class="fa fa-check"></i><b>6.8</b> apexcharter (bells &amp; whistles)</a></li>
-<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-basic"><i class="fa fa-check"></i><b>6.9</b> dygraph basic</a></li>
-<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraph (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-basic"><i class="fa fa-check"></i><b>6.9</b> dygraphs basic</a></li>
+<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraphs (bells &amp; whistles)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Animation</a><ul>
 <li class="chapter" data-level="7.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>7.1</b> ggplot animation</a></li>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>10</b> Final document</a><ul>
 <li class="chapter" data-level="10.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>10.1</b> Picking a final output doc</a></li>
-<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard"><i class="fa fa-check"></i><b>10.2</b> flexdashboard</a></li>
+<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard-vs-shiny"><i class="fa fa-check"></i><b>10.2</b> flexdashboard (vs Shiny)</a></li>
 <li class="chapter" data-level="10.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>10.3</b> R markdown with floating contents and tabbed sections</a></li>
 <li class="chapter" data-level="10.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>10.4</b> bookdown</a></li>
 </ul></li>
@@ -296,19 +296,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rcolorbrewer" class="section level2">
 <h2><span class="header-section-number">9.1</span> RColorBrewer</h2>
 <ul>
-<li><p>We’ve already used colours in some of the previous code examples. Particularly the palettes in the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>.</p></li>
-<li><p>RColourBrewer contains ready made colour palettes we can view all at once like this.</p></li>
+<li>We have already been setting colours in some of the previous plots using the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>. RColourBrewer contains ready made colour palettes. We can view all the palletes it contains in onne picture like this.</li>
 </ul>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="co"># easy colours</span></a>
 <a class="sourceLine" id="cb114-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/RColourBrewer-1.png" width="672" /></p>
 <ul>
-<li>We can also limit the display above to just those palettes that are friendly to people who are colour blind.</li>
+<li>We can also filter the picture above to show only palettes friendly to people who are colour blind.</li>
 </ul>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <ul>
-<li>We can create a palette of colours with a specific number of colours like this. And view them in a simple bar plot.</li>
+<li>And we can create a palette of colours with a specific number of colours like this. Then view them in a simple bar plot.</li>
 </ul>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
 <pre><code>## Warning in RColorBrewer::brewer.pal(9, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
@@ -319,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="prismatic" class="section level2">
 <h2><span class="header-section-number">9.2</span> Prismatic</h2>
 <ul>
-<li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with colour palettes by shifting the entire range of colours at once. For example, below we start with the terrain pallete in the prismatic package.</li>
+<li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below we start with the terrain pallete in the prismatic package.</li>
 </ul>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
 <a class="sourceLine" id="cb119-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
@@ -346,8 +345,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hand-picked-colours" class="section level2">
 <h2><span class="header-section-number">9.3</span> Hand picked colours</h2>
 <ul>
-<li><p>You can also hand pick your own colour palette from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a>. It is recommended on a <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">detailed guid to ggplot colours</a> by Michael Toth.</p></li>
-<li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create and then copy and paste the colours in this palette below.</p></li>
+<li><p>You can also hand pick your own colour palette from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a>. The website is recommended by Michael Toth in his excellent <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">detailed guide to ggplot colours</a>.</p></li>
+<li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create and then copy and paste the colours into this palette below.</p></li>
 </ul>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
 <a class="sourceLine" id="cb123-2" title="2"></a>

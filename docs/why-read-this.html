@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-09" />
+<meta name="date" content="2019-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -246,8 +246,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="interactive-plots.html"><a href="interactive-plots.html#crosstalk"><i class="fa fa-check"></i><b>6.6</b> crosstalk</a></li>
 <li class="chapter" data-level="6.7" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-basic"><i class="fa fa-check"></i><b>6.7</b> apexcharter basic</a></li>
 <li class="chapter" data-level="6.8" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-bells-whistles"><i class="fa fa-check"></i><b>6.8</b> apexcharter (bells &amp; whistles)</a></li>
-<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-basic"><i class="fa fa-check"></i><b>6.9</b> dygraph basic</a></li>
-<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraph (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-basic"><i class="fa fa-check"></i><b>6.9</b> dygraphs basic</a></li>
+<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraphs (bells &amp; whistles)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Animation</a><ul>
 <li class="chapter" data-level="7.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>7.1</b> ggplot animation</a></li>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>10</b> Final document</a><ul>
 <li class="chapter" data-level="10.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>10.1</b> Picking a final output doc</a></li>
-<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard"><i class="fa fa-check"></i><b>10.2</b> flexdashboard</a></li>
+<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard-vs-shiny"><i class="fa fa-check"></i><b>10.2</b> flexdashboard (vs Shiny)</a></li>
 <li class="chapter" data-level="10.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>10.3</b> R markdown with floating contents and tabbed sections</a></li>
 <li class="chapter" data-level="10.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>10.4</b> bookdown</a></li>
 </ul></li>
@@ -298,9 +298,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Good Exploratory Data Analysis (EDA) is the foundation of most data work from data engineering to <a href="http://blog.kaggle.com/category/winners-interviews/">Kaggle Data Science competition winners</a>.</p></li>
 <li><p>Ideally, you are able to explore your data <strong>quickly</strong> and intuitively in a <a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a>. You become absorbed by the patterns and stories the exploration of your data reveals, not slowed by code errors and Google searches.</p></li>
-<li><p>This book aims to help you explore data faster and with fewer errors. While at the same time to not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only a three simple <a href="intro.html#code-style">Code style</a> rules to follow.</p></li>
-<li><p>The following chapters describe a set of linked methods in a logical order. First, we start with what methods let you explore and visualise data quickly before you commit to the intense process of polishing your final plot. Then how interactivity can be part of that rapid exploration too.</p></li>
-<li><p>All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or addition to this book as an <a href="https://github.com/billster45/rapid_r_data_vis_book/issues">issue</a>.</p></li>
+<li><p>This book aims to help you explore data faster and with fewer errors. While at the same time to not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only three simple <a href="intro.html#code-style">Code style</a> rules to follow.</p></li>
+<li><p>The following chapters describe a set of linked methods in a logical order. We start first with methods to explore and visualise data quickly before you select a plot to start the intense process of polishing your final plot. We will also cover how interactive plots can be part of that rapid exploration too, as well as tables, colours and three impactful html formats to present your work.</p></li>
+<li><p>All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone can suggest an improvement or addition to this book as an <a href="https://github.com/billster45/rapid_r_data_vis_book/issues">issue</a>.</p></li>
 <li><p>Each section starts with a bare bones code example with no bells or whistles. This means each method could become part of your fast Exploratory Data Analysis toolbox.</p></li>
 <li><p>After each simple code example a more complex version is provided in well structured code. The more detailed examples you can use as a template to re-use for your own final polished plots.</p></li>
 <li><p>The book is my <em>current</em> approach to data visualisation in R. But my methods keep changing and improving from reading <a href="https://www.r-bloggers.com/">R-Bloggers</a> and <a href="https://twitter.com/search?q=%23rstats&amp;src=typd&amp;lang=en">#rstats</a> and Slack channels every day.</p></li>

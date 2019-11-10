@@ -26,11 +26,11 @@ knitr::include_graphics(path = "marriage.svg")
 
 * Ideally, you are able to explore your data **quickly** and intuitively in a [flow state](https://en.wikipedia.org/wiki/Flow_(psychology)). You become absorbed by the patterns and stories the exploration of your data reveals, not slowed by code errors and Google searches. 
 
-* This book aims to help you explore data faster and with fewer errors. While at the same time to not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only a three simple [Code style] rules to follow.
+* This book aims to help you explore data faster and with fewer errors. While at the same time to not compromise on code clarity and quality. Your quickly created code can still be easy to read and re-use with only three simple [Code style] rules to follow.
 
-* The following chapters describe a set of linked methods in a logical order. First, we start with what methods let you explore and visualise data quickly before you commit to the intense process of polishing your final plot. Then how interactivity can be part of that rapid exploration too.
+* The following chapters describe a set of linked methods in a logical order. We start first with methods to explore and visualise data quickly before you select a plot to start the intense process of polishing your final plot. We will also cover how interactive plots can be part of that rapid exploration too, as well as tables, colours and three impactful html formats to present your work.
 
-* All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone could suggest an improvement or addition to this book as an [issue](https://github.com/billster45/rapid_r_data_vis_book/issues).
+* All the examples are aimed at beginners in R to those with an intermediate level of experience. However, even very experienced R users might pick up a new trick. And anyone can suggest an improvement or addition to this book as an [issue](https://github.com/billster45/rapid_r_data_vis_book/issues).
 
 * Each section starts with a bare bones code example with no bells or whistles. This means each method could become part of your fast Exploratory Data Analysis toolbox. 
 

@@ -2,22 +2,20 @@
 
 ## RColorBrewer
 
-* We've already used colours in some of the previous code examples. Particularly the palettes in the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette).
-
-* RColourBrewer contains ready made colour palettes we can view all at once like this.
+* We have already been setting colours in some of the previous plots using  the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette). RColourBrewer contains ready made colour palettes. We can view all the palletes it contains in onne picture like this.
 
 ```{r RColourBrewer}
 # easy colours
 RColorBrewer::display.brewer.all()
 ```
 
-* We can also limit the display above to just those palettes that are friendly to people who are colour blind.
+* We can also filter the picture above to show only palettes friendly to people who are colour blind.
 
 ```{r}
 display.brewer.all(colorblindFriendly = TRUE)
 ```
 
-* We can create a palette of colours with a specific number of colours like this. And view them in a simple bar plot.
+* And we can create a palette of colours with a specific number of colours like this. Then view them in a simple bar plot.
 
 ```{r}
 mypalette <- RColorBrewer::brewer.pal(9,"Set2") 
@@ -27,7 +25,7 @@ graphics::barplot(1:9,col = mypalette)
 
 ## Prismatic
 
-* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting the entire range of colours at once. For example, below we start with the terrain pallete in the prismatic package.
+* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below we start with the terrain pallete in the prismatic package.
 
 ```{r}
 terrain <- prismatic::colour(terrain.colors(10))
@@ -57,9 +55,9 @@ plot(terrain_negate)
 
 ## Hand picked colours
 
-* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). It is recommended on a [detailed guid to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html) by Michael Toth.
+* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). The website is recommended by Michael Toth in his excellent [detailed guide to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html).
 
-* The [colour picking website](http://tristen.ca/hcl-picker/) was used to create and then copy and paste the colours in this palette below.
+* The [colour picking website](http://tristen.ca/hcl-picker/) was used to create and then copy and paste the colours into this palette below.
 
 ```{r colour_picker}
 newpalette <- c("#804759","#713E4E","#633543","#562D39","#48252F","#3B1D25")

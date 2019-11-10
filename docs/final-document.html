@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-09" />
+<meta name="date" content="2019-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -246,8 +246,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="interactive-plots.html"><a href="interactive-plots.html#crosstalk"><i class="fa fa-check"></i><b>6.6</b> crosstalk</a></li>
 <li class="chapter" data-level="6.7" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-basic"><i class="fa fa-check"></i><b>6.7</b> apexcharter basic</a></li>
 <li class="chapter" data-level="6.8" data-path="interactive-plots.html"><a href="interactive-plots.html#apexcharter-bells-whistles"><i class="fa fa-check"></i><b>6.8</b> apexcharter (bells &amp; whistles)</a></li>
-<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-basic"><i class="fa fa-check"></i><b>6.9</b> dygraph basic</a></li>
-<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraph-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraph (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="6.9" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-basic"><i class="fa fa-check"></i><b>6.9</b> dygraphs basic</a></li>
+<li class="chapter" data-level="6.10" data-path="interactive-plots.html"><a href="interactive-plots.html#dygraphs-bells-whistles"><i class="fa fa-check"></i><b>6.10</b> dygraphs (bells &amp; whistles)</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Animation</a><ul>
 <li class="chapter" data-level="7.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>7.1</b> ggplot animation</a></li>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>10</b> Final document</a><ul>
 <li class="chapter" data-level="10.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>10.1</b> Picking a final output doc</a></li>
-<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard"><i class="fa fa-check"></i><b>10.2</b> flexdashboard</a></li>
+<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard-vs-shiny"><i class="fa fa-check"></i><b>10.2</b> flexdashboard (vs Shiny)</a></li>
 <li class="chapter" data-level="10.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>10.3</b> R markdown with floating contents and tabbed sections</a></li>
 <li class="chapter" data-level="10.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>10.4</b> bookdown</a></li>
 </ul></li>
@@ -296,26 +296,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="picking-a-final-output-doc" class="section level2">
 <h2><span class="header-section-number">10.1</span> Picking a final output doc</h2>
 <ul>
-<li>After all our hard work to explore and polish a final plot we should show it off in an easy to navigate html document. Here are three good options I reccomend.</li>
+<li>It is hard but satisfying work to explore your data and tell interesting stories in polished plots. An important final step is to show it off in easy to navigate html documents. Here are three good options.</li>
 </ul>
 </div>
-<div id="flexdashboard" class="section level2">
-<h2><span class="header-section-number">10.2</span> flexdashboard</h2>
+<div id="flexdashboard-vs-shiny" class="section level2">
+<h2><span class="header-section-number">10.2</span> flexdashboard (vs Shiny)</h2>
 <ul>
-<li><p>This <a href="https://github.com/matt-dray/earl18-crosstalk">Flexdashboard by Matt Dray</a> is a fantastic working example. It includes some of the interactivty we saw earlier using crosstalk, plotly and DT tables described in the earlier <a href="interactive-plots.html#interactive-plots">Interactive plots</a> chapter.</p></li>
-<li><p>Also, here is an easy to follow tutorial presentation on <a href="https://arm.rbind.io/slides/flexdashboard.html#1">how to build flexdashboards</a></p></li>
+<li><p>This <a href="https://github.com/matt-dray/earl18-crosstalk">Flexdashboard by Matt Dray</a> is a fantastic working example. It includes some of the interactivity we saw earlier using crosstalk, plotly and DT tables described in the <a href="interactive-plots.html#interactive-plots">Interactive plots</a> chapter.</p></li>
+<li><p>Also, here is an easy to follow tutorial about <a href="https://arm.rbind.io/slides/flexdashboard.html#1">how to build flexdashboards</a></p></li>
+<li><p>Flexdashboards using <a href="interactive-plots.html#crosstalk">crosstalk</a> can be a good alternative to a <a href="https://rstudio.github.io/shinydashboard/">shinydashboard</a> as the code is much easier to build and edit. This is because the interactivity for the user is taken care of by the simple crosstalk options. In contrast, with Shiny you will need to understand, build, and maintain the more complex <a href="https://shiny.rstudio.com/articles/reactivity-overview.html">reactivity</a> of your app. As well as needing a platform to <a href="https://shiny.rstudio.com/deploy/">deploy</a> your shiny app (html created by flexdashboard can be emailed to customers).</p></li>
+<li><p>However, if your flexdashboard presents a lot of data in its plots and tables this can make the html doc that flexdashboard creates large and too slow to open for users. Shiny does not suffer from this as it only pulls the data the user requests from the selections they have make (e.g. with drop down menus). In other words, when you open a Shiny app the front end doesn’t contain all of the data a user could view, but in flexdashboard it does.</p></li>
+<li><p>Shiny is also a better option when you want to give users a greater range of interactive plots and selection options than <a href="https://rstudio.github.io/crosstalk/index.html">crosstalk</a> can provide. Crosstalk is limited to basic filtering for only a limited number of <a href="https://rstudio.github.io/crosstalk/widgets.html">html widgets</a>. In contrast, Shiny can be set up to allow users to interact with pretty much any R package you want to use in your app.</p></li>
 </ul>
 </div>
 <div id="r-markdown-with-floating-contents-and-tabbed-sections" class="section level2">
 <h2><span class="header-section-number">10.3</span> R markdown with floating contents and tabbed sections</h2>
 <ul>
-<li>When using R markdown I’ve found a <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents">floating table of contents</a> and <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections">tabbed sections</a> are the most effective for providing compact and easy to navigate html documents.</li>
+<li>When using R markdown I’ve found a <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents">floating table of contents</a> and <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections">tabbed sections</a> are the most effective for providing compact and easy to navigate html documents. Particularly when you are presenting a lot information at once such as a detailed report.</li>
 </ul>
 </div>
 <div id="bookdown" class="section level2">
 <h2><span class="header-section-number">10.4</span> bookdown</h2>
 <ul>
-<li>Finally, how this book itself was created is suprisingly quick to do. Here is a board <a href="https://bookdown.org/home/about/">bookdown guide</a> to follow. This is how I built this book:</li>
+<li>Finally, how this book itself was created is surprisingly quick to do. Here is a board <a href="https://bookdown.org/home/about/">bookdown guide</a> to follow. This is how I built this book:</li>
 </ul>
 <ol style="list-style-type: decimal">
 <li><p>Clone or download this <a href="https://github.com/rstudio/bookdown-demo">minimal example</a>.</p></li>
@@ -331,10 +334,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p><code>rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')</code></p>
 </blockquote>
-<p>…this builds the book into a single doc folder holding all the html files needed in it.</p>
+<p>…this builds the book into a single <code>docs</code> folder holding all the html files needed in it.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Push the docs folder to your repo so it’s ready to publish.</p></li>
-<li><p>Now on GitHub website follow this <a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">guidance</a>. It describes how you go to the <code>Settings</code> of the repo, then <code>GitHub Pages</code> section, then the <code>Source</code> section that has a drop down.
+<li><p>Push the <code>docs</code> folder to your GitHub repository so it’s ready to publish.</p></li>
+<li><p>Now on GitHub website follow this <a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">guidance</a>. It describes how you go to the <code>Settings</code> of the repository, then <code>GitHub Pages</code> section, then the <code>Source</code> section that has a drop down.
 Select the third option of the Source drop down that is….</p></li>
 </ol>
 <blockquote>
