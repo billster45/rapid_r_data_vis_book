@@ -2,15 +2,15 @@
 
 ## Navigate R markdown quickly 
 
-* To quickly find a bit if your code to edit, instead of scrolling up and down the [R Markdown](https://bookdown.org/yihui/rmarkdown/) code, jump quickly to the right section by using the document outline. You can show the outline in one of three ways:
+* To quickly find a bit if your code to edit, instead of scrolling up and down the [R Markdown](https://bookdown.org/yihui/rmarkdown/) code, jump instantly to the right section by using the document outline. You can show the outline in one of three ways:
 
 1. Hold down `Ctrl+Shift+O`. 
 
-2. Click the top right icon in the code pane.
+2. Click the top-right icon in the code pane.
 
-3. Left click on the bottom bar of the R markdown file. 
+3. Left-click on the bottom bar of the R markdown file. 
 
-The gif below shows these three methods. It was recorded with [ScreenToGif](https://www.screentogif.com/). I gave a donation to the author as I found it so easy to use as well as providing lots of genuinely useful features like a gif progress bar and the ability to pixelate out sections of the recording.
+The gif below shows these three methods. It was recorded with [ScreenToGif](https://www.screentogif.com/). I gave a donation to the author as I found it so easy to use as well as providing lots of genuinely useful features. For example, a gif progress bar and the ability to pixelate out sections of the recording.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("outline.gif") 
@@ -20,7 +20,7 @@ knitr::include_graphics("outline.gif")
 
 * Another tip to speed up coding in RStudio is to use keyboard shortcuts. Here is the full list of [RStudio shorcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
 
-* I use `Ctrl+Shift+M` in Windows (`Cmd+Shift+M` in Mac) to insert a pipe `%>%` with spaces. This makes tidyverse coding fast.
+* I use `Ctrl+Shift+M` in Windows (`Cmd+Shift+M` in Mac) to insert a pipe `%>%` with spaces which makes tidyverse coding fast.
 
 * I also use `Alt+-` in Windows (`Option+-` in Mac) to create the assign operator `<-`.
 
@@ -57,6 +57,7 @@ library(DT) # awesome interactive tables
 
 # Quality Assurance
 library(tidylog) # great for QA on the fly 
+library(testthat) # for writing tests
 
 # wrangling / munging / manipulating
 library(tidyverse) # loads of useful packages in one 
@@ -73,17 +74,35 @@ library(mosaicData) # sample data
 
 ## The data to visualise
 
-* Often in EDA and data visualisation we are most interested in how values change over time. For example, are things getting worse, better, higher, lower? For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we mostly use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) data in this book. This is a time series data set built into ggplot.
+* Often in EDA and data visualisation, we are most interested in how values change over time. For example, are things getting worse, better, higher, lower? For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we mostly use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) data in this book. This is a time-series data set built into ggplot.
 
-* To improve your own skills I recommend finding other open data sets to develop your data vis skills. I found the marriage data we look at later in this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/). The [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) data sets are also a great source of data sets where you also get to learn from seeing how others (including David Robinson) have tackled them. 
+* To improve your skills I recommend finding other open data sets to develop your data vis skills. I found the marriage data we look at later in this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/). The [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) data sets are also a great source of data sets where you also get to learn from seeing how others (including David Robinson) have tackled them. 
 
 * You could also look for data stories that interest you or that you could improve and explore further. I recently saw a data visualisation in The Times newspaper on [smoking and vaping](https://github.com/billster45/improve_a_data_viz/blob/master/README.md) that I tried to improve.
 
 * The only manipulation we will do to the Texas housing sales data below is to create a real date using [lubridate](https://lubridate.tidyverse.org/). 
 
-* We'll also use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Assurance while you code. Just replace the dplyr verbs with the same verb in tidylog. Tidylog tells you what each dplyr verb has done to your data. For example, how many rows are dropped or added by filters and joins, or what percentage of values have changed after a mutate.
-
 ```{r create_df, message=TRUE}
+# create a data frame with a real date for plotting
+df <- ggplot2::txhousing %>% 
+  dplyr::mutate(date = lubridate::make_date(year = year,
+                                              month = month, 
+                                              day =1)) 
+```
+
+* Here are the top few rows of the data frame we created using a simple kableExtra table. The [Tables] chapter later on in this book describes different table methods in more detail.
+
+```{r}
+kableExtra::kable(utils::head(df))
+```
+
+## QA and Unit tests on the fly
+
+### tidylog to QA dplyr verbs
+
+* We'll also use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Assurance during dplyr data manipulation. Just replace the dplyr verbs with the same verb in tidylog. Tidylog tells you what each dplyr verb has done to your data. For example, how many rows `dplyr::filter()` drops or adds, or what percentage of values `dplyr::mutate()` has changed.
+
+```{r, message=TRUE}
 # create a data frame with a real date for plotting
 df <- ggplot2::txhousing %>% 
   tidylog::mutate(date = lubridate::make_date(year = year,
@@ -91,7 +110,9 @@ df <- ggplot2::txhousing %>%
                                               day =1)) 
 ```
 
-* Let's also create a data frame with fewer cities so that some plots we draw later are less crowded. Below we select only cities where the maximum number of sales in any month more than 500.
+* The tidylog message above tells us that the mutate has changed `(100%) of 'date' (0 new NA)`. This what we would expect to happen.
+
+* Let's also create a data frame with fewer cities so that some plots created later will be less crowded. Below we select only cities where the maximum number of sales in any month is more than 500.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -102,7 +123,7 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 500)
 ```
 
-* Hold on. Look! Read the tidylog messages above. It tells us the percentage of values that are "NA" is 43% (`new variable 'sales_max' with 27 unique values and 43% NA`). Well spotted tidylog. We correct it below by removing NAs from the maximum sales value using `na.rm = TRUE`.
+* Hold on. Look! Read the tidylog message above. It says `new variable 'sales_max' with 27 unique values and 43% NA`. As we filter the rows in the next line of code by `sales_max` we don't want any of the values to be NA. Well spotted tidylog. We correct it below by removing NAs from `salses_max` by adding `na.rm = TRUE` inside the `base:max()` function.
 
 ```{r}
 # reduce the number of cities for simpler plots
@@ -114,25 +135,85 @@ df_red <- df %>%
   tidylog::filter(sales_max >= 500)
 ```
 
-* We know the new code above is now correct as the tidylog message tells us that the new variable `sales_max` has `0% NA` as we would expect.
+* The tidylog message above now tells us that the new variable `sales_max` has `0% NA` as we would expect.
 
-* Here are the top few rows of the data frame we created using a simple kableExtra table. The [Tables] chapter later on in this book describes different table methods in more detail.
+### testthat to create unit tests on data created
+
+* Unit testing is mostly used during the creation of [R packages](http://r-pkgs.had.co.nz/). It can also be part of your analysis code. Particularly if your work is high impact and you need to be confident the results are still valid in the future. For example, running new data through your code or when you have added new logic. Unit tests are an automatic way to highlight errors new data or new logic has introduced you may not have spotted.
+
+* Hadley Wickham provides some useful ["what to test"](https://r-pkgs.org/tests.html#what-to-test) rules of thumb for when to use [unit tests](https://r-pkgs.org/tests.html) in his [R packages book](http://r-pkgs.had.co.nz/):
+
+> Strive to test each behaviour in one and only one test. Then if that behaviour later changes you only need to update a single test.
+
+> Avoid testing simple code that you’re confident will work. Instead focus your time on code that you’re not sure about, is fragile, or has complicated interdependencies. That said, I often find I make the most mistakes when I falsely assume that the problem is simple and doesn’t need any tests.
+
+> Always write a test when you discover a bug. You may find it helpful to adopt the test-first philosophy. There you always start by writing the tests, and then write the code that makes them pass. This reflects an important problem solving strategy: start by establishing your success criteria, how you know if you’ve solved the problem.
+
+* In this unit test we're immediately going to break Hadley's second rule above and write a test on the simple code that created our dataframe `df`. The unit tests are all adapted from an [excellent introductory blog](https://katherinemwood.github.io/post/testthat/) on unit tests. The code has been altered to follow the three [Code style] rules described in the next chapter to make these examples easier to read and understand.
+
+* First, let's test if the dimensions of `df` are as we expect with 9 columns and 8,602 rows.
 
 ```{r}
-kableExtra::kable(utils::head(df))
+testthat::test_that("data dimensions correct", {
+
+    testthat::expect_equal(
+    object = base::ncol(df),
+    expected = 9
+  )
+
+  testthat::expect_equal(
+    object = base::nrow(df),
+    expected = 8602
+  )
+})
+```
+
+* This `testthat::test_that()` test does not return a message, so we know `df` has passed and the dimensions are as we expect. Let's now test data types. 
+
+```{r}
+testthat::test_that('data types correct', {
+  
+  testthat::expect_is(object = df,
+                      class = 'data.frame')
+  
+  testthat::expect_is(object = df$date, 
+                      class = 'Date')
+})
+
+```
+
+* Again, this test no messages so `df` has passed this test. Finally, let's run a test we know will fail to see what failure message is returned.
+
+```{r, error=TRUE}
+testthat::test_that("no missing values", {
+
+    testthat::expect_identical(
+    object = df,
+    expected = stats::na.omit(df)
+  )
+})
+```
+
+* The code above tests if the original `df` object is identical to the `expected` object after omitting rows with NA values (using `stats::na.omit()`). The testthat message tells us the object and the expectation have a `Different number of rows`. We can now investigate this test failure by eye-balling some rows of `df` where any of the columns contain a missing value. Then decide if this is what we would expect from this data source.
+
+```{r}
+df %>%
+  dplyr::filter_all(dplyr::any_vars(base::is.na(.))) %>%
+  utils::head() %>% 
+  kableExtra::kable()
 ```
 
 ## Code style 
 
 ### Rule 1: Include names before all functions
 
-* Include the package name before every function, even for [base R](https://rstudio.com/wp-content/uploads/2016/05/base-r.pdf) functions.  This makes your code easier to read, 
+* Include the package name before every function, even for [base R](https://rstudio.com/wp-content/uploads/2016/05/base-r.pdf) functions, to make your code easier to read, 
 
-* I started out learning R by reading other people's code. But I got confused where functions came from. Particularly when they had used lots of different packages mixed with base functions and their own functions. It made their code appear more complex and intimidating than it should have done.
+* I started learning R by reading other people's code. But I got confused where functions came from. Particularly when they used functions from lots of different packages mixed with base functions and their own functions, but without the package name shown. It made their code appear more complex and intimidating than it was.
 
-* Another benefit of typing the package name before each function is you can hit the tab key at the end of the double colon. From here you can browse all the functions in that package that appear as a scrollable list.
+* Another benefit of including the package name before each function is hitting the tab key at the end of the double colon to browse all the package's functions as a scrollable list.
 
-* Also, try highlighting a function and its package name then hit the `F1` key.  This will show the help page for that function. Also, try hitting the `F2` key when a function name is highlighted and see what happens. This can be a quick way to see all the possible arguments in a function including the default values the author of the package has chosen that you might not be aware of. 
+* Also, try highlighting a function and its package name then hit the `F1` key to show the help page. While hitting the `F2` key can be a quick way to see all the possible arguments in a function. As well as seeing the default argument values the package author has chosen for you.
 
 ```{r, echo=FALSE, out.width = "1100%"}
 knitr::include_graphics("package_name.gif") 
@@ -140,11 +221,11 @@ knitr::include_graphics("package_name.gif")
 
 ### Rule 2: Add argument names to all functions
 
-* Finally, instead of relying on the order of the arguments that the function expects, name every argument you set. Your code will be quicker to understand when we know exactly what arguments are being set without having to read the help pages.
+* Instead of relying on the order of the arguments the function expects, name every argument you set the value of. Your code will be quicker to understand when we know which arguments are set without having to read the help page for that function.
 
 ### Rule 3: Each line does one thing
 
-* Ideally, each line of code does one thing. Hit the return key after every pipe `%>%`, comma, or plus `+` and RStudio will automatically indent your code in just the right way. You can also indent old code by blocking on to it and using the shortcut `Ctrl+Shift+A`
+* Each line of code should do one thing. You can do this by hitting the return key after every pipe `%>%`, comma, or plus `+`. RStudio will then automatically indent your code in just the right way. You can also indent old code by blocking on to it and using the [RStudio shorcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) `Ctrl+Shift+A` in Windows (`Command+Shift+A` in Mac). 
 
 * The code below works but doesn't follow the three rules. It is cramped, slow to understand, and can be difficult to edit or re-use.
 
@@ -160,11 +241,11 @@ ggplot(df) +
   theme(panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), strip.text.x = element_text(size = 10), axis.text.x = element_text(angle = 60, hjust = 1, size = 9), legend.text = element_text(size = 12), legend.position = "right", legend.direction = "vertical", plot.title = element_text(size = 22, face = "bold"), plot.subtitle = element_text(color = "grey", size = 18), plot.caption = element_text(hjust = 0, size = 12, color = "darkgrey"), legend.title = element_blank())
 ```
 
-* In contrast, the code below is the identical to the code above but it follows the 3 rules. The benefits of following these rules are that you can more easily:
+* In contrast, the code below is identical to the code above, but it follows the three rules so you can more easily:
 
-1. Run your code top downwards in chunks adding more lines each time you run it (like the popular ggplot flip-books I describe at bullet 11 in my collection of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r).
+1. Run your code top downwards in chunks adding more lines each time. Much like the popular ggplot flip-books I describe at bullet 11 in my collection of [R guides and galleries](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r).
 
-2. Comment out whole lines of code or parameters in a function to understand what they are doing.
+2. Comment out one line of code (or just one argument in a function) to understand what it does when you run the code without it.
 
 3. Find and edit arguments in a function (e.g. a font size)
 
@@ -172,9 +253,9 @@ ggplot(df) +
 
 5. Help others new to R understand what you are doing and learn faster.
 
-6. Avoid being a gatekeeper of your R knowledge and skills. Share, explain and democratise what you know. You can then move on to more complex analysis in R with an even higher value (as proposed by Richard Susskind in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)) and in my example of describing [NLP techniques intuitively](https://github.com/billster45/NLP-Intuition/blob/master/README.md).
+6. Avoid being a gatekeeper of your R knowledge and skills. Share, explain and democratise what you know. You can then move on to more complex analysis in R with an even higher value. Richard Susskind advocates this in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)) and in my example of describing [NLP techniques intuitively](https://github.com/billster45/NLP-Intuition/blob/master/README.md).
 
-* Further tweaks to improve code clarity are to put spaces either side of the equals sign and to use use [styler](https://styler.r-lib.org/) to automatically apply some of these rules. You can also [customise styler](https://cran.r-project.org/web/packages/styler/vignettes/customizing_styler.html) to apply your own rules. I would like to try customising styler to apply rules 1 to 3 above. I don't know if that's possible yet.
+* Further tweaks to improve code clarity are to put spaces either side of the equals sign and to use [styler](https://styler.r-lib.org/) to apply some of these rules automatically. You can also [customise styler](https://cran.r-project.org/web/packages/styler/vignettes/customizing_styler.html) to apply your own rules. I want to try customising styler to apply rules 1 to 3 above. I don't know if that's possible yet.
 
 ```{r clean_code, eval=FALSE}
 df %>%
@@ -249,7 +330,7 @@ ggplot(data = <DATA>) +
   <FACET_FUNCTION>
 ```
 
-* My preference is for the code to style to let me mentally imagin data being poured into ggplot through the pipe, then we tell it which columns to map, then the geom, followed by the same co-ordinate and facet functions as Wickham recommends. 
+* My preference is for the code style to let you imagine data being "poured" into ggplot through the pipe. Then we tell ggplot which columns to map, then the geom, followed by the same co-ordinate and facet functions as Wickham recommends.
 
 * This is inspired by the code layout of the many flipbook guides (see bullet 11 [here](https://github.com/billster45/r-guides-and-galleries/blob/master/README.md#learn-to-visualise-data-with-r) for examples).
 

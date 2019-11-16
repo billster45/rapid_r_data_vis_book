@@ -5,7 +5,7 @@
 
 ## DataTable basic
 
-* We usually plot [tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) where the data frame is "long". But for easy to read tables we will often want to reshape our long data to "wide". In the Texas housing sales data this means showing one column per month (rather than one row per month in tidy data). 
+* We usually plot [tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) where the data frame is "long". But for easy to read tables we will often want to reshape our long data to "wide". In the Texas housing sales data, this means showing one column per month (rather than one row per month in tidy data). 
 
 * To make the data wide we use `tidyr::pivot_wider()` then pipe that wide data into `DT::datatable()` to create an interactive table very easily.
 
@@ -28,7 +28,7 @@ df_wide %>%
 
 * The [DT DataTables reference](https://rstudio.github.io/DT/) describes all the DataTable elements you can change with clear examples and code. This resource is usually all you need to refer to. 
 
-* Eventually you will have chosen lots of different [DataTable options](https://rstudio.github.io/DT/options.html) to apply. However, if your work includes many tables this will lead to lots of repeated settings code. Reduce the amount of code by setting the default table options globally like this.
+* Eventually you will have chosen lots of different [DataTable options](https://rstudio.github.io/DT/options.html) to apply. However, if your work includes many tables, this will lead to lots of repeated settings code. Reduce the amount of code by setting the default table options globally like this.
 
 ```{r}
 options(DT.options = list(

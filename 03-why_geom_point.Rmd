@@ -2,7 +2,7 @@
 
 ## ggplot is famed for annoying errors
 
-* It's a good idea to start with `ggplot2::geom_point()` because it works for for both raw and summarised data straight away. This both speeds up EDA and makes ggplot less intimidating for beginners.
+* It's a good idea to start with `ggplot2::geom_point()` because it works for both raw and summarised data straight away. This both speeds up EDA and makes ggplot less intimidating for beginners.
 
 * Let's explore more granular data to trigger some common errors using the marriage data from the mosaicData package. We do a little data cleaning on the ceremony date and on the column that describes any previous marriages.
 
@@ -20,7 +20,7 @@ kableExtra::kable(utils::head(marriage %>%
                                 dplyr::select(ceremonydate1, person, prev_marriage, age, race, sign)))
 ```
 
-* In the Texas housing sales data we had one value of sales per city and date. This meant geom_line worked fine as long as both the date and the city were in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common). 
+* In the Texas housing sales data, geom_line works because we have only one value of sales per city and date used in the "aesthetics" of the plot (e.g. x,y, colour, category, or facet being the most common aesthetics). 
 
 * A common way to trigger ggplot2 errors (or create confusing plots) is to use bar and line charts before the data is summarised. For example, a line chart is inappropriate with many ages per previous marriage status in the data.
 
@@ -46,7 +46,7 @@ marriage %>%
   ggplot2::geom_bar()
 ```
 
-* `ggplot2::geom_col()` or `ggplot2::geom_bar(stat = "identity")` will plot the data for us without and error but it's showing the sum of all the ages in each previous marriage category which doesn't tell us an interesting story in th data.
+* `ggplot2::geom_col()` or `ggplot2::geom_bar(stat = "identity")` will plot the data for us without and error but it's showing the sum of all the ages in each previous marriage category which doesn't tell us an interesting story in the data.
 
 ```{r}
 marriage %>%
@@ -59,7 +59,7 @@ marriage %>%
   #ggplot2::geom_col()
 ```
 
-* Another reason to avoid bars to begin with is they may perform a statistical transformation without us realising. This is explained in the [Statistical Transformations](https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations) chapter of [R for Data Science](https://r4ds.had.co.nz/).
+* Another reason to avoid starting EDA with bars is they may perform a statistical transformation without us realising. As explained in the [Statistical Transformations](https://r4ds.had.co.nz/data-visualisation.html#statistical-transformations) chapter of [R for Data Science](https://r4ds.had.co.nz/).
 
 * A bar or line may end up being the final plot choice, but for fast EDA let's avoid them and retreat to our friend `ggplot2::geom_point()`
 
@@ -78,7 +78,7 @@ marriage %>%
   ggplot2::geom_point(alpha = 0.3)
 ```
 
-* Immediately this is the start of an interesting story we can follow. We see the ages of brides and grooms showny by whether they are getting married for the first time or if they have been divorced or widowed. 
+* Immediately this is the start of an interesting story we can follow. We see the ages of brides and grooms shown by whether they are getting married for the first time or if they have been divorced or widowed. 
 
 * As well as data points we might also experiment with different ways of showing these distributions. Hadley Wickham's [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) has a good short chapter on [displaying distributions](https://ggplot2-book.org/statistical-summaries.html#distributions).
 
@@ -104,7 +104,7 @@ marriage %>%
   ggplot2::geom_histogram(bins = "6")
 ```
 
-* This looks better but is there an optimum bin number? There is probably no optimum width as discussed in this [stackexchange](https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram) question.
+* This looks better but is there an optimum bin number? There is probably no optimum width, as discussed in this [stackexchange](https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram) question.
 
 * Let's also try a  density distribution plot using `ggplot2::geom_density()`
 
@@ -148,7 +148,7 @@ marriage %>%
 
 * The plot above would have been my final choice until I saw the fantastic ["evolution of a ggplot"](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) post by Cedric Sherer. 
 
-* In the gif below you can see Sherer also starts with a boxplot but his final choice is `ggplot2::geom_jitter()` and `ggplot2::stat_summary()`. His post gives the full code in a gradual code story presented like the ggplot flip books. 
+* In the gif below you can see Sherer also starts with a boxplot, but his final choice is `ggplot2::geom_jitter()` and `ggplot2::stat_summary()`. His post gives the full code in a gradual code story presented like the ggplot flip-books. 
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a2c70dc1255c5d0f1c563e945519251/61035/img/evol-ggplot/evol-ggplot-1.gif") 
@@ -160,7 +160,7 @@ knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
 ```
 
-* Inspired by that plot and its code I prefer my final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed, more like a plot in a good online newspaper can.
+* Inspired by that plot and its code I prefer my final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed, more like a plot in a quality online newspaper can.
 
 ```{r, echo=FALSE, fig.height=12}
 knitr::include_graphics(path = "marriage.svg") 
@@ -230,7 +230,7 @@ p <- marriage %>%
   ggplot2::coord_flip() +
     ggplot2::labs(
     title = "Age* of brides and grooms by previous marriage status",
-    caption = "*The average ages are the median. This is the middle age among all ages.\n i.e. 50% of ages fall below the median value and 50% above it"
+    caption = "*The average ages are the median, the middle age among all ages.\n i.e. 50% of ages fall below the median value and 50% above it"
   ) 
 
 ggplot2::ggsave(file="marriage.svg", 
@@ -240,7 +240,7 @@ ggplot2::ggsave(file="marriage.svg",
 
 * In the plot above we can see grooms are older on average overall. But do they tend to be older or younger than their bride within each marriage?
 
-* As a final quick exploratory chart let's put the ceremony ID on the x axis, use `ggplot2::geom_point()` for age, and give the data points for brides and grooms their own colour. Adding the ceremony ID `bookpageID` to the group aesthetic means that when we add `ggplot2::geom_line()` this creates a line that joins the two data points for each marriage.
+* As a final quick exploratory chart let's put the ceremony ID on the x-axis, use `ggplot2::geom_point()` for age, and give the data points for brides and grooms their own colour. Adding the ceremony ID `bookpageID` to the group aesthetic means that when we add `ggplot2::geom_line()` this creates a line that joins the two data points for each marriage.
 
 * We can see that most grooms are older than most brides in each ceremony.
 

@@ -2,7 +2,7 @@
 
 ## RColorBrewer
 
-* We have already been setting colours in some of the previous plots using  the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette). RColourBrewer contains ready made colour palettes. We can view all the palletes it contains in onne picture like this.
+* We have already been setting colours in some of the previous plots using the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette). RColourBrewer contains ready-made colour palettes. We can view all the palettes it contains in one picture like this.
 
 ```{r RColourBrewer}
 # easy colours
@@ -25,7 +25,7 @@ graphics::barplot(1:9,col = mypalette)
 
 ## Prismatic
 
-* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below we start with the terrain pallete in the prismatic package.
+* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below, we start with the terrain palette in the prismatic package.
 
 ```{r}
 terrain <- prismatic::colour(terrain.colors(10))
@@ -53,9 +53,9 @@ terrain_negate <- prismatic::clr_negate(terrain)
 plot(terrain_negate)
 ```
 
-## Hand picked colours
+## Hand-picked colours
 
-* You can also hand pick your own colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). The website is recommended by Michael Toth in his excellent [detailed guide to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html).
+* You can also hand-pick your colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). The website is recommended by Michael Toth in his excellent [detailed guide to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html).
 
 * The [colour picking website](http://tristen.ca/hcl-picker/) was used to create and then copy and paste the colours into this palette below.
 
