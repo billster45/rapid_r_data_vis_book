@@ -10,7 +10,7 @@
 
 3. Left-click on the bottom bar of the R markdown file. 
 
-The gif below shows these three methods. It was recorded with [ScreenToGif](https://www.screentogif.com/). I gave a donation to the author as I found it so easy to use as well as providing lots of genuinely useful features. For example, a gif progress bar and the ability to pixelate out sections of the recording.
+The gif below shows these three methods. It's recorded with [ScreenToGif](https://www.screentogif.com/). I donated to the author as I found it so easy to use as well as providing lots of genuinely useful features - for example, a gif progress bar and the ability to pixelate out sections of the recording.
 
 ```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics("outline.gif") 
@@ -47,7 +47,7 @@ library(glue) #
 
 # colours
 library(RColorBrewer) # ready to use colour pallets
-library(prismatic) # palettes and ways to tweak an entier pallete
+library(prismatic) # palettes and ways to tweak an entire pallete
 
 # tables
 library(kableExtra) # attractive static tables
@@ -76,7 +76,7 @@ library(mosaicData) # sample data
 
 * Often in EDA and data visualisation, we are most interested in how values change over time. For example, are things getting worse, better, higher, lower? For this reason, instead of using a [built in data set](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) like iris or mtcars we mostly use the [Texas housing sales ](http://vincentarelbundock.github.io/Rdatasets/doc/ggplot2/txhousing.html) data in this book. This is a time-series data set built into ggplot.
 
-* To improve your skills I recommend finding other open data sets to develop your data vis skills. I found the marriage data we look at later in this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/). The [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) data sets are also a great source of data sets where you also get to learn from seeing how others (including David Robinson) have tackled them. 
+* To improve your skills I recommend finding other open data sets to develop your data vis skills. I found the marriage data we look at later in this [comprehensive list of R datasets](https://vincentarelbundock.github.io/Rdatasets/). The [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) data sets are also a great source of data sets. You also get to learn from seeing how others (including David Robinson) have tackled them. 
 
 * You could also look for data stories that interest you or that you could improve and explore further. I recently saw a data visualisation in The Times newspaper on [smoking and vaping](https://github.com/billster45/improve_a_data_viz/blob/master/README.md) that I tried to improve.
 
@@ -110,7 +110,7 @@ df <- ggplot2::txhousing %>%
                                               day =1)) 
 ```
 
-* The tidylog message above tells us that the mutate has changed `(100%) of 'date' (0 new NA)`. This what we would expect to happen.
+* The tidylog message above tells us that the mutate has changed `(100%) of 'date' (0 new NA)`. This is what we would expect to happen.
 
 * Let's also create a data frame with fewer cities so that some plots created later will be less crowded. Below we select only cities where the maximum number of sales in any month is more than 500.
 
@@ -139,7 +139,7 @@ df_red <- df %>%
 
 ### testthat to create unit tests on data created
 
-* Unit testing is mostly used during the creation of [R packages](http://r-pkgs.had.co.nz/). It can also be part of your analysis code. Particularly if your work is high impact and you need to be confident the results are still valid in the future. For example, running new data through your code or when you have added new logic. Unit tests are an automatic way to highlight errors new data or new logic has introduced you may not have spotted.
+* Unit testing is mostly used during the creation of [R packages](http://r-pkgs.had.co.nz/). It can also be part of your analysis code. Particularly if your work is high impact and you need to be confident the results are still valid in the future. For example, you are running new data through your code or when you have added new logic. Unit tests are an automatic way to highlight errors new data or new logic has introduced you may not have spotted.
 
 * Hadley Wickham provides some useful ["what to test"](https://r-pkgs.org/tests.html#what-to-test) rules of thumb for when to use [unit tests](https://r-pkgs.org/tests.html) in his [R packages book](http://r-pkgs.had.co.nz/):
 
@@ -168,7 +168,7 @@ testthat::test_that("data dimensions correct", {
 })
 ```
 
-* This `testthat::test_that()` test does not return a message, so we know `df` has passed and the dimensions are as we expect. Let's now test data types. 
+* This `testthat::test_that()` test does not return a message, so we know `df` has passed because the dimensions are as we expect. Let's now test data types. 
 
 ```{r}
 testthat::test_that('data types correct', {
@@ -182,7 +182,7 @@ testthat::test_that('data types correct', {
 
 ```
 
-* Again, this test no messages so `df` has passed this test. Finally, let's run a test we know will fail to see what failure message is returned.
+* Again, this test no messages so `df` has passed this test. Finally, let's run a test we know will fail to see what failure message returns.
 
 ```{r, error=TRUE}
 testthat::test_that("no missing values", {
@@ -209,9 +209,9 @@ df %>%
 
 * Include the package name before every function, even for [base R](https://rstudio.com/wp-content/uploads/2016/05/base-r.pdf) functions, to make your code easier to read, 
 
-* I started learning R by reading other people's code. But I got confused where functions came from. Particularly when they used functions from lots of different packages mixed with base functions and their own functions, but without the package name shown. It made their code appear more complex and intimidating than it was.
+* I started learning R by reading other people's code. But I got confused where functions came from. Particularly when they used functions from lots of different packages mixed with base functions and their own functions, but without the package name shown. It made their code appear more complicated and intimidating than it was.
 
-* Another benefit of including the package name before each function is hitting the tab key at the end of the double colon to browse all the package's functions as a scrollable list.
+* Another benefit of including the package name is hitting the tab key at the end of the double colon let's us browse all the package's functions in a scrollable list.
 
 * Also, try highlighting a function and its package name then hit the `F1` key to show the help page. While hitting the `F2` key can be a quick way to see all the possible arguments in a function. As well as seeing the default argument values the package author has chosen for you.
 
@@ -221,7 +221,7 @@ knitr::include_graphics("package_name.gif")
 
 ### Rule 2: Add argument names to all functions
 
-* Instead of relying on the order of the arguments the function expects, name every argument you set the value of. Your code will be quicker to understand when we know which arguments are set without having to read the help page for that function.
+* Instead of relying on the order of the arguments the function expects, name every argument when you set its value. Your code will be quicker to understand when we know which arguments are set without having to read the help page for that function.
 
 ### Rule 3: Each line does one thing
 
@@ -253,7 +253,7 @@ ggplot(df) +
 
 5. Help others new to R understand what you are doing and learn faster.
 
-6. Avoid being a gatekeeper of your R knowledge and skills. Share, explain and democratise what you know. You can then move on to more complex analysis in R with an even higher value. Richard Susskind advocates this in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)) and in my example of describing [NLP techniques intuitively](https://github.com/billster45/NLP-Intuition/blob/master/README.md).
+6. Avoid being a gatekeeper of your R knowledge and skills. Share, explain and democratise what you know. You can then move on to more sophisticated analysis in R with an even higher value. Richard Susskind advocates this in [The Future of Professions](https://www.amazon.co.uk/dp/0198713398/)) and in my example of describing [NLP techniques intuitively](https://github.com/billster45/NLP-Intuition/blob/master/README.md).
 
 * Further tweaks to improve code clarity are to put spaces either side of the equals sign and to use [styler](https://styler.r-lib.org/) to apply some of these rules automatically. You can also [customise styler](https://cran.r-project.org/web/packages/styler/vignettes/customizing_styler.html) to apply your own rules. I want to try customising styler to apply rules 1 to 3 above. I don't know if that's possible yet.
 
@@ -317,7 +317,7 @@ df %>%
   )
 ```
 
-* Note this layout differs from the [layered gramar of graphics](https://r4ds.had.co.nz/data-visualisation.html#the-layered-grammar-of-graphics) code template below.
+* Note this layout differs from the [layered grammar of graphics](https://r4ds.had.co.nz/data-visualisation.html#the-layered-grammar-of-graphics) code template below.
 
 ```{r, eval = FALSE}
 ggplot(data = <DATA>) + 
