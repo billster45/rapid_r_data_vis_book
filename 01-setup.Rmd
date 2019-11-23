@@ -2,7 +2,7 @@
 
 ## Navigate R markdown quickly 
 
-* To quickly find a bit if your code to edit, instead of scrolling up and down the [R Markdown](https://bookdown.org/yihui/rmarkdown/) code, jump instantly to the right section by using the document outline. You can show the outline in one of three ways:
+* To quickly find part of your code to edit, instead of scrolling up and down the [R Markdown](https://bookdown.org/yihui/rmarkdown/) code, jump instantly to the right section by using the document outline. You can show the outline in one of three ways:
 
 1. Hold down `Ctrl+Shift+O`. 
 
@@ -54,10 +54,12 @@ library(kableExtra) # attractive static tables
 library(formattable) # colour tables. Like Excel's conditional formattinng
 library(rpivotTable) # like Excel's pivot table
 library(DT) # awesome interactive tables
+library(reactable)
 
 # Quality Assurance
 library(tidylog) # great for QA on the fly 
-library(testthat) # for writing tests
+library(testthat) # for writing unit tests
+library(assertr) # for writing tests verify assumptions about data early in the data pipeline of manipulation
 
 # wrangling / munging / manipulating
 library(tidyverse) # loads of useful packages in one 
@@ -80,7 +82,7 @@ library(mosaicData) # sample data
 
 * You could also look for data stories that interest you or that you could improve and explore further. I recently saw a data visualisation in The Times newspaper on [smoking and vaping](https://github.com/billster45/improve_a_data_viz/blob/master/README.md) that I tried to improve.
 
-* The only manipulation we will do to the Texas housing sales data below is to create a real date using [lubridate](https://lubridate.tidyverse.org/). 
+* The only manipulation we will do to the Texas housing sales data below is to create a real date using [lubridate](https://lubridate.tidyverse.org/). This book doesn't cover the data manipulation part of EDA. A good guide is the [Managing Data Frames with the `dplyr` package](https://bookdown.org/rdpeng/exdata/managing-data-frames-with-the-dplyr-package.html) chapter in Roger Peng's [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/). As well as the resources described in bullet 1 [here](https://github.com/billster45/r-guides-and-galleries#learn-to-analyse-data-with-r).
 
 ```{r create_df, message=TRUE}
 # create a data frame with a real date for plotting
@@ -96,9 +98,9 @@ df <- ggplot2::txhousing %>%
 kableExtra::kable(utils::head(df))
 ```
 
-## QA and Unit tests on the fly
+## QA and Unit tests
 
-### tidylog to QA dplyr verbs
+### tidylog
 
 * We'll also use [tidylog](https://github.com/elbersb/tidylog/blob/master/README.md) with dplyr. Tidylog is an easy way to include fast basic Quality Assurance during dplyr data manipulation. Just replace the dplyr verbs with the same verb in tidylog. Tidylog tells you what each dplyr verb has done to your data. For example, how many rows `dplyr::filter()` drops or adds, or what percentage of values `dplyr::mutate()` has changed.
 
@@ -137,7 +139,7 @@ df_red <- df %>%
 
 * The tidylog message above now tells us that the new variable `sales_max` has `0% NA` as we would expect.
 
-### testthat to create unit tests on data created
+### testthat
 
 * Unit testing is mostly used during the creation of [R packages](http://r-pkgs.had.co.nz/). It can also be part of your analysis code. Particularly if your work is high impact and you need to be confident the results are still valid in the future. For example, you are running new data through your code or when you have added new logic. Unit tests are an automatic way to highlight errors new data or new logic has introduced you may not have spotted.
 
@@ -201,6 +203,77 @@ df %>%
   dplyr::filter_all(dplyr::any_vars(base::is.na(.))) %>%
   utils::head() %>% 
   kableExtra::kable()
+```
+
+### assertr
+
+* You can also run tests [piped](https://www.datacamp.com/community/tutorials/pipe-r-tutorial#intro) directly within your data manipulation code using [assertr](https://docs.ropensci.org/assertr/). This  [assertr vignette](https://cran.r-project.org/web/packages/assertr/vignettes/assertr.html) has good examples on built-in data, as well as the assert section at the bottom of this [good blog](https://sharla.party/post/new-data-strategies/).
+
+* Below we purposely ensure the assertr tests will fail all the tests so we can read the useful error output it can create.
+
+```{r, error=TRUE}
+df %>%   
+  assertr::chain_start() %>% 
+  assertr::verify(base::nrow(.) == 8601) %>% 
+  assertr::verify(base::ncol(.) ==8) %>%
+  assertr::assert(in_set(1:11), 
+                  month) %>%
+  assertr::assert(in_set(2000:2014), 
+                  year) %>%
+  assertr::assert(within_bounds(lower.bound = 0,
+                                upper.bound = Inf, 
+                                include.lower= TRUE,
+                                allow.na = TRUE), -city,-date) %>%
+  assertr::insist(within_n_sds(3), 
+                  sales:inventory,) %>%
+  assertr::assert(not_na, dplyr::everything()) %>% 
+  assertr::chain_end(error_fun = error_stop)
+```
+
+* Then we adjust all of the tests so that they pass. 
+
+```{r}
+df %>%   
+  assertr::chain_start() %>% 
+  assertr::verify(base::nrow(.) == 8602) %>% 
+  assertr::verify(base::ncol(.) ==9) %>%
+  assertr::assert(in_set(1:12), 
+                  month) %>%
+  assertr::assert(in_set(2000:2015), 
+                  year) %>%
+  assertr::assert(within_bounds(lower.bound = 0,
+                                upper.bound = Inf, 
+                                include.lower= TRUE,
+                                allow.na = TRUE), -city,-date) %>%
+  assertr::insist(within_n_sds(11), 
+                  sales:inventory,) %>%
+  #assertr::assert(not_na, dplyr::everything()) %>% 
+  assertr::chain_end(error_fun = error_stop) %>% 
+  utils::head()
+```
+
+* The code above returns the data frame which means assertr code could be part of your data preparation code when `df` was created.
+
+```{r}
+df <- ggplot2::txhousing %>% 
+  dplyr::mutate(date = lubridate::make_date(year = year,
+                                              month = month, 
+                                              day =1)) %>% 
+  assertr::chain_start() %>% 
+  assertr::verify(base::nrow(.) == 8602) %>% 
+  assertr::verify(base::ncol(.) ==9) %>%
+  assertr::assert(in_set(1:12), 
+                  month) %>%
+  assertr::assert(in_set(2000:2015), 
+                  year) %>%
+  assertr::assert(within_bounds(lower.bound = 0,
+                                upper.bound = Inf, 
+                                include.lower= TRUE,
+                                allow.na = TRUE), -city,-date) %>%
+  assertr::insist(within_n_sds(11), 
+                  sales:inventory,) %>%
+  #assertr::assert(not_na, dplyr::everything()) %>% 
+  assertr::chain_end(error_fun = error_stop)
 ```
 
 ## Code style 

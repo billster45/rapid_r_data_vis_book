@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-16" />
+<meta name="date" content="2019-11-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,9 +217,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="intro.html"><a href="intro.html#rstudio-shortcuts"><i class="fa fa-check"></i><b>3.2</b> Rstudio shortcuts</a></li>
 <li class="chapter" data-level="3.3" data-path="intro.html"><a href="intro.html#load-r-packages-to-your-library"><i class="fa fa-check"></i><b>3.3</b> Load R packages to your library</a></li>
 <li class="chapter" data-level="3.4" data-path="intro.html"><a href="intro.html#the-data-to-visualise"><i class="fa fa-check"></i><b>3.4</b> The data to visualise</a></li>
-<li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#qa-and-unit-tests-on-the-fly"><i class="fa fa-check"></i><b>3.5</b> QA and Unit tests on the fly</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#tidylog-to-qa-dplyr-verbs"><i class="fa fa-check"></i><b>3.5.1</b> tidylog to QA dplyr verbs</a></li>
-<li class="chapter" data-level="3.5.2" data-path="intro.html"><a href="intro.html#testthat-to-create-unit-tests-on-data-created"><i class="fa fa-check"></i><b>3.5.2</b> testthat to create unit tests on data created</a></li>
+<li class="chapter" data-level="3.5" data-path="intro.html"><a href="intro.html#qa-and-unit-tests"><i class="fa fa-check"></i><b>3.5</b> QA and Unit tests</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="intro.html"><a href="intro.html#tidylog"><i class="fa fa-check"></i><b>3.5.1</b> tidylog</a></li>
+<li class="chapter" data-level="3.5.2" data-path="intro.html"><a href="intro.html#testthat"><i class="fa fa-check"></i><b>3.5.2</b> testthat</a></li>
+<li class="chapter" data-level="3.5.3" data-path="intro.html"><a href="intro.html#assertr"><i class="fa fa-check"></i><b>3.5.3</b> assertr</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="intro.html"><a href="intro.html#code-style"><i class="fa fa-check"></i><b>3.6</b> Code style</a><ul>
 <li class="chapter" data-level="3.6.1" data-path="intro.html"><a href="intro.html#rule-1-include-names-before-all-functions"><i class="fa fa-check"></i><b>3.6.1</b> Rule 1: Include names before all functions</a></li>
@@ -302,49 +303,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>We have already been setting colours in some of the previous plots using the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>. RColourBrewer contains ready-made colour palettes. We can view all the palettes it contains in one picture like this.</li>
 </ul>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="co"># easy colours</span></a>
-<a class="sourceLine" id="cb119-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="co"># easy colours</span></a>
+<a class="sourceLine" id="cb125-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/RColourBrewer-1.png" width="672" /></p>
 <ul>
 <li>We can also filter the picture above to show only palettes friendly to people who are colour blind.</li>
 </ul>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <ul>
 <li>And we can create a palette of colours with a specific number of colours like this. Then view them in a simple bar plot.</li>
 </ul>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
 <pre><code>## Warning in RColorBrewer::brewer.pal(9, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
 ## Returning the palette you asked for with that many colors</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="prismatic" class="section level2">
 <h2><span class="header-section-number">9.2</span> Prismatic</h2>
 <ul>
 <li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below, we start with the terrain palette in the prismatic package.</li>
 </ul>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb124-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb130-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <ul>
 <li>Now we turn the palette grey.</li>
 </ul>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
-<a class="sourceLine" id="cb125-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
+<a class="sourceLine" id="cb131-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <ul>
 <li>Darken the palette.</li>
 </ul>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
-<a class="sourceLine" id="cb126-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
+<a class="sourceLine" id="cb132-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 <ul>
 <li>Make the palette negative.</li>
 </ul>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
-<a class="sourceLine" id="cb127-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
+<a class="sourceLine" id="cb133-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 </div>
 <div id="hand-picked-colours" class="section level2">
 <h2><span class="header-section-number">9.3</span> Hand-picked colours</h2>
@@ -352,9 +353,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>You can also hand-pick your colour palette from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a>. The website is recommended by Michael Toth in his excellent <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">detailed guide to ggplot colours</a>.</p></li>
 <li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create and then copy and paste the colours into this palette below.</p></li>
 </ul>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
-<a class="sourceLine" id="cb128-2" title="2"></a>
-<a class="sourceLine" id="cb128-3" title="3"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
+<a class="sourceLine" id="cb134-2" title="2"></a>
+<a class="sourceLine" id="cb134-3" title="3"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/colour_picker-1.png" width="672" /></p>
 
 </div>
