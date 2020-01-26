@@ -1,0 +1,775 @@
+# Process Mining
+
+## What is Process Mining?
+
+* [Process mining](http://www.processmining.org/) techniques can visualise the many paths that cases can take in organisations. For example, a patient being treated in a hospital or a complaint handled by a train company. However, seeing every path cases take in a process map is often overwhelming. Fortunately, there are many ways to simplify process maps we explore in this chapter.
+
+* Data science techniques can also be applied to process mined data. For example, predicting the time it will take a case to complete a process, or recommending the next best step that should shorten the time to a case completing. 
+
+* The [Coursera Process Mining course](https://www.coursera.org/learn/process-mining) and accompanying [Process Mining: Data Science in Action book](https://www.springer.com/gp/book/9783662498507) provide a detailed background to these techniques and their applications in different industries. There is also a free to read [Process Mining in Practice book](http://processminingbook.com/index.html) by the same author.
+
+* The minimum data needed for process mining are two columns that record:
+  1. **Activity:** The activities (or events) that took place in the process.
+  2. **Date:** The date (and perhaps time) each activity occurred. 
+<br><br>
+
+* For example, knowing how and when a complaint is handled in different ways are the two minimum pieces of information needed for process mining in data. Three further data items will offer more insight:
+  1. **Resource:** The person (or system) that carried out each activity in the process. This is known as the "resource". 
+  2. **Lifecycle:** The transaction lifecycle of the case at each activity. For example, is the case at  "start", "in progress", or "complete".
+  3. **State:** The state the case was moved into by each activity. This is usually a greater level of detail below the broad transaction lifecycle categories. 
+<br><br>
+
+* For example, the data could tell us the customer is the resource who carried out the payment activity which moves its transaction lifecycle to "complete" and into the state "paid".
+
+## The event log
+
+### Understanding the event log
+
+* The [`eventdataR`](https://www.bupar.net/eventdataR.html) package contains both artificial and real life event logs. It comes from a family of process mining packages called [`bupaR`](https://www.bupar.net/). Let's walk through key process mining techniques in a logical order using the [`hospital_billing`](https://www.bupar.net/eventdataR.html#hospital_billing) event log from `eventdataR`. How it was created and anonymised is described [here](https://data.4tu.nl/repository/uuid:76c46b83-c930-4798-a1c9-4be94dfeb741). Also, the academic paper [Data-driven process discovery: revealing conditional infrequent behavior from event logs](https://wwwis.win.tue.nl/~wvdaalst/publications/p914.pdf) explores the same hospital billing event log in figure 6.
+
+* The example hospital billing event log has already been created for us. Putting it into the `utils::str()` function shows us the structure of this R object. The output shows that log holds number of cases, activities, resources, and "traces". Traces are the unique paths cases take through different activities. Resources are typically the names of people who carried out each activity.
+
+```{r}
+utils::str(eventdataR::hospital_billing)
+```
+
+* Also, at the bottom of the output above, the event log has six additional [attributes](http://adv-r.had.co.nz/Data-structures.html#attributes):
+  1. `case_id` a unique case id to tell us which activity rows belong to each case.
+  2. `activity` a description of what happened.
+  3. `activity_instance_id` a unique id for each activity.
+  4. `lifecycle` the status of the case at each activity such as "complete".
+  5. `resource` who did the activity.
+  6. `timestamp` when the activity happened. 
+
+* We return just those attributes below..
+
+```{r}
+str(base::attributes(eventdataR::hospital_billing))
+```
+
+* We would typically expect cases to be in one of several states as they pass through a process. Below we can see all the values of the `state` column. It appears that `state` has not been used to create a `lifecycle` attribute in the event log that would define when the case is "complete". Instead, all cases have been marked as "complete" at every activity.
+
+```{r}
+eventdataR::hospital_billing %>% dplyr::count(state)
+eventdataR::hospital_billing %>% dplyr::count(lifecycle)
+```
+
+* This heatmap counts the activities and the state they were in at the time the activity was carried out.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  dplyr::count(activity,state) %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = state,
+               y = activity,
+               fill = n) +
+  ggplot2::geom_tile(width=0.9, 
+                     height=0.9)+ 
+  ggplot2::geom_text(aes(label =  base::ifelse(n>0,
+                                               base::format(n, 
+                                                            big.mark = ",", 
+                                                            scientific = FALSE),
+                                               NA)), 
+                     size = 3) +
+  ggplot2::scale_fill_gradient(low = "white", 
+                               high = "red",
+                               limits = c(-500,12000)) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 legend.position = "none",
+                 axis.title.y = element_text(angle = 0,
+                                             vjust = 0.5)) +
+  ggplot2::labs(x = "State",
+                y = "Activity",
+                title = "Case activities and the case state the activity creates")
+```
+
+* The states `Billed`, `Closed` and `Released` are almost entirely triggered by one activity (`BILLED`, `FIN`, and `RELEASE` respectively). Only the state `In progress` is triggered by more than one activity, though it is almost entirely the activities `NEW` and `CHANGE DIAGN`, followed by `DELETE`, `REOPEN` in smaller numbers.
+
+* With more domain knowledge from an expert who works with the real life process it would be possible to create a useful lifecycle attribute. For example, a sensible categorisation might be to:
+  1. assign the value of `lifecycle` to "complete" for rows with the state values `Billed`, `Closed`, `Invoice rejected`, `Rejected`, `Released` or `Unbillable`.
+  2. assign the value of `lifecycle` to "in progress" for rows with the state values `Billable` and `In progress`, and,
+  3. assign the value of `lifecycle` to "start" when the activity is `NEW`.
+
+* Some state values are `NA`. These missing values could be imputed with the last known value of state when it was not `NA`.
+
+### Creating your own event log
+
+* The hospital billing event log has been created for us. Creating our own log from raw events data is straightforward. Follow the bupaR ["create event log" guidance](https://www.bupar.net/creating_eventlogs.html). 
+
+* When creating an event log, as well as the activity name, each activity row needs its own globally unique ID and a lifecycle status. The lifecycle would typically describe if a case has just started, is in-progress, or is complete when each activity occurs. If both a unique activity ID and a lifecycle status are missing they can easily be [artifically created](https://www.bupar.net/creating_eventlogs.html#lack_of_transitional_lifecycle) using a row count for the ID and by assigning the status to a single value such as "complete" or "NA".
+
+* Who did each activity (the resource) may also be missing. Resource can also simply be assigned as a [blank  "NA" column](https://www.bupar.net/creating_eventlogs.html#lack_of_resources).
+
+## Visualise the event log
+
+* To quickly and intuitively understand the hospital billing event log we can explore it like any other data frame or tibble in R. First we view all the events for three cases using `dplyr` verbs and `DT::datatable()`.
+
+```{r}
+eventdataR::hospital_billing %>%
+  dplyr::filter(case_id %in% c("A","B","C")) %>% 
+  dplyr::select(case_id,activity,resource,timestamp,state,lifecycle) %>% 
+  dplyr::arrange(case_id,timestamp) %>% 
+  DT::datatable(
+    caption = "Top ",
+    filter = "top",
+    extensions = c("FixedColumns", "Buttons"),
+    options = list(columnDefs = list(list(width = "150px", 
+                                          targets = c(4))))
+  )
+```
+
+* In this table the cases A and C have a final `activity` of `BILLED`. The `state` that the `BILLED` activity moves the cases into is also called `Billed`. 
+
+* In contrast, for case B the `BILLED` activity was not carried out. Its final state in the log  is `DELETE`. Perhaps the hospital bill for this person was withdrawn or cancelled for some reason?
+
+### Process map
+
+* We can quickly create [process maps](https://www.bupar.net/processmaps.html) from an event log using the function `processmapR::process_map()`. 
+
+```{r}
+eventdataR::hospital_billing %>% 
+  processmapR::process_map()
+```
+
+* This process map displays the entire event log to show every activity that has occurred and in what order. Plotting the detail of every case path (or trace) is often overwhelming. The process can appear more complex than it really is. Maps that are too detailed have been called ["spaghetti-like"](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.81.1207&rep=rep1&type=pdf) by the authors of an algorithmic method we will explore later that is one of several ways to simplify process maps.
+
+* Process maps can be simplified in many ways. Each method helps us understand both typical and rare case paths more easily. A basic simplification is to create the process map only for a small number of cases. Below only cases A, B and C from the table above are mapped.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  dplyr::filter(case_id %in% c("A","B","C")) %>% 
+  processmapR::process_map()
+```
+
+* If no arguments are included in the `processmapR::process_map()` function the number in the box and its colour are how many cases have had that activity carried out. Darker colours represent more cases. The number on the edges (or arrows) and their thickness represent how many cases have passed between two activities in the direction of the arrow.
+
+* We can also [subset](https://www.bupar.net/subsetting.html) event logs using the [`edeaR::trace_frequency()`](https://www.bupar.net/subsetting.html#trace_frequency) function so that the process map shows only the most common paths cases take . Let's filter the log to contain only cases that have followed the top 90% most frequent paths, then pipe (%>%) that reduced log it into thee process map function.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::process_map()
+```
+
+* The default values on a process map are the the number of cases. The process map below uses a [custom profile](https://www.bupar.net/processmaps.html#frequency_profile). We have adjusted the the numbers inside each box to include both the absolute number of times the activity was carried out, and in brackets below is the percentage of those activities among all the activities carried out. This means that the percentages in the brackets across all the boxes in the map sum to 100%.
+
+* The labels on the arrows have also been altered. They now show the absolute number of times cases move from each activity to the next in the direction of the arrow. The percentages in brackets on all the arrows coming out of each box will sum to 100%.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::process_map(type_nodes = processmapR::frequency("absolute"),
+                           sec_nodes = processmapR::frequency("relative"),
+                           type_edges = processmapR::frequency("absolute"),
+                           sec_edges = processmapR::frequency("relative"),
+                           rankdir = "TB")
+```
+
+* Next we alter the value in the brackets in the box labels to show the *unique* number of cases passing through that activity. The number above it (not in brackets) is usually higher for this event log. This tells us some cases must pass through that activity more than once. 
+
+* We also alter the label on the arrows inside the brackets to show the median average time between the two activities. The thickness of the arrow still represents the percentage of cases moving from that node.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::process_map(type_nodes = processmapR::frequency("absolute"),
+                           sec_nodes = processmapR::frequency("absolute_case"),
+                           type_edges = processmapR::frequency("relative"),
+                           sec_edges = processmapR::performance(FUN = median, 
+                                                                units = "days",
+                                                                flow_time = "inter_start_time"
+                                                                ),
+                           rankdir = "TB")
+```
+
+### Trace explorer
+
+* Another way to visualise the paths that cases take is with the trace explorer. This plot displays each trace (or path) sorted in descending order of frequency. The coloured squares represent the activities cases pass through in order from left to right. We have also filtered the log first to show only the top 90% most frequent paths to mirror the process map filter above.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::trace_explorer(coverage = 1,
+                              type = "frequent",
+                              .abbreviate = T)
+```
+
+* Compared to the process map, the trace explorer is easier for domain experts to identify case paths that are unexpected or not allowed. This is known as ["conformance checking"](https://www.bupar.net/processcheckr.html) that is also explored later.
+
+* The Trace Explorer chart also allows easy identification and exploration of repeated activities that may also be unusual or unexpected. For example, in the process maps above the `BILLED` activity occurs more than once for some cases. We can see this where the unique number of cases in brackets in each box is a lower number than the number of cases passing through the activity that is shown above it. Below we filter the log first to only include cases where the `BILLED` activity occurred tow or more times. We also trim the path (or trace) to only show the first and last time the `BILLED` activity occurs.
+
+```{r, eval = FALSE}
+eventdataR::hospital_billing %>% 
+  processcheckR::check_rule(processcheckR::contains(activity = "BILLED", n = 2)) %>% 
+  tidylog::filter(contains_BILLED_2 == TRUE) %>% 
+  edeaR::filter_trim(start_activities = "BILLED",
+                     end_activities = "BILLED") %>%
+  processmapR::trace_explorer(coverage = 0.8,
+                              type = "frequent",
+                              .abbreviate = T)
+```
+
+* Also, as the trace explorer is a ggplot chart, we are also able to alter the plot format in two ways. We can save it as an R object and then adjust elements of that nested list directly. And we can add on additional ggplot format settings using using the + symbol. Both methods are demonstrated below.
+
+```{r}
+p <- eventdataR::hospital_billing %>% 
+  processcheckR::check_rule(processcheckR::contains(activity = "BILLED", n = 2)) %>% 
+  tidylog::filter(contains_BILLED_2 == TRUE) %>% 
+  edeaR::filter_trim(start_activities = "BILLED",
+                     end_activities = "BILLED") %>%
+  processmapR::trace_explorer(coverage = 0.8,
+                              type = "frequent",
+                              .abbreviate = F) +
+  ggplot2::labs(title = "Most frequent paths where the 'BILLED' activity is repeated")
+
+p$data$relative_frequency <- round(p$data$relative_frequency,2)
+p$theme$strip.background$fill <- "lightgrey"
+p$theme$strip.text$colour <- "black"
+
+p
+```
+
+### Conformance checking
+
+* We can also use [processcheckR](https://www.bupar.net/processcheckr.html) to identify which traces either follow or break certain rules. For example, below we narrow down the process map to only show cases that have the `CHANGE_DIAGN` activity carried out. This change of diagnosis activity we can imagine may be a significant event in a hospital with an impact on the final bill so would be worth checking that certain agreed processes are followed. This might include detecting both mistakes in the process and potential fraudulent activity. 
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processcheckR::filter_rules(r1 = processcheckR::and("CHANGE DIAGN","REOPEN"),
+                              r2 = processcheckR::succession("NEW","CHANGE DIAGN")) %>% 
+  processmapR::process_map(type_nodes = processmapR::frequency("absolute"),
+                           sec_nodes = processmapR::frequency("absolute_case"),
+                           type_edges = processmapR::frequency("relative"),
+                           sec_edges = processmapR::performance(FUN = median, 
+                                                                units = "days",
+                                                                flow_time = "inter_start_time"
+                                                                ),
+                           rankdir = "TB")
+```
+
+### Dotted chart
+
+* The dotted chart is similar in style to the trace explorer. It also displays activities in the order they occur horizontally. The main difference is that each line of dots in the dotted chart represents an individual case. The trace explorer instead displays the unique paths for one or more cases.
+
+* In the dotted chart below the x axis argument is set so that the position of each dot horizontally is the `absolute` date when each activity occurred. Also, the horizontal lines are sorted in descending order of the total trace time (or duration) of each case. The shortest duration case is at the top and the longest at the bottom.
+
+```{r}
+eventdataR::hospital_billing %>%
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::dotted_chart(x = "absolute", 
+                              sort = "duration")
+```
+
+* This dotted chart is very useful for insight into the hospital billing process. At the top of the plot, the pink dots show many cases which begin in early 2013 with the `NEW` activity have no further activities recorded. This short single activity path can also be seen in the first process map we drew in this chapter. It is the arrow that goes from the `NEW` box directly to the `END` circle without passing through any other activity boxes. However, this short path is much easier to identify with a dotted chart. It also reveals the date range in which it occurs most often. The only way to identify changes in case paths over time with the process map is to [animate](https://www.bupar.net/processanimater.html), or draw multiple maps from event logs that are filtered with different [time periods](https://www.bupar.net/subsetting.html#time_period). 
+
+* All of the `NEW` activities occur in a narrow time range in early 2013. This strongly suggests the data was extracted from the live system by selecting only cases where the `NEW` activity occurred in early 2013.
+
+* Again, because the function `processmapR::dotted_chart()` creates a ggplot chart we can alter how it appears by adding ggplot settings or updating the R object. For example, a useful change we make to this dotted chart is to show monthly breaks on the x-axis.
+
+```{r}
+# Put the dotted chart into an R object
+p <- eventdataR::hospital_billing %>%
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::dotted_chart(x = "absolute", 
+                            sort = "duration") 
+
+# change the format of the x axis to a date
+p$data$start <- as.Date(p$data$start) 
+
+p +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y")) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9
+    )) +
+    ggplot2::labs(
+    title = "Month on which NEW activity occurred",
+    x = "Date",
+    y = "Number of activities"
+  ) +
+  ggplot2::guides(colour = guide_legend(override.aes = list(size=5)))
+```
+
+* Let's further explore the activity over time. The bar plot below counts the number of occurrences of the `NEW` activity in each month. We can see all the `NEW` activities occurred between January and April 2013.
+
+```{r}
+min <- lubridate::as_date(base::min(eventdataR::hospital_billing$timestamp))
+max <- lubridate::as_date(base::max(eventdataR::hospital_billing$timestamp))
+
+eventdataR::hospital_billing %>% 
+  edeaR::filter_activity(activities = c("NEW")) %>%
+  dplyr::mutate(day = lubridate::as_date(timestamp),
+                month = base::cut(day, "month"),
+                month = lubridate::as_date(month)) %>% 
+  dplyr::count(month) %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = month,
+               y = n) +
+  ggplot2::geom_bar(stat = "identity") +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y"),
+                          limits = c(min,max)) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9
+    )) +
+    ggplot2::labs(
+    title = "Month on which NEW activity occurred",
+    x = "Date",
+    y = "Number of activities"
+  ) 
+```
+
+* Next we sort the order of the rows of dots by the start date. 
+
+```{r}
+p <- eventdataR::hospital_billing %>%
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  processmapR::dotted_chart(x = "absolute", 
+                                    sort = "start")
+
+# change the format of the x axis to a date
+p$data$start <- as.Date(p$data$start) 
+
+p +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y")) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9
+    )) +
+    ggplot2::labs(
+    title = "Month on which NEW activity occurred",
+    x = "Date",
+    y = "Number of activities"
+  ) +
+  ggplot2::guides(colour = guide_legend(override.aes = list(size=5)))
+```
+
+* This reveals two distinct groups of cases, one where the `BILLED` activity (green dots) often occurs during autumn 2013, and the other where `BILLED` often occurs during spring 2014. However, with so many dots plotted, it is hard to follow the path for a case individually. This is known as "over-plotting". We can reduce over-plotting by sampling the cases with `dplyr` first. We can also use the plotly version of a dotted chart and hover our mouse pointer over each dot. This reveals the case id making is possible to follow the path of individual cases by hand.
+
+```{r}
+eventdataR::hospital_billing %>%
+  edeaR::filter_trace_frequency(percentage = 0.9) %>%
+  dplyr::sample_n(size = 100) %>%  
+  processmapR::plotly_dotted_chart(x = "absolute", 
+                                    sort = "start")
+```
+
+### Bespoke exploration
+
+* Further bespoke explorations are described in this [process mining blog post](https://notast.netlify.com/post/process-mining-part-3-3-more-analysis-and-visualizations/).It includes an example of creating an interruption index to tell us how much a resource "toggles" between multiple cases, and a heatmap to show peak periods during the day. 
+
+* Let's re-create the hourly heatmap for our hospital billing data. We can see that some activities are more common at lunchtime (e.g. `STORNO` and `MANUAL`), and some occur in the early hours of the morning (e.g. `CODE ERROR`). Perhaps the very early activities outside of normal office hours are automatic system activities?
+
+```{r}
+t <- eventdataR::hospital_billing %>%
+  dplyr::mutate(hour = lubridate::hour(timestamp)) %>% 
+  dplyr::count(activity, hour) %>% 
+  dplyr::group_by(activity) %>% 
+  dplyr::mutate(nn = sum(n)) %>%
+  dplyr::ungroup() %>% 
+  dplyr::mutate(percent= ((n/nn)*100))
+
+t %>% 
+  ggplot2::ggplot(aes(x = hour, 
+                      y = activity, 
+                      fill=percent)) + 
+  ggplot2::geom_tile(size=.5, color="white") + 
+  ggplot2::scale_fill_gradient(low = "lightblue", 
+                               high = "red",
+                               limits = c(0,50)) +
+  ggplot2::geom_text(aes(label =  base::ifelse(percent>0,
+                                               round(percent,0),
+                                               NA)), 
+                     size = 4,
+                     #fontface = "bold"
+                     ) +
+  ggplot2::theme_classic()+
+  ggplot2::theme(legend.position = "none") +
+  ggplot2::labs(x="24 hour Clock", 
+                y="", 
+                title= "In what hour does each hospital billing activity occur?",
+                subtitle = "Percentage in each hour for each activity",
+                fill="%")  +
+  ggplot2::scale_y_discrete(limits = rev(levels(eventdataR::hospital_billing$activity))) +
+  ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 12))
+```
+
+## Can we predict the age of a case?
+
+* Perhaps there is a feature in the data that can explain why there are two time periods in which the activity `BILLED` occurs? This pattern is seen clearly if we visualise the number of times the `BILLED` activity occurs in each month.
+
+```{r}
+eventdataR::hospital_billing %>% 
+  edeaR::filter_activity(activities = c("BILLED")) %>%
+  dplyr::mutate(day = lubridate::as_date(timestamp),
+                month = base::cut(day, "month"),
+                month = lubridate::as_date(month)) %>% 
+  dplyr::count(month) %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = month,
+               y = n) +
+  ggplot2::geom_bar(stat = "identity") +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y"),
+                          limits = c(min,max)) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9)) +
+  ggplot2::labs(
+    title = "Month in which BILLED activity occurred",
+    x = "Date",
+    y = "Number of activities") 
+```
+
+* It will be most useful to explore the characteristics known when the first activity (`NEW`) is carried out. In this way the early information at case start could be used to predict and better understand in which of the two time periods the `BILLED` activity is likely to occur. Below we extract the characteristics at the start of the process for each case. We also categorise the very detailed `diagnosis` column by extracting just the first letter of the full diagnosis code. This is so that the plots created are less complicated.
+
+```{r}
+predictors_at_NEW <- eventdataR::hospital_billing %>% 
+  edeaR::filter_activity(activities = c("NEW")) %>% 
+  tibble::as_tibble() %>% 
+  dplyr::select(case_id,actorange:speciality) %>% 
+  dplyr::mutate(diagnosis_cat = stringr::str_sub(string = diagnosis,
+                                      start = 1,
+                                      end = 1)) 
+```
+
+* First we see what is contained in each predictor quickly using [skimr](https://github.com/ropensci/skimr).
+
+```{r}
+library(skimr)
+skimr::skim(predictors_at_NEW)
+
+predictors_at_NEW <- predictors_at_NEW %>% 
+  dplyr::select(-actorange,-actred,-closecode,-flagc,-msgcode,-msgtype)
+```
+
+* The skimr output shows 6 columns with all missing values we can remove as they offer no information. Next, we join the first known case characteristics (from when the case started at the `NEW` activity) to the final `BILLED` activity rows. 
+
+```{r}
+billed <- eventdataR::hospital_billing %>% 
+  edeaR::filter_activity(activities = c("BILLED")) %>%
+  dplyr::mutate(day = lubridate::as_date(timestamp),
+                month = base::cut(day, "month"),
+                month = lubridate::as_date(month)) %>% 
+  tibble::as_tibble() %>% 
+  dplyr::select(case_id,day,month) %>% 
+  dplyr::left_join(predictors_at_NEW) 
+```
+
+* Finally, we can plot different case characteristics by the month in which the final case activity `BILLED` occurred. Starting with `casetype` we can see a strong relationship with values A and B. These two values each dominate each of the two peaks separately. The second peak in January to April 2014 was almost all `casetype` value "A" or "NA" at the first activity (`NEW`). While the first peak is almost  all `casetype` value "B" at the first activity.
+
+```{r}
+billed %>%
+  dplyr::group_by(month,casetype) %>% 
+  dplyr::summarise(n = n()) %>% 
+  dplyr::ungroup() %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = month,
+               y = n,
+               colour = casetype,
+               fill = casetype) +
+  ggplot2::geom_bar(stat = "identity") +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y")) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9)) +
+  ggplot2::labs(
+    #title = paste(casetype," by BILLED month"),
+    x = "Date",
+    y = "Number of activities") 
+```
+
+* `casetype` does not entirely explain the two peaks (i.e. sometimes other casetype values occur). Below we put the ggplot code from above into a function so that it is easy to repeat the plot for more of the case characteristics known at the start of the case.
+
+```{r}
+plot_fun <- function(cat){
+  
+  cat <- ensym(cat)
+
+billed %>%
+  dplyr::group_by(month,!!cat) %>% 
+  dplyr::summarise(n = n()) %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = month,
+               y = n,
+               colour = !!cat,
+               fill = !!cat) +
+  ggplot2::geom_bar(stat = "identity") +
+  ggplot2::scale_x_date(date_breaks = "1 month",
+                          labels = scales::date_format("%b %y")) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(
+      axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9)) +
+  ggplot2::labs(
+    title = paste("Value of ",cat,"during activity NEW shown by BILLED month"),
+    x = "Date",
+    y = "Number of activities") 
+
+}
+```
+
+* In the plots below the `diagnosis` column is mostly "NA" at the earlier peak of `BILLED` activities, while all the other `diganosis` categories are more common than "NA" in the second peak of `BILLED` activity.
+
+<details><summary>Show all the plots</summary>
+<p>
+```{r}
+vars <- c("blocked","diagnosis_cat","flaga","flagb","flagd","iscancelled","isclosed","msgcount","speciality")
+purrr::map(vars,plot_fun)
+```
+</p>
+</details>
+<br/>
+
+* If we wanted to predict the eventual age of the case when it reaches the `BILLED` activity from what we knew about the case at the first `NEW` activity, knowing if it is `casetype` "A",  "B" or "NA" will be a good predictor. Also, cases which move quickly from the first `NEW` activity to `CHANGE DIAGN` (with an average of 0 days) their subsequent average time to the `FIN`  activity is only 89 days, but much longer for cases that move directly from `NEW` to `FIN` (with an average time of 361 days). This means that the activities that cases pass through should also help us predict the case age when it is in-flight, and not just from what we knew about the case when it began. 
+
+* There are likely to be complex combinations of additional predictors or "features" that could be used to predict the most likely case age. In a later chapter we introduce the caret package as a way to automatically combine values to create more accurate predictions.
+
+## Process Discovery algorithms
+
+* There are also algorithmic methods designed to reveal important paths and the causal structure among the complexity of the raw  spaghetti-like process maps. They include the [Heuristics Miner](https://www.bupar.net/heuristics_miner.html) [package](https://github.com/bupaverse/heuristicsmineR/blob/master/README.md) and the [Fuzzy Miner package](https://github.com/nirmalpatel/fuzzymineR/blob/master/README.md) that represent the process as a simplified model.
+
+### Flexible Heuristics Miner
+
+* The Flexible Heuristics Miner algorithm is well explained in the [Flexible Heuristics Miner paper](https://www.researchgate.net/publication/221312126_Flexible_Heuristics_Miner_FHM) using worked examples and set notation.
+
+* First we create a simple precedence matrix. The activities on the left hand y axis are the *antecedent* (so come first in the process), while the activities along the bottom x axis are the *consequent* (so occur after the antecedent). A more literal description of a precedence matrix is a ["directly-follows frequency matrix"](https://www.futurelearn.com/courses/process-mining/0/steps/15639).
+
+```{r}
+p_matrix <- heuristicsmineR::precedence_matrix_absolute(eventlog = eventdataR::hospital_billing)
+
+new_levs <- base::sort(base::levels(p_matrix$antecedent))
+
+levels(p_matrix$antecedent) <- new_levs
+levels(p_matrix$consequent) <- new_levs
+
+p1 <- p_matrix %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = consequent,
+               y = antecedent,
+               fill = n) +
+  ggplot2::geom_raster()+ 
+  ggplot2::geom_text(aes(label =  base::ifelse(n>0,
+                                               base::format(n, 
+                                                            big.mark = ",", 
+                                                            scientific = FALSE),
+                                               NA)), 
+                     size = 3,
+                     angle = 60) +
+  ggplot2::scale_fill_gradient(low = "white", high = "red") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 legend.position = "none",
+                 axis.title.y = element_text(angle = 0,
+                                             vjust = 0.5)) +
+  ggplot2::labs(x = "Consequent",
+                y = "Antecedent")
+
+p1
+```
+
+* This precedence matrix is equivalent to the FHM algorithm example in Table 2 of the [Flexible Heuristics Miner paper](https://www.researchgate.net/publication/221312126_Flexible_Heuristics_Miner_FHM). 
+
+* Using `heuristicsmineR::precedence_matrix_length_two_loops()` we can also create "length two loops". This shows which activities recurring after a different activity is carried out. For example, the value 129 and `STORNO,BILLED` tells us there were 129 `STORNO,BILLED,STORNO` activity sequences in the event log. This matrix is equivalent to the worked FHM algorithm example in Table 3 of the [Flexible Heuristics Miner paper](https://www.researchgate.net/publication/221312126_Flexible_Heuristics_Miner_FHM).
+
+```{r}
+p_matrix <- heuristicsmineR::precedence_matrix_length_two_loops(eventlog = eventdataR::hospital_billing)
+
+p2 <- p_matrix %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = consequent,
+               y = antecedent,
+               fill = n) +
+  ggplot2::geom_tile()+ 
+  ggplot2::geom_text(aes(label =  base::ifelse(n>0,
+                                               base::format(n, 
+                                                            big.mark = ",", 
+                                                            scientific = FALSE),
+                                               NA)), 
+                     size = 3) +
+  ggplot2::scale_fill_gradient(low = "white", high = "red") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 legend.position = "none",
+                 axis.title.y = element_text(angle = 0,
+                                             vjust = 0.5)) +
+  ggplot2::labs(x = "Consequent",
+                y = "Antecedent")
+
+
+p2
+```
+
+* The `heuristicsmineR::dependency_matrix()` calculates formula (1) in the [Flexible Heuristics Miner paper](https://www.researchgate.net/publication/221312126_Flexible_Heuristics_Miner_FHM). In words, the formula is the number of times activity B follows activity A, minus the other direction (A follows B), divided by the sum of the previous two values plus one. The value is always between -1 and 1. A high value indicates a *dependency relation* in that direction. 
+
+* Below we calculate the dependency matrix and illustrate the calculation with one task pair following the text at the start of section 4.1 of the FHM paper.
+
+```{r, fig.widtht=16}
+dm <- heuristicsmineR::dependency_matrix(eventlog = eventdataR::hospital_billing, 
+                                         threshold = 0) 
+t <- base::as.data.frame(dm) %>% 
+  dplyr::filter(consequent != "End")
+
+new_levs <- base::sort(base::levels(t$antecedent))
+
+levels(t$antecedent) <- new_levs
+levels(t$consequent) <- new_levs
+  
+p3 <- t %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = consequent,
+               y = antecedent,
+               fill = dep) +
+  ggplot2::geom_tile()+ 
+  ggplot2::geom_text(aes(label = round(dep,1)),
+                     size = 3) +
+  ggplot2::scale_fill_gradient(low = "white", 
+                               high = "orange") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 legend.position = "none",
+                 axis.title.y = element_blank(),
+                 axis.text.y = element_blank()) 
+
+p3 <- p3 +
+  ggplot2::theme(axis.title.y = element_blank())
+
+p1 <- p1 +
+  ggplot2::theme(axis.title.y = element_text(angle = 90))
+
+cowplot::plot_grid(p1, p3, 
+                   labels = c('Directly-follows frequency matrix', 
+                              'Dependency matrix'), 
+                   label_size = 12,
+                   vjust = 1)
+```
+
+* In the left hand matrix above the task `CODE ERROR` is directly followed two times by task `REOPEN`, but the other way never occurs. This means that the dependency relation value of `CODE ERROR` ⇒W `REOPEN` = (2 - 0) / (2 + 0 + 1) = 0.7. This indicates we are not completely sure of the dependency relation with only two observations.
+
+* However, if `CODE ERROR` is directly followed by `REOPEN` many more times than two (say 50 times) and the other way around never occurs we can be much more certain there is a dependency relation. The value would then be `CODE ERROR` ⇒W `REOPEN` = (50 - 0) / (50 + 0 + 1) = 0.98 which is much closer to one indicating a very strong dependence relation.
+
+* If noise caused `CODE ERROR` to follow `REOPEN` once, the value of `CODE ERROR` ⇒W `REOPEN` is (50 -1) / (50 + 1 + 1) = 0.94. This is only a little lower and indicates we are still confident
+of a dependency relation with the value being so close to 1.
+
+* If we alter the threshold value for which we will accept a dependency relation (e.g. values  above 0.9) then view that in a matrix, we can be fairly certain there is a causality between the antecedent and consequent activities shown below.
+
+```{r}
+dm <- heuristicsmineR::dependency_matrix(eventlog = eventdataR::hospital_billing, 
+                                         threshold = 0.9,
+                                         all_connected = TRUE) 
+base::as.data.frame(dm) %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = consequent,
+               y = antecedent,
+               fill = dep) +
+  ggplot2::geom_raster()+ 
+  ggplot2::geom_text(aes(label = round(dep, 1))) +
+  ggplot2::scale_fill_gradient(low = "white", high = "orange") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 axis.title.y = element_text(angle = 0,
+                                             vjust = 0.5),
+                 legend.position = "none")+
+  ggplot2::labs(x = "Consequent",
+                y = "Antecedent")
+```
+
+* We can also render the simplified matrix of strong dependency relations above 0.9 into a diagram. This shows the dependency relation value on each arrow that is always above 0.9.
+
+```{r}
+dm %>% 
+  heuristicsmineR::render_dependency_matrix()
+```
+
+* A causal net uses the dependency graph above but annotated to show the number of cases that pass through each activity when the dependency relation is set at 0.9.
+
+```{r}
+cn <- heuristicsmineR::causal_net(eventdataR::hospital_billing,
+                                  dependencies = dm)
+  
+cn %>% 
+  heuristicsmineR::render_causal_net()
+```
+
+* So if we created a dependency matrix with a much lower threshold the causal net would have more paths and be more complex.
+
+```{r}
+dm <- heuristicsmineR::dependency_matrix(eventlog = eventdataR::hospital_billing, 
+                                         threshold = 0.1,
+                                         all_connected = TRUE) 
+
+heuristicsmineR::causal_net(eventdataR::hospital_billing,
+                            dependencies = dm) %>% 
+  heuristicsmineR::render_causal_net()
+
+```
+
+* Dependency graphs and causal nets are described in this [Coursera Process Mining] lecture(https://www.coursera.org/lecture/process-mining/3-4-dependency-graphs-and-causal-nets-ozi0S)
+
+### Fuzzy miner
+
+* In the paper [Data-driven process discovery : revealing conditional
+infrequent behavior from event logs](https://wwwis.win.tue.nl/~wvdaalst/publications/p914.pdfsection) section 5.2, figure 6, fuzzymineR is demonstrated on the hospital billing data. Unfortunately, attempting to replicate that figure returns an [error](https://github.com/nirmalpatel/fuzzymineR/issues/1).
+
+```{r, error=TRUE}
+metrics <- fuzzymineR::mine_fuzzy_model(eventdataR::hospital_billing)
+#So that [fuzzymineR](https://github.com/nirmalpatel/fuzzymineR/blob/master/README.md) would operate [this](https://stackoverflow.com/a/27667945) setting was altered to the following value: `Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_231')`.
+```
+
+* Due to the error we run the algorithm with the `eventdataR::traffic_fines` event log that is also demonstrated in [section 5.2](https://wwwis.win.tue.nl/~wvdaalst/publications/p914.pdfsection).
+
+```{r, results="hide"}
+# Mine the fuzzy model
+metrics <- 
+  fuzzymineR::mine_fuzzy_model(eventdataR::traffic_fines)
+```
+
+* Then we can visualize the fuzzy model for a given set of [parameters](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.81.1207&rep=rep1&type=pdf).
+
+```{r}
+p <- fuzzymineR::viz_fuzzy_model(metrics = metrics,
+                            node_sig_threshold = 0, 
+                            edge_sig_threshold = 0.4, 
+                            edge_sig_to_corr_ratio = 0.75, 
+                            preserve_threshold = 0.4)
+
+t <- p$x$diagram
+t <- stringr::str_replace(t,'layout = \"dot','layout = \"neato')
+p$x$diagram <- t
+p
+```
+
+* Which can be compared to the full complex process map for traffic fines to determine if the fuzzymineR map is useful for process discovery.
+
+```{r}
+eventdataR::traffic_fines %>% 
+  processmapR::process_map(type = frequency("absolute"))
+```

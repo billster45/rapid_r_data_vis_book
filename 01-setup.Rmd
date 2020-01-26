@@ -43,7 +43,10 @@ library(png) #
 library(directlabels) # for directly labelling lines for example
 library(gghighlight) # label points of interest on your charts
 library(ggrepel) # move labels so they don't overlap
-library(glue) # 
+library(glue) # include column names in a looping chart title
+library(crosstalk) # link html widgets like plotly to DT tables
+library(skimr) # quickly skim the characteristics of a data frame
+library(cowplot) # 
 
 # colours
 library(RColorBrewer) # ready to use colour pallets
@@ -64,14 +67,22 @@ library(assertr) # for writing tests verify assumptions about data early in the 
 # wrangling / munging / manipulating
 library(tidyverse) # loads of useful packages in one 
 
-library(crosstalk) # link html widgets like plotly to DT tables
-
 # time series tools
 library(anytime) # convert text into the right date type
 library(tsbox) # convert to time series for dygraphs
 
 # sample data
 library(mosaicData) # sample data
+library(eventdataR) # sample process mining data sets
+
+# Processing mining
+library(bupaR) # the process mining package that converts your data into an event log
+library(edeaR) # good for filtering and subsetting a process event log
+library(processmapR) # convert an event log into a visual process map
+library(processanimateR) # animate a process map
+library(processcheckR) # carry out conformance checking (i.e. a process follows certain rules)
+library(heuristicsmineR) # Process discovery algorithm
+library(fuzzymineR) # Process discovery algorithm
 ```
 
 ## The data to visualise

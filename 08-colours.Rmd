@@ -1,0 +1,66 @@
+# Colours
+
+## RColorBrewer
+
+* We have already been setting colours in some of the previous plots using the [RColorBrewer package](https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette). RColourBrewer contains ready-made colour palettes. We can view all the palettes it contains in one picture like this.
+
+```{r RColourBrewer}
+# easy colours
+RColorBrewer::display.brewer.all()
+```
+
+* We can also filter the picture above to show only palettes friendly to people who are colour blind.
+
+```{r}
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
+* And we can create a palette of colours with a specific number of colours like this. Then view them in a simple bar plot.
+
+```{r}
+mypalette <- RColorBrewer::brewer.pal(9,"Set2") 
+
+graphics::barplot(1:9,col = mypalette)
+```
+
+## Prismatic
+
+* [Prismatic](https://github.com/EmilHvitfeldt/prismatic) lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below, we start with the terrain palette in the prismatic package.
+
+```{r}
+terrain <- prismatic::colour(terrain.colors(10))
+plot(terrain)
+```
+
+* Now we turn the palette grey.
+
+```{r}
+terrain_gray <- prismatic::clr_grayscale(terrain)
+plot(terrain_gray)
+```
+
+* Darken the palette.
+
+```{r}
+terrain_darken <- prismatic::clr_darken(terrain)
+plot(terrain_darken)
+```
+
+* Make the palette negative.
+
+```{r}
+terrain_negate <- prismatic::clr_negate(terrain)
+plot(terrain_negate)
+```
+
+## Hand-picked colours
+
+* You can also hand-pick your colour palette from this [colour picking website](http://tristen.ca/hcl-picker/). The website is recommended by Michael Toth in his excellent [detailed guide to ggplot colours](https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html).
+
+* The [colour picking website](http://tristen.ca/hcl-picker/) was used to create and then copy and paste the colours into this palette below.
+
+```{r colour_picker}
+newpalette <- c("#804759","#713E4E","#633543","#562D39","#48252F","#3B1D25")
+
+barplot(1:6,col = newpalette)
+```

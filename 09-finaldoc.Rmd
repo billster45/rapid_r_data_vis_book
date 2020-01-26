@@ -1,0 +1,49 @@
+# Final document
+
+## Picking a final output doc
+
+* It is hard but satisfying work to explore your data and tell interesting stories in polished plots. An important final step is to show it off in easy to navigate HTML documents. Here are three good options.
+
+## flexdashboard (vs Shiny)
+
+* This [Flexdashboard by Matt Dray](https://github.com/matt-dray/earl18-crosstalk) is a fantastic working example. It includes some of the interactivity we saw earlier using crosstalk, plotly and DT tables described in the [Interactive plots] chapter.
+
+* Also, here is an easy to follow tutorial about [how to build flexdashboards](https://arm.rbind.io/slides/flexdashboard.html#1)
+
+* Flexdashboards using [crosstalk] are an excellent alternative to a [shinydashboard](https://rstudio.github.io/shinydashboard/) as the code is much easier to build and edit. It is because the interactivity for the user is taken care of by the simple crosstalk options. In contrast, with Shiny you will need to understand, build, and maintain the more complex [reactivity](https://shiny.rstudio.com/articles/reactivity-overview.html) of your app. As well as needing a platform to [deploy](https://shiny.rstudio.com/deploy/) your shiny app. In contrast, with flexdashboard, you can email the HTML document it creates to your audience.
+
+* However, if your flexdashboard presents a lot of data in its plots and tables this can make the HTML doc that flexdashboard creates large and too slow to open for users. Shiny does not suffer from this as it only pulls the data the user requests from the selections they have make (e.g. with drop-down menus). In other words, when you open a Shiny app the front end doesn't contain all of the data a user could view, but in flexdashboard it does.
+
+* Shiny is also a better option when you want to give users a greater range of interactive plots and selection options than [crosstalk](https://rstudio.github.io/crosstalk/index.html) can provide. Crosstalk is limited to basic filtering for only a limited number of [html widgets](https://rstudio.github.io/crosstalk/widgets.html). In contrast, Shiny can be set up to allow users to interact with pretty much any R package you want to use in your app.
+
+## R markdown with floating contents and tabbed sections
+
+* When using R markdown I've found a [floating table of contents](https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents) and [tabbed sections](https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections) are the most effective for providing compact and easy to navigate HTML documents, particularly when you are presenting a lot of information at once, such as a detailed report.
+
+## bookdown
+
+* Finally, how this book itself is created is surprisingly quick to do. Here is a board [bookdown guide](https://bookdown.org/home/about/) to follow. Here is how I built this book:
+ 
+1. Clone or download this [minimal example](https://github.com/rstudio/bookdown-demo).  
+
+2. Add this line....
+
+> `output_dir: "docs"` 
+  
+  ...to the configuration file `_bookdown.yml` (as described [here](https://bookdown.org/yihui/bookdown/github.html))
+  
+3. In RStudio build the book to gitbook format either using the drop down in the build tab (next to Environment tab), or by running  this line of code..
+   
+> `rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')`
+ 
+  ...this builds the book into a single `docs` folder holding all the html files needed in it. 
+
+4. Push the `docs` folder to your GitHub repository so it's ready to publish.
+
+5. Now on GitHub website follow this [guidance](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site). It describes how you go to the `Settings` of the repository, then `GitHub Pages` section, then the `Source` section that has a drop-down.
+Select the third option of the Source drop-down that is....
+   
+> `master branch/docs folder 
+   Use only the docs folder for Github pages`
+   
+   ..it then has a bit of a think then tells you when the published book is ready to view and at what web address.

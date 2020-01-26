@@ -1,0 +1,119 @@
+# Tables
+
+```{r}
+```
+
+## DataTable basic
+
+* We usually plot [tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) where the data frame is "long". But for easy to read tables we will often want to reshape our long data to "wide". In the Texas housing sales data, this means showing one column per month (rather than one row per month in tidy data). 
+
+* To make the data wide we use `tidyr::pivot_wider()` then pipe that wide data into `DT::datatable()` to create an interactive table very easily.
+
+```{r}
+# first reshape with new tidyr
+df_wide <- 
+  df %>% 
+  dplyr::filter(year == 2014) %>% 
+  dplyr::arrange(city,date) %>% 
+  dplyr::mutate(date1 = base::format(date, "%b %y")) %>%
+  tidyr::pivot_wider(id_cols = city, 
+              names_from = date1,
+              values_from = sales)
+
+df_wide %>% 
+  DT::datatable(df_wide)
+```
+
+## DataTable (bells & whistles)
+
+* The [DT DataTables reference](https://rstudio.github.io/DT/) describes all the DataTable elements you can change with clear examples and code. This resource is usually all you need to refer to. 
+
+* Eventually you will have chosen lots of different [DataTable options](https://rstudio.github.io/DT/options.html) to apply. However, if your work includes many tables, this will lead to lots of repeated settings code. Reduce the amount of code by setting the default table options globally like this.
+
+```{r}
+options(DT.options = list(
+  pageLength = 10,
+  lengthMenu = c(5, 10, 20, 50, 100, 200, 500),
+  dom = "Blfrtip",
+  buttons = list(list(extend = "csv", filename = "download")),
+  keys = TRUE,
+  autoWidth = TRUE
+))
+```
+
+* The default settings above will then be applied every time you use `DT::datatable()`
+
+```{r}
+df_wide %>% 
+  DT::datatable(
+    caption = "Housing sales",
+    filter = "top",
+    extensions = c("FixedColumns", "Buttons"),
+    options = list(columnDefs = list(list(width = "150px", 
+                                          targets = c(1))))
+  )
+```
+
+## Colour DataTable with formattable
+
+* Colouring DataTable cells based on the value it contains is a common client request. Here is a code template you can re-use that is like Excel's conditional formatting.
+
+```{r}
+# find 8 cut points going from the smallest to the largest value of sales in 2014 
+cuts <- base::seq(from = min(df$sales[df$year==2014], 
+                             na.rm = TRUE),
+                  to = max(df$sales[df$year==2014], 
+                           na.rm=TRUE),
+                  length.out = 8)
+
+# define 9 colours for those cut points (1 more than the cut points needed)
+colours <- RColorBrewer::brewer.pal(n = 9,name = "Blues")
+
+# columns to format
+cols <- base::seq(from = 2,
+                  to = ncol(df_wide),
+                  by = 1)
+
+df_wide %>% 
+  dplyr::mutate_if(.predicate = base::is.character, 
+                   .funs = base::as.factor) %>% # converts an character columns to a factor so that the drop down menu works in the DataTable
+  DT::datatable(
+    caption = "Housing sales",
+    filter = "top",
+    extensions = c("FixedColumns", "Buttons"),
+    options = list(columnDefs = list(list(width = "150px", 
+                                          targets = c(1))))
+  ) %>% 
+  DT::formatStyle(columns = cols,
+              background = DT::styleInterval(cuts = cuts,
+                                             values = colours)) %>% 
+  DT::formatCurrency(columns = cols, 
+                     currency = "",
+                     digits = 0,
+                     interval = 3, 
+                     mark = ',') 
+```
+
+## rpivottable basic
+
+* I love Excel pivot tables and charts for exploring data. rpivotTables are a similar exploratory tool in R. We simply put the dataframe into the function `rpivotTable::rpviotTable()` then play around with the html output below (as you would with an Excel pivot table).
+
+```{r}
+df_red %>% 
+  rpivotTable::rpivotTable()
+```
+
+## rpivottable (bells & whistles)
+
+* Once we've decided how we want the rpivotTable to look manually we can hard code the layout to tell a particular story for our audience.
+
+```{r}
+df_red %>% 
+  rpivotTable::rpivotTable(
+                         rows = c("year","city"),
+                         cols = "date",
+                         inclusions = list(year = list("2014")),
+                         aggregatorName = "Sum",
+                         vals = "sales",
+                         rendererName = "Line Chart")
+```

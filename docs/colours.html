@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Colours | Rapid R Data Viz Book</title>
+  <title>Chapter 10 Colours | Rapid R Data Viz Book</title>
   <meta name="description" content="Description" />
   <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Colours | Rapid R Data Viz Book" />
+  <meta property="og:title" content="Chapter 10 Colours | Rapid R Data Viz Book" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Colours | Rapid R Data Viz Book" />
+  <meta name="twitter:title" content="Chapter 10 Colours | Rapid R Data Viz Book" />
   
   <meta name="twitter:description" content="Description" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Bill Cockerill" />
 
 
-<meta name="date" content="2019-11-23" />
+<meta name="date" content="2020-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,6 +92,9 @@
 <script src="libs/dt-ext-buttons-1.10.19/js/buttons.print.min.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 <link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
 <script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="libs/jquery-ui-1.11.4/jquery.ui.touch-punch.min.js"></script>
@@ -258,23 +261,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1" data-path="animation.html"><a href="animation.html#ggplot-animation"><i class="fa fa-check"></i><b>7.1</b> ggplot animation</a></li>
 <li class="chapter" data-level="7.2" data-path="animation.html"><a href="animation.html#plotly-animation"><i class="fa fa-check"></i><b>7.2</b> plotly animation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>8</b> Tables</a><ul>
-<li class="chapter" data-level="8.1" data-path="tables.html"><a href="tables.html#datatable-basic"><i class="fa fa-check"></i><b>8.1</b> DataTable basic</a></li>
-<li class="chapter" data-level="8.2" data-path="tables.html"><a href="tables.html#datatable-bells-whistles"><i class="fa fa-check"></i><b>8.2</b> DataTable (bells &amp; whistles)</a></li>
-<li class="chapter" data-level="8.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>8.3</b> Colour DataTable with formattable</a></li>
-<li class="chapter" data-level="8.4" data-path="tables.html"><a href="tables.html#rpivottable-basic"><i class="fa fa-check"></i><b>8.4</b> rpivottable basic</a></li>
-<li class="chapter" data-level="8.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>8.5</b> rpivottable (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="8" data-path="process-mining.html"><a href="process-mining.html"><i class="fa fa-check"></i><b>8</b> Process Mining</a><ul>
+<li class="chapter" data-level="8.1" data-path="process-mining.html"><a href="process-mining.html#what-is-process-mining"><i class="fa fa-check"></i><b>8.1</b> What is Process Mining?</a></li>
+<li class="chapter" data-level="8.2" data-path="process-mining.html"><a href="process-mining.html#the-event-log"><i class="fa fa-check"></i><b>8.2</b> The event log</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="process-mining.html"><a href="process-mining.html#understanding-the-event-log"><i class="fa fa-check"></i><b>8.2.1</b> Understanding the event log</a></li>
+<li class="chapter" data-level="8.2.2" data-path="process-mining.html"><a href="process-mining.html#creating-your-own-event-log"><i class="fa fa-check"></i><b>8.2.2</b> Creating your own event log</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>9</b> Colours</a><ul>
-<li class="chapter" data-level="9.1" data-path="colours.html"><a href="colours.html#rcolorbrewer"><i class="fa fa-check"></i><b>9.1</b> RColorBrewer</a></li>
-<li class="chapter" data-level="9.2" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>9.2</b> Prismatic</a></li>
-<li class="chapter" data-level="9.3" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>9.3</b> Hand-picked colours</a></li>
+<li class="chapter" data-level="8.3" data-path="process-mining.html"><a href="process-mining.html#visualise-the-event-log"><i class="fa fa-check"></i><b>8.3</b> Visualise the event log</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="process-mining.html"><a href="process-mining.html#process-map"><i class="fa fa-check"></i><b>8.3.1</b> Process map</a></li>
+<li class="chapter" data-level="8.3.2" data-path="process-mining.html"><a href="process-mining.html#trace-explorer"><i class="fa fa-check"></i><b>8.3.2</b> Trace explorer</a></li>
+<li class="chapter" data-level="8.3.3" data-path="process-mining.html"><a href="process-mining.html#conformance-checking"><i class="fa fa-check"></i><b>8.3.3</b> Conformance checking</a></li>
+<li class="chapter" data-level="8.3.4" data-path="process-mining.html"><a href="process-mining.html#dotted-chart"><i class="fa fa-check"></i><b>8.3.4</b> Dotted chart</a></li>
+<li class="chapter" data-level="8.3.5" data-path="process-mining.html"><a href="process-mining.html#bespoke-exploration"><i class="fa fa-check"></i><b>8.3.5</b> Bespoke exploration</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>10</b> Final document</a><ul>
-<li class="chapter" data-level="10.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>10.1</b> Picking a final output doc</a></li>
-<li class="chapter" data-level="10.2" data-path="final-document.html"><a href="final-document.html#flexdashboard-vs-shiny"><i class="fa fa-check"></i><b>10.2</b> flexdashboard (vs Shiny)</a></li>
-<li class="chapter" data-level="10.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>10.3</b> R markdown with floating contents and tabbed sections</a></li>
-<li class="chapter" data-level="10.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>10.4</b> bookdown</a></li>
+<li class="chapter" data-level="8.4" data-path="process-mining.html"><a href="process-mining.html#can-we-predict-the-age-of-a-case"><i class="fa fa-check"></i><b>8.4</b> Can we predict the age of a case?</a></li>
+<li class="chapter" data-level="8.5" data-path="process-mining.html"><a href="process-mining.html#process-discovery-algorithms"><i class="fa fa-check"></i><b>8.5</b> Process Discovery algorithms</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="process-mining.html"><a href="process-mining.html#flexible-heuristics-miner"><i class="fa fa-check"></i><b>8.5.1</b> Flexible Heuristics Miner</a></li>
+<li class="chapter" data-level="8.5.2" data-path="process-mining.html"><a href="process-mining.html#fuzzy-miner"><i class="fa fa-check"></i><b>8.5.2</b> Fuzzy miner</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>9</b> Tables</a><ul>
+<li class="chapter" data-level="9.1" data-path="tables.html"><a href="tables.html#datatable-basic"><i class="fa fa-check"></i><b>9.1</b> DataTable basic</a></li>
+<li class="chapter" data-level="9.2" data-path="tables.html"><a href="tables.html#datatable-bells-whistles"><i class="fa fa-check"></i><b>9.2</b> DataTable (bells &amp; whistles)</a></li>
+<li class="chapter" data-level="9.3" data-path="tables.html"><a href="tables.html#colour-datatable-with-formattable"><i class="fa fa-check"></i><b>9.3</b> Colour DataTable with formattable</a></li>
+<li class="chapter" data-level="9.4" data-path="tables.html"><a href="tables.html#rpivottable-basic"><i class="fa fa-check"></i><b>9.4</b> rpivottable basic</a></li>
+<li class="chapter" data-level="9.5" data-path="tables.html"><a href="tables.html#rpivottable-bells-whistles"><i class="fa fa-check"></i><b>9.5</b> rpivottable (bells &amp; whistles)</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="colours.html"><a href="colours.html"><i class="fa fa-check"></i><b>10</b> Colours</a><ul>
+<li class="chapter" data-level="10.1" data-path="colours.html"><a href="colours.html#rcolorbrewer"><i class="fa fa-check"></i><b>10.1</b> RColorBrewer</a></li>
+<li class="chapter" data-level="10.2" data-path="colours.html"><a href="colours.html#prismatic"><i class="fa fa-check"></i><b>10.2</b> Prismatic</a></li>
+<li class="chapter" data-level="10.3" data-path="colours.html"><a href="colours.html#hand-picked-colours"><i class="fa fa-check"></i><b>10.3</b> Hand-picked colours</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="final-document.html"><a href="final-document.html"><i class="fa fa-check"></i><b>11</b> Final document</a><ul>
+<li class="chapter" data-level="11.1" data-path="final-document.html"><a href="final-document.html#picking-a-final-output-doc"><i class="fa fa-check"></i><b>11.1</b> Picking a final output doc</a></li>
+<li class="chapter" data-level="11.2" data-path="final-document.html"><a href="final-document.html#flexdashboard-vs-shiny"><i class="fa fa-check"></i><b>11.2</b> flexdashboard (vs Shiny)</a></li>
+<li class="chapter" data-level="11.3" data-path="final-document.html"><a href="final-document.html#r-markdown-with-floating-contents-and-tabbed-sections"><i class="fa fa-check"></i><b>11.3</b> R markdown with floating contents and tabbed sections</a></li>
+<li class="chapter" data-level="11.4" data-path="final-document.html"><a href="final-document.html#bookdown"><i class="fa fa-check"></i><b>11.4</b> bookdown</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -297,65 +319,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="colours" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> Colours</h1>
+<h1><span class="header-section-number">Chapter 10</span> Colours</h1>
 <div id="rcolorbrewer" class="section level2">
-<h2><span class="header-section-number">9.1</span> RColorBrewer</h2>
+<h2><span class="header-section-number">10.1</span> RColorBrewer</h2>
 <ul>
 <li>We have already been setting colours in some of the previous plots using the <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette">RColorBrewer package</a>. RColourBrewer contains ready-made colour palettes. We can view all the palettes it contains in one picture like this.</li>
 </ul>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="co"># easy colours</span></a>
-<a class="sourceLine" id="cb125-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" title="1"><span class="co"># easy colours</span></a>
+<a class="sourceLine" id="cb193-2" title="2">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/RColourBrewer-1.png" width="672" /></p>
 <ul>
 <li>We can also filter the picture above to show only palettes friendly to people who are colour blind.</li>
 </ul>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1"><span class="kw">display.brewer.all</span>(<span class="dt">colorblindFriendly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 <ul>
 <li>And we can create a palette of colours with a specific number of colours like this. Then view them in a simple bar plot.</li>
 </ul>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" title="1">mypalette &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;Set2&quot;</span>) </a></code></pre></div>
 <pre><code>## Warning in RColorBrewer::brewer.pal(9, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
 ## Returning the palette you asked for with that many colors</code></pre>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" title="1">graphics<span class="op">::</span><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">col =</span> mypalette)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 </div>
 <div id="prismatic" class="section level2">
-<h2><span class="header-section-number">9.2</span> Prismatic</h2>
+<h2><span class="header-section-number">10.2</span> Prismatic</h2>
 <ul>
 <li><a href="https://github.com/EmilHvitfeldt/prismatic">Prismatic</a> lets us play around with colour palettes by shifting one aspect of all of the colours it contains at the same time. For example, below, we start with the terrain palette in the prismatic package.</li>
 </ul>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb130-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1">terrain &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">colour</span>(<span class="kw">terrain.colors</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb198-2" title="2"><span class="kw">plot</span>(terrain)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <ul>
 <li>Now we turn the palette grey.</li>
 </ul>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
-<a class="sourceLine" id="cb131-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" title="1">terrain_gray &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_grayscale</span>(terrain)</a>
+<a class="sourceLine" id="cb199-2" title="2"><span class="kw">plot</span>(terrain_gray)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 <ul>
 <li>Darken the palette.</li>
 </ul>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
-<a class="sourceLine" id="cb132-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1">terrain_darken &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_darken</span>(terrain)</a>
+<a class="sourceLine" id="cb200-2" title="2"><span class="kw">plot</span>(terrain_darken)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
 <ul>
 <li>Make the palette negative.</li>
 </ul>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
-<a class="sourceLine" id="cb133-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" title="1">terrain_negate &lt;-<span class="st"> </span>prismatic<span class="op">::</span><span class="kw">clr_negate</span>(terrain)</a>
+<a class="sourceLine" id="cb201-2" title="2"><span class="kw">plot</span>(terrain_negate)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 </div>
 <div id="hand-picked-colours" class="section level2">
-<h2><span class="header-section-number">9.3</span> Hand-picked colours</h2>
+<h2><span class="header-section-number">10.3</span> Hand-picked colours</h2>
 <ul>
 <li><p>You can also hand-pick your colour palette from this <a href="http://tristen.ca/hcl-picker/">colour picking website</a>. The website is recommended by Michael Toth in his excellent <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html">detailed guide to ggplot colours</a>.</p></li>
 <li><p>The <a href="http://tristen.ca/hcl-picker/">colour picking website</a> was used to create and then copy and paste the colours into this palette below.</p></li>
 </ul>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
-<a class="sourceLine" id="cb134-2" title="2"></a>
-<a class="sourceLine" id="cb134-3" title="3"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1">newpalette &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#804759&quot;</span>,<span class="st">&quot;#713E4E&quot;</span>,<span class="st">&quot;#633543&quot;</span>,<span class="st">&quot;#562D39&quot;</span>,<span class="st">&quot;#48252F&quot;</span>,<span class="st">&quot;#3B1D25&quot;</span>)</a>
+<a class="sourceLine" id="cb202-2" title="2"></a>
+<a class="sourceLine" id="cb202-3" title="3"><span class="kw">barplot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,<span class="dt">col =</span> newpalette)</a></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/colour_picker-1.png" width="672" /></p>
 
 </div>
@@ -396,7 +418,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-colours.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-colours.Rmd",
 "text": "Edit"
 },
 "history": {
