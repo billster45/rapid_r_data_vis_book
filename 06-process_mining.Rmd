@@ -365,9 +365,9 @@ eventdataR::hospital_billing %>%
 
 ### Resource exploration
 
-* All of the bupaR visualisations explored so far are from the case perspective - which activities were carried out in what order. However, we also know **who** carried out each activity. They are known as the resource. 
+* The bupaR visualisations explored in this chapter so far are about the case, telling us which activities were carried out and in what order. However, we also know **who** carried out each activity. 
 
-* Below we first randomly select 30 complete cases that begin with the `NEW` activity and end with the `BILLED` activity and view the activities for these cases in a process map.
+* Below we create a small data set of 30 randomly selected complete cases that begin with the `NEW` activity and end with the `BILLED` activity. We then view the activities for these 30 cases in a process map.
 
 ```{r}
 limited <- eventdataR::hospital_billing %>% 
@@ -378,10 +378,9 @@ limited <- eventdataR::hospital_billing %>%
 limited %>% processmapR::process_map()
 ```
 
-* We now visualise in a resource process map how those activities are carried out between the different resources using `processmapR::resourcemap()`.
+* Let's now visualise who carried out each of those activities (the resource) in a resource process map using `processmapR::resourcemap()`. We also add a new factor level to the resource column where no resource has been recorded. This is so that the resource map draws fully and does not stop where the resource information is missing leaving orphaned nodes (or boxes).
 
 ```{r}
-#add new missing factor level to resource so that the resource map does not break where there is a missing resource
 limited$resource = factor(limited$resource, levels=c(levels(limited$resource), "missing"))
 limited$resource[is.na(limited$resource)] = "missing"
 
@@ -395,7 +394,7 @@ limited %>%   processmapR::resource_map(type_nodes = processmapR::frequency("abs
                            rankdir = "TB")
 ```
 
-* We can see from the resource process map that the resource is often missing for certain activities. In the table below we highlight in yellow which activities they are.
+* We can see from the resource process map above that the resource is often missing for certain activities. In the table below we highlight in yellow which activities the resource information is missing for these 30 cases.
 
 ```{r}
 limited %>% 
@@ -408,30 +407,23 @@ limited %>%
  backgroundColor = styleEqual(c("missing"), c('yellow'))  ) #https://rstudio.github.io/DT/010-style.html
 ```
 
-* We can also quickly view how many resources were used on each case for our limited sample of 30 with the `edeaR::resource_frequency()` function.
+* We can also plot how many resources were used on each case for the entire log using the `edeaR::resource_frequency()` function.
 
 ```{r}
-limited %>% 
+eventdataR::hospital_billing %>% 
   edeaR::resource_frequency(level = "case") %>% 
   plot() 
 ```
 
-* And see if some resources specialise in certain activities for which we'd expect a low number per activity using the `edeaR::resource_specialisation()` function.
+* And use the `edeaR::resource_specialisation()` function to see if some resources specialise in certain activities across all of the cases.
 
 ```{r}
-limited %>% 
+eventdataR::hospital_billing %>% 
   edeaR::resource_specialisation(level = "activity") %>% 
   plot()
 ```
 
-* In this plot of the `edeaR::resource_specialisation()` function we can see the number of activities each resource executes. "ResA" is busiest resource.
-
-```{r}
-limited %>%
-  edeaR::resource_specialisation(level = "resource") %>% plot()
-```
-
-* Finally, using the `processmapR::resource_matrix()` we can see which resources (the antecedent) directly pass a case to another resource (consequent) to carry out the next activity.
+* Finally, using the `processmapR::resource_matrix()` we can see which resources (the antecedent) directly pass a case to another resource (consequent) to carry out the next activity just for our limited set of 30 cases.
 
 ```{r}
 rm <- limited %>%
@@ -460,6 +452,26 @@ p1 <- rm %>%
                 y = "Antecedent")
 
 p1
+```
+
+### Filter interactively within RStudio
+
+* In the central section of the [bupaR cheatsheet](https://www.bupar.net/materials/20170904%20poster%20bupaR.pdf) all of the edeaR event and case filter functions are also available as interactive [Shiny Gadgets](https://shiny.rstudio.com/articles/gadgets.html). For example, running the function `edeaR::ifilter_endpoints()` within RStudio will create a dialog from which you can select the start and end activities and filter the log.  
+
+```{r, eval=FALSE}
+filter_end_points <- edeaR::ifilter_endpoints(eventdataR::hospital_billing)
+
+filter_end_points %>% processmapR::process_map()
+```
+
+```{r, echo=FALSE, fig.height=12}
+knitr::include_graphics(path = "interactive_gadget.png") 
+```
+
+* We can then put this filtered log `filter_end_points` into a process map.
+
+```{r, echo=FALSE, fig.height=12}
+knitr::include_graphics(path = "interactive_result.png") 
 ```
 
 ### Bespoke exploration
