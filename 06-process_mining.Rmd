@@ -394,17 +394,12 @@ limited %>%   processmapR::resource_map(type_nodes = processmapR::frequency("abs
                            rankdir = "TB")
 ```
 
-* We can see from the resource process map above that the resource is often missing for certain activities. In the table below we highlight in yellow which activities the resource information is missing for these 30 cases.
+* We can see from the resource process map above that the resource is often missing for certain activities. In the heatmap below, for these 30 cases, we can see on the top row are the count activities where the resource information is missing.
 
 ```{r}
 limited %>% 
-  dplyr::count(activity,resource) %>% 
-  tidyr::spread(key = activity,value = n) %>% 
-  dplyr::arrange(desc(resource)) %>% 
-  DT::datatable(options = list(pageLength =100)) %>% #https://rstudio.github.io/DT/options.html
-  DT::formatStyle('resource',
-                  target = 'row',
- backgroundColor = styleEqual(c("missing"), c('yellow'))  ) #https://rstudio.github.io/DT/010-style.html
+  edeaR::resource_frequency("resource-activity") %>% 
+  plot()
 ```
 
 * We can also plot how many resources were used on each case for the entire log using the `edeaR::resource_frequency()` function.
