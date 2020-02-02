@@ -6,7 +6,7 @@
 
 * Data science techniques can also be applied to process mined data. For example, predicting the time it will take a case to complete a process, or recommending the next best step that should shorten the time to a case completing. 
 
-* The [Coursera Process Mining course](https://www.coursera.org/learn/process-mining) and accompanying [Process Mining: Data Science in Action book](https://www.springer.com/gp/book/9783662498507) provide a detailed background to these techniques and their applications in different industries. There is also a free to read [Process Mining in Practice book](http://processminingbook.com/index.html) by the same author.
+* The [Coursera Process Mining course](https://www.coursera.org/learn/process-mining) and accompanying [Process Mining: Data Science in Action book](https://www.springer.com/gp/book/9783662498507) provide a detailed background to these techniques and their applications in different industries. There is also a free to read [Process Mining in Practice book](http://processminingbook.com) by the same author.
 
 * The minimum data needed for process mining are two columns that record:
   1. **Activity:** The activities (or events) that took place in the process.
@@ -25,7 +25,9 @@
 
 ### Understanding the event log
 
-* The [`eventdataR`](https://www.bupar.net/eventdataR.html) package contains both artificial and real life event logs. It comes from a family of process mining packages called [`bupaR`](https://www.bupar.net/). Let's walk through key process mining techniques in a logical order using the [`hospital_billing`](https://www.bupar.net/eventdataR.html#hospital_billing) event log from `eventdataR`. How it was created and anonymised is described [here](https://data.4tu.nl/repository/uuid:76c46b83-c930-4798-a1c9-4be94dfeb741). Also, the academic paper [Data-driven process discovery: revealing conditional infrequent behavior from event logs](https://wwwis.win.tue.nl/~wvdaalst/publications/p914.pdf) explores the same hospital billing event log in figure 6.
+* The [`eventdataR`](https://www.bupar.net/eventdataR.html) package contains both artificial and real life event logs. It comes from a family of process mining packages called [`bupaR`](https://www.bupar.net/) which stands for Business Process Analysis with R. The [bupaR cheatsheet](https://www.bupar.net/materials/20170904%20poster%20bupaR.pdf) summaries the key functions from the family of packages in one clear page.
+
+* Let's walk through key process mining techniques in a logical order using the [`hospital_billing`](https://www.bupar.net/eventdataR.html#hospital_billing) event log from `eventdataR`. How it was created and anonymised is described [here](https://data.4tu.nl/repository/uuid:76c46b83-c930-4798-a1c9-4be94dfeb741). Also, the academic paper [Data-driven process discovery: revealing conditional infrequent behavior from event logs](https://wwwis.win.tue.nl/~wvdaalst/publications/p914.pdf) explores the same hospital billing event log in figure 6.
 
 * The example hospital billing event log has already been created for us. Putting it into the `utils::str()` function shows us the structure of this R object. The output shows that log holds number of cases, activities, resources, and "traces". Traces are the unique paths cases take through different activities. Resources are typically the names of people who carried out each activity.
 
@@ -94,14 +96,6 @@ eventdataR::hospital_billing %>%
 
 * Some state values are `NA`. These missing values could be imputed with the last known value of state when it was not `NA`.
 
-### Creating your own event log
-
-* The hospital billing event log has been created for us. Creating our own log from raw events data is straightforward. Follow the bupaR ["create event log" guidance](https://www.bupar.net/creating_eventlogs.html). 
-
-* When creating an event log, as well as the activity name, each activity row needs its own globally unique ID and a lifecycle status. The lifecycle would typically describe if a case has just started, is in-progress, or is complete when each activity occurs. If both a unique activity ID and a lifecycle status are missing they can easily be [artifically created](https://www.bupar.net/creating_eventlogs.html#lack_of_transitional_lifecycle) using a row count for the ID and by assigning the status to a single value such as "complete" or "NA".
-
-* Who did each activity (the resource) may also be missing. Resource can also simply be assigned as a [blank  "NA" column](https://www.bupar.net/creating_eventlogs.html#lack_of_resources).
-
 ## Visualise the event log
 
 * To quickly and intuitively understand the hospital billing event log we can explore it like any other data frame or tibble in R. First we view all the events for three cases using `dplyr` verbs and `DT::datatable()`.
@@ -143,7 +137,7 @@ eventdataR::hospital_billing %>%
   processmapR::process_map()
 ```
 
-* If no arguments are included in the `processmapR::process_map()` function the number in the box and its colour are how many cases have had that activity carried out. Darker colours represent more cases. The number on the edges (or arrows) and their thickness represent how many cases have passed between two activities in the direction of the arrow.
+* If no arguments are included in the `processmapR::process_map()` function the number in the box (or node) and its colour are how many cases have had that activity carried out. Darker colours represent more cases. The number on the arrows (or edges) and their thickness represent how many cases have passed between two activities in the direction of the arrow.
 
 * We can also [subset](https://www.bupar.net/subsetting.html) event logs using the [`edeaR::trace_frequency()`](https://www.bupar.net/subsetting.html#trace_frequency) function so that the process map shows only the most common paths cases take . Let's filter the log to contain only cases that have followed the top 90% most frequent paths, then pipe (%>%) that reduced log it into thee process map function.
 
@@ -153,9 +147,9 @@ eventdataR::hospital_billing %>%
   processmapR::process_map()
 ```
 
-* The default values on a process map are the the number of cases. The process map below uses a [custom profile](https://www.bupar.net/processmaps.html#frequency_profile). We have adjusted the the numbers inside each box to include both the absolute number of times the activity was carried out, and in brackets below is the percentage of those activities among all the activities carried out. This means that the percentages in the brackets across all the boxes in the map sum to 100%.
+* The default values on a process map are the the number of cases. The process map below uses a [custom profile](https://www.bupar.net/processmaps.html#frequency_profile). We have adjusted the the numbers inside each box (or node) to include both the absolute number of times the activity was carried out, and in brackets below is the percentage of those activities among all the activities carried out. This means that the percentages in the brackets across all the boxes in the map sum to 100%.
 
-* The labels on the arrows have also been altered. They now show the absolute number of times cases move from each activity to the next in the direction of the arrow. The percentages in brackets on all the arrows coming out of each box will sum to 100%.
+* The labels on the arrows (or edges) have also been altered. They now show the absolute number of times cases move from each activity to the next in the direction of the arrow. The percentages in brackets on all the arrows coming out of each box will sum to 100%.
 
 ```{r}
 eventdataR::hospital_billing %>% 
@@ -169,7 +163,7 @@ eventdataR::hospital_billing %>%
 
 * Next we alter the value in the brackets in the box labels to show the *unique* number of cases passing through that activity. The number above it (not in brackets) is usually higher for this event log. This tells us some cases must pass through that activity more than once. 
 
-* We also alter the label on the arrows inside the brackets to show the median average time between the two activities. The thickness of the arrow still represents the percentage of cases moving from that node.
+* We also alter the label on the arrows (or edges) inside the brackets to show the median average time between the two activities. The thickness of the arrow still represents the percentage of cases moving from that node.
 
 ```{r}
 eventdataR::hospital_billing %>% 
@@ -369,6 +363,105 @@ eventdataR::hospital_billing %>%
                                     sort = "start")
 ```
 
+### Resource exploration
+
+* All of the bupaR visualisations explored so far are from the case perspective - which activities were carried out in what order. However, we also know **who** carried out each activity. They are known as the resource. 
+
+* Below we first randomly select 30 complete cases that begin with the `NEW` activity and end with the `BILLED` activity and view the activities for these cases in a process map.
+
+```{r}
+limited <- eventdataR::hospital_billing %>% 
+  edeaR::filter_endpoints(start_activities = "NEW", 
+                          end_activities = "BILLED") %>% 
+  dplyr::sample_n(30)
+
+limited %>% processmapR::process_map()
+```
+
+* We now visualise in a resource process map how those activities are carried out between the different resources using `processmapR::resourcemap()`.
+
+```{r}
+#add new missing factor level to resource so that the resource map does not break where there is a missing resource
+limited$resource = factor(limited$resource, levels=c(levels(limited$resource), "missing"))
+limited$resource[is.na(limited$resource)] = "missing"
+
+limited %>%   processmapR::resource_map(type_nodes = processmapR::frequency("absolute"),
+                           sec_nodes = processmapR::frequency("absolute_case"),
+                           type_edges = processmapR::frequency("absolute"),
+                           sec_edges = processmapR::performance(FUN = median, 
+                                                                units = "days",
+                                                                flow_time = "inter_start_time"
+                                                                ),
+                           rankdir = "TB")
+```
+
+* We can see from the resource process map that the resource is often missing for certain activities. In the table below we highlight in yellow which activities they are.
+
+```{r}
+limited %>% 
+  dplyr::count(activity,resource) %>% 
+  tidyr::spread(key = activity,value = n) %>% 
+  dplyr::arrange(desc(resource)) %>% 
+  DT::datatable(options = list(pageLength =100)) %>% #https://rstudio.github.io/DT/options.html
+  DT::formatStyle('resource',
+                  target = 'row',
+ backgroundColor = styleEqual(c("missing"), c('yellow'))  ) #https://rstudio.github.io/DT/010-style.html
+```
+
+* We can also quickly view how many resources were used on each case for our limited sample of 30 with the `edeaR::resource_frequency()` function.
+
+```{r}
+limited %>% 
+  edeaR::resource_frequency(level = "case") %>% 
+  plot() 
+```
+
+* And see if some resources specialise in certain activities for which we'd expect a low number per activity using the `edeaR::resource_specialisation()` function.
+
+```{r}
+limited %>% 
+  edeaR::resource_specialisation(level = "activity") %>% 
+  plot()
+```
+
+* In this plot of the `edeaR::resource_specialisation()` function we can see the number of activities each resource executes. "ResA" is busiest resource.
+
+```{r}
+limited %>%
+  edeaR::resource_specialisation(level = "resource") %>% plot()
+```
+
+* Finally, using the `processmapR::resource_matrix()` we can see which resources (the antecedent) directly pass a case to another resource (consequent) to carry out the next activity.
+
+```{r}
+rm <- limited %>%
+  processmapR::resource_matrix(type = "absolute") 
+
+p1 <- rm %>% 
+  ggplot2::ggplot() +
+  ggplot2::aes(x = consequent,
+               y = antecedent,
+               fill = n) +
+  ggplot2::geom_tile()+ 
+  ggplot2::geom_text(aes(label =  base::ifelse(n>0,
+                                               base::format(n, 
+                                                            big.mark = ",", 
+                                                            scientific = FALSE),
+                                               NA)), 
+                     size = 3) +
+  ggplot2::scale_fill_gradient(low = "white", high = "red") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.text.x = element_text(angle = 60, 
+                                            hjust = 1),
+                 legend.position = "none",
+                 axis.title.y = element_text(angle = 0,
+                                             vjust = 0.5)) +
+  ggplot2::labs(x = "Consequent",
+                y = "Antecedent")
+
+p1
+```
+
 ### Bespoke exploration
 
 * Further bespoke explorations are described in this [process mining blog post](https://notast.netlify.com/post/process-mining-part-3-3-more-analysis-and-visualizations/).It includes an example of creating an interruption index to tell us how much a resource "toggles" between multiple cases, and a heatmap to show peak periods during the day. 
@@ -407,6 +500,107 @@ t %>%
                 fill="%")  +
   ggplot2::scale_y_discrete(limits = rev(levels(eventdataR::hospital_billing$activity))) +
   ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 12))
+```
+
+### Creating your own event log
+
+* In the visualisations so far we have used the hospital billing event log that has been created for us. Creating our own log from raw events data is straightforward. Follow the bupaR ["create event log" guidance](https://www.bupar.net/creating_eventlogs.html). 
+
+* When creating an event log, as well as the activity name and a timestamp, each activity row needs its own globally unique ID, the resource who carried out each activity and a lifecycle status. The lifecycle would typically describe if a case has just started, is in-progress, or is complete when each activity occurs. If a unique activity ID and a lifecycle status are missing they can easily be [artifically created](https://www.bupar.net/creating_eventlogs.html#lack_of_transitional_lifecycle) using a row count for the ID and by assigning the status to a single value such as "complete" or "NA". If Who did each activity (the resource) may also be missing. Resource can also simply be assigned as a [blank  "NA" column](https://www.bupar.net/creating_eventlogs.html#lack_of_resources).
+
+* The example below demonstrates creating an event log with minimum amount of information required to draw a process map with the activity id, resource, and status created artificially before the event log is built with the `bupaR::eventlog()` function.
+
+```{r}
+patients <- data.frame(stringsAsFactors=FALSE,
+             patient = c("John Doe", "John Doe", "John Doe", "John Doe",
+                         "John Doe", "John Doe", "John Doe", "John Doe",
+                         "John Doe"),
+            activity = c("check-in", "surgery", "surgery", "surgery",
+                         "treatment", "treatment", "surgery", "surgery",
+                         "check-out"),
+           timestamp = c("2017-05-10 08:33:26", "2017-05-10 08:38:21",
+                         "2017-05-10 08:53:16", "2017-05-10 09:25:19",
+                         "2017-05-10 10:01:25", "2017-05-10 10:35:18",
+                         "2017-05-10 10:41:35", "2017-05-10 11:05:56", "2017-05-11 14:52:36"))
+
+example_log_1 <- patients %>%  #a data.frame with the information in the table above
+  dplyr::mutate(activity_instance = 1:n(),
+                resource = NA,
+                status = "complete",
+                timestamp = anytime::anytime(timestamp)) %>% 
+  bupaR::eventlog(
+        case_id = "patient",
+        activity_id = "activity",
+        activity_instance_id = "activity_instance",
+        lifecycle_id = "status",
+        timestamp = "timestamp",
+        resource_id = "resource"
+    )
+
+example_log_1 %>% processmapR::process_map()
+```
+
+* After creating an event log you may need to add additional columns with useful information. This is known as "enrichment". However, this breaks the attributes you have mapped using the `bupaR::eventlog()` function and the event log cannot be used with bupaR functions.
+
+* Rather than using the `bupar::eventlog()` function to recreate the event log, which is time consuming, it’s much faster to use `bupar::mapping()` to save the attribute mappings and then `bupar::re_map()` to add them back to the broken event log. The time saving can be significant for large event logs that can take 5 to 10 mins to re-create whereas the re_map takes only a few seconds.
+
+For example, below we create an event log using the same [example data](https://www.bupar.net/creating_eventlogs.html#resources) in the bupaR guidance.
+
+```{r, error=TRUE}
+patients <- data.frame(stringsAsFactors=FALSE,
+             patient = c("John Doe", "John Doe", "John Doe", "John Doe",
+                         "John Doe", "John Doe", "John Doe", "John Doe",
+                         "John Doe"),
+            activity = c("check-in", "surgery", "surgery", "surgery",
+                         "treatment", "treatment", "surgery", "surgery",
+                         "check-out"),
+           timestamp = c("2017-05-10 08:33:26", "2017-05-10 08:38:21",
+                         "2017-05-10 08:53:16", "2017-05-10 09:25:19",
+                         "2017-05-10 10:01:25", "2017-05-10 10:35:18",
+                         "2017-05-10 10:41:35", "2017-05-10 11:05:56", "2017-05-11 14:52:36"),
+              status = c("complete", "schedule", "start", "complete", "start",
+                         "complete", "start", "complete", "complete"),
+            resource = c("Samantha", "Danny", "Richard", "Richard", "Danny",
+                         "Danny", "William", "William", "Samantha")
+) 
+
+resource_experience_years <- data.frame(stringsAsFactors=FALSE,
+            resource = c("Samantha", "Danny", "Richard","William", "Samantha"),
+            years_experience = c(2, 5, 0.2, 6, 8.9))
+
+example_log_1 <- patients %>%  #a data.frame with the information in the table above
+    dplyr::mutate(activity_instance = 1:n(),
+                timestamp = anytime::anytime(timestamp)) %>% 
+    eventlog(
+        case_id = "patient",
+        activity_id = "activity",
+        activity_instance_id = "activity_instance",
+        lifecycle_id = "status",
+        timestamp = "timestamp",
+        resource_id = "resource"
+    )
+
+# Save event log Mappings
+example_log_1_mapping <- bupaR::mapping(example_log_1)
+
+# enrich and filter the log
+example_log_1 <- example_log_1 %>%
+  dplyr::left_join(resource_experience_years,
+                   by = c("resource" = "resource")) 
+
+# the log is broken so won't work with a process map
+example_log_1 %>% processmapR::process_map()
+```
+
+* To fix the log so that it can be used to draw a process map , below we remap the log attributes with the `bupaR::remap()` function. We re-map the attributes we saved in the code above using the `buparR::mapping()` function. After remapping We can draw a process map from the re-mapped event log.
+
+```{r}
+# re-map the atributes
+example_log_1 <- example_log_1 %>% 
+  bupaR::re_map(example_log_1_mapping) 
+
+# the log attributes have been re-mapped so it will create a process map
+example_log_1 %>% processmapR::process_map()
 ```
 
 ## Can we predict the age of a case?
@@ -591,6 +785,14 @@ p1 <- p_matrix %>%
                 y = "Antecedent")
 
 p1
+```
+
+* A lower code version of the ... is..
+
+```{r}
+eventdataR::hospital_billing %>% 
+  processmapR::precedence_matrix(type = "absolute") %>% 
+  plot()
 ```
 
 * This precedence matrix is equivalent to the FHM algorithm example in Table 2 of the [Flexible Heuristics Miner paper](https://www.researchgate.net/publication/221312126_Flexible_Heuristics_Miner_FHM). 
