@@ -144,7 +144,7 @@ marriage %>%
   ggplot2::theme_light()
 ```
 
-## Final choice: geom_jitter() **and** stat_summary()
+## Final choice: geom_dotplot() **and** stat_summary()
 
 * The plot above would have been my final choice until I saw the fantastic ["evolution of a ggplot"](https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/) post by Cedric Sherer. 
 
@@ -160,7 +160,7 @@ knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/1e7033393a
 knitr::include_graphics(path = "https://d33wubrfki0l68.cloudfront.net/ca54e2775766e840243d03d86f0bdc1b7aa2291a/93cec/post/2019-05-17_evol-ggplot-1_files/figure-html/plot-with.map-1.png") 
 ```
 
-* Inspired by that plot and its code I prefer my final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed, more like a plot in a quality online newspaper can.
+* Inspired by that plot and its code I prefer my final plot below on the marriage data. It is more engaging than a boxplot as it tells the story with little or no explanation needed. Much like a plot in a quality online newspaper can. I have also used `ggplot2::geom_dotplot()` instead of `ggplot2::geom_jitter()`. The dot plot lines up dots that very close in value. I found this [geom_dotplot tutorial](https://www.tutorialgateway.org/r-ggplot2-dot-plot/) helpful to understand how to use it and control how the dots are lined up using the [binwidth](https://ggplot2.tidyverse.org/reference/geom_dotplot.html) argument.
 
 ```{r, echo=FALSE, fig.height=12}
 knitr::include_graphics(path = "marriage.svg") 
@@ -178,7 +178,8 @@ p <- marriage %>%
   ggplot2::aes(
     x = prev_marriage,
     y = age,
-    colour = prev_marriage
+    fill = prev_marriage,
+    colour = prev_marriage,
   ) +
   ggplot2::facet_wrap(~person, ncol = 1) +
   ggplot2::stat_summary(fun.y = median, 
@@ -198,7 +199,6 @@ p <- marriage %>%
   ggplot2::geom_text(aes(x = 0.7,
                          y = pers_avg,
                          label = paste(person," average age", round(pers_avg,0)), 
-                         #colour = "white",
                          hjust = 1.05),
                      colour = "black",
                      size = 3) +
@@ -207,12 +207,18 @@ p <- marriage %>%
                    y = pers_avg, 
                    yend = pers_prev_avg),
                size = 0.8) +
-  ggplot2::geom_jitter(size = 2, 
-                       alpha = 0.4, 
-                       width = 0.2) +
+  ggplot2::geom_dotplot(binaxis = "y",
+                        dotsize = 1,
+                        method = "dotdensity",
+                        binwidth =  0.5,
+                        alpha = 0.4,
+                        stackdir = "center",
+                        stackratio = 1.5) +
   ggplot2::scale_color_brewer(type = "qual",
                               palette = "Dark2") +
-  ggplot2::theme_minimal()+
+  ggplot2::scale_fill_brewer(type = "qual",
+                              palette = "Dark2") +
+  ggplot2::theme_minimal() +
   ggplot2::theme(
                  plot.title = element_text(size = 14, 
                                            hjust = 0),
