@@ -144,7 +144,7 @@ df %>%
 
 * To do this we "nest" a dataframe for each city into one dataframe. Then loop through each of the nested city dataframes, creating a plot for each one.
 
-* Here we use `dplyr::group_by()` on city, then use `tidyr::nest()` to create the indivdiual nested dataframes.
+* Here we use `dplyr::group_by()` on city, then use `tidyr::nest()` to create the individual nested dataframes.
 
 ```{r loop_through_print}
 df_red_nest <-
@@ -246,7 +246,6 @@ p <- df %>%
     colour = city
   ) +
   ggplot2::geom_line(size = 1) +
-  ggplot2::theme_minimal() +
   gghighlight::gghighlight(base::max(sales) > 5000, # highlight only cities with higher sales 
     label_params = list(size = 4)
   ) +
@@ -270,6 +269,7 @@ p <- df %>%
     xintercept = years,
     linetype = 4
   ) +
+  ggplot2::theme_minimal() +
   ggplot2::theme(
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -279,9 +279,6 @@ p <- df %>%
       hjust = 1,
       size = 9
     ),
-    legend.text = element_text(size = 12),
-    legend.position = "right",
-    legend.direction = "vertical",
     plot.title = element_text(
       size = 22,
       face = "bold"
@@ -295,7 +292,6 @@ p <- df %>%
       size = 12,
       color = "darkgrey"
     ),
-    legend.title = element_blank()
   )
 
 ggplot2::ggsave(file="texas.svg", 
@@ -303,3 +299,76 @@ ggplot2::ggsave(file="texas.svg",
                 plot=p)
 
 ```
+
+## Simplify plot theme settings
+
+* If we're happy with the font sizes and other theme settings in our final plot we will want further plots to look the same. We can so this with less code by creating our own theme then setting that as the default using `ggplot2::theme_set()`. Defining the plot theme settings separately will make our plot code shorter and so easier to read. Below we put all the plot theme settings from the final plot above into `my_theme` then set that as the default.
+
+```{r}
+my_theme <- 
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    strip.text.x = element_text(size = 10),
+    axis.text.x = element_text(
+      angle = 60,
+      hjust = 1,
+      size = 9
+    ),
+    plot.title = element_text(
+      size = 22,
+      face = "bold"
+    ),
+    plot.subtitle = element_text(
+      color = "grey",
+      size = 18
+    ),
+    plot.caption = element_text(
+      hjust = 0,
+      size = 12,
+      color = "darkgrey"
+    ),
+  )
+
+# Set my_theme to be the default
+ggplot2::theme_set(my_theme)
+```
+
+* We can now run our final plot again but without any theme settings. The plot uses the default theme we have set above and so looks the same. With shorter code we can more quickly understand what it is doing.
+
+```{r}
+df %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = date,
+    y = sales,
+    colour = city
+  ) +
+  ggplot2::geom_line(size = 1) +
+  gghighlight::gghighlight(base::max(sales) > 5000, # highlight only cities with higher sales 
+    label_params = list(size = 4)
+  ) +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::scale_x_date(
+    date_breaks = "1 year",
+    labels = scales::date_format("%b %y"),
+    limits = c(
+      as.Date("2000-01-01"),
+      as.Date("2015-07-01")
+    )
+  ) +
+  ggplot2::labs(
+    title = "Texas Housing Sales",
+    subtitle = "Texas cities with more than 5,000 sales in any month",
+    caption = "Source: ggplot2 built in txhousing data set",
+    x = "Month",
+    y = "Volume of Sales"
+  ) +
+  ggplot2::geom_vline(
+    xintercept = years,
+    linetype = 4
+  )
+```
+
+
